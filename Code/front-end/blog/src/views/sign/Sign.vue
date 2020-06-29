@@ -1,9 +1,6 @@
 <template>
   <div class="sign-body">
     <div class="overflow-hidden signCard">
-      <div class="title">
-          <div>SIGN IN</div>
-      </div>
       <router-view></router-view>
     </div>
   </div>
@@ -21,13 +18,9 @@
   position: absolute;
   top: 7rem;
   max-height: 40rem;
-  opacity: 0.9;
+  opacity: 0.95;
   border-radius: 30px;
   background-color: white;
   padding: 1rem;
-}
-.title {
-    font-size: 3rem;
-    text-align: center;
 }
 </style>
