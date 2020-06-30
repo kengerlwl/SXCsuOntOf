@@ -16,8 +16,18 @@
           placeholder="Enter Email"
         ></b-form-input>
       </b-form-group>
-      <b-button id="sign-btn" pill size="lg" block variant="success"
+      <b-button id="sign-btn" pill size="lg" block variant="danger"
         >GET NEW PASSWORD</b-button
+      >
+      <!-- Sign In -->
+      <b-button
+        id="sign-btn"
+        pill
+        size="lg"
+        block
+        variant="outline-success"
+        to="/sign/signIn"
+        >SIGN IN</b-button
       >
     </div>
   </div>

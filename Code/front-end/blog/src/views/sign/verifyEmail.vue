@@ -15,7 +15,7 @@
           placeholder="Enter Captcha"
         ></b-form-input>
       </b-form-group>
-      <b-button id="sign-btn" pill size="lg" block variant="success"
+      <b-button id="sign-btn" pill size="lg" block variant="danger"
         >VERIFY</b-button
       >
     </div>
