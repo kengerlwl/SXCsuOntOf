@@ -71,6 +71,9 @@
   </div>
 </template>
 <script>
+// import VueX
+import { mapState, mapMutations } from "vuex";
+
 export default {
   data() {
     return {
@@ -80,6 +83,17 @@ export default {
       comfirmPassword: "",
       checkbox: "",
     };
+  },
+  computed: {
+    // get data from vuex
+    ...mapState({
+      baseURL: (state) => {
+        return state.api.baseURL;
+      },
+      signUpURL: (state) => {
+        return state.api.signUpURL;
+      },
+    }),
   },
 };
 </script>
