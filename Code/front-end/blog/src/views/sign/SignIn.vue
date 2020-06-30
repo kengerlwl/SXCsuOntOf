@@ -2,9 +2,7 @@
   <div>
     <div class="title">
       <div>
-        <b-icon-caret-left-fill></b-icon-caret-left-fill>
-         Sign In 
-        <b-icon-caret-right-fill></b-icon-caret-right-fill>
+        Sign In
       </div>
     </div>
     <div id="sign-in-content">
@@ -31,7 +29,7 @@
 
       <!-- Forgot Password -->
       <div id="forgot-pwd-link">
-        <b-link>
+        <b-link to="/sign/forgotPassword">
           Forgot Password?
         </b-link>
       </div>
@@ -96,5 +94,6 @@ export default {
 .title {
   font-size: 3rem;
   text-align: start;
+  padding-left: 2rem;
 }
 </style>

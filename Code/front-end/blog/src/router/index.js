@@ -4,6 +4,9 @@ import Home from '../views/Home.vue'
 import Sign from '../views/sign/Sign.vue'
 import SignIn from '../views/sign/SignIn.vue'
 import SignUp from '../views/sign/SignUp.vue'
+import verifyEmail from '../views/sign/verifyEmail.vue'
+import forgotPassword from '../views/sign/forgotPassword.vue'
+
 
 Vue.use(VueRouter)
 
@@ -34,6 +37,16 @@ const routes = [{
                 path: '/sign/signUp',
                 name: 'SignUp',
                 component: SignUp
+            },
+            {
+                path: '/sign/verifyEmail',
+                name: 'VerifyEmail',
+                component: verifyEmail
+            },
+            {
+                path: '/sign/forgotPassword',
+                name: 'ForgotPassword',
+                component: forgotPassword
             }
         ],
         redirect: '/sign/signIn'

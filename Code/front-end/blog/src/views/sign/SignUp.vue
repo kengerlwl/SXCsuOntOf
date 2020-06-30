@@ -2,13 +2,11 @@
   <div>
     <div class="title">
       <div>
-        <b-icon-caret-left-fill></b-icon-caret-left-fill>
-         Sign Up 
-        <b-icon-caret-right-fill></b-icon-caret-right-fill>
+        Sign Up
       </div>
     </div>
     <div id="sign-up-content">
-    <!-- Username -->
+      <!-- Username -->
       <b-form-group id="input-group-1" label="Username" label-for="input-1">
         <b-form-input
           id="input-1"
@@ -18,7 +16,7 @@
         ></b-form-input>
       </b-form-group>
 
-    <!-- Email -->
+      <!-- Email -->
       <b-form-group id="input-group-2" label="Email" label-for="input-2">
         <b-form-input
           id="input-2"
@@ -29,7 +27,7 @@
         ></b-form-input>
       </b-form-group>
 
-    <!-- Password -->
+      <!-- Password -->
       <b-form-group id="input-group-3" label="Password" label-for="input-3">
         <b-form-input
           id="input-3"
@@ -41,7 +39,11 @@
       </b-form-group>
 
       <!-- Confirm Password -->
-      <b-form-group id="input-group-4" label="Confirm Password" label-for="input-4">
+      <b-form-group
+        id="input-group-4"
+        label="Confirm Password"
+        label-for="input-4"
+      >
         <b-form-input
           id="input-4"
           v-model="comfirmPassword"
@@ -55,7 +57,13 @@
       <b-form-checkbox id="checkbox-1" v-model="checkbox" name="checkbox-1">
         I accept
       </b-form-checkbox>
-      <b-button id="sign-btn" pill size="lg" block variant="info"
+      <b-button
+        id="sign-btn"
+        pill
+        size="lg"
+        block
+        variant="info"
+        to="/sign/verifyEmail"
         >SIGN UP</b-button
       >
       <b-button
@@ -106,6 +114,7 @@ export default {
 }
 .title {
   font-size: 3rem;
-  text-align: center;
+  text-align: start;
+  padding-left: 2rem;
 }
 </style>
