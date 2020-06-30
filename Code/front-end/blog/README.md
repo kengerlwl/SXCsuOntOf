@@ -32,5 +32,13 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 - **[Bootstrap-vue](https://bootstrap-vue.org/)**，Bootstrap UI 庫。
 - **[VueX](https://vuex.vuejs.org/zh/)**，作為 SPA 單頁面組件之間的傳值與各方法，共享數據。
 - **[Axios](https://www.npmjs.com/package/vue-axios)**，前端數據請求工具，具有 JQuery Ajax 效果。
+- **[MockJS](https://github.com/nuysoft/Mock)**，前端獨立開發時作為攔截 axios 請求，給出隨機數據。
 
 ## 頁面
+
+### Sign 登入註冊
+
+**子路由**
+
+- SignIn 登入
+- SignUp 註冊
