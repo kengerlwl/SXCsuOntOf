@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Home from '../views/Home.vue'
+import Home from '../views/home/Home.vue'
 import Sign from '../views/sign/Sign.vue'
 import SignIn from '../views/sign/SignIn.vue'
 import SignUp from '../views/sign/SignUp.vue'
