@@ -1,4 +1,4 @@
-Blog API
+文章 API
 ===
 
 ## 登入
@@ -431,18 +431,18 @@ http://127.0.0.1:5000/user/delete_account
 }
 ```
 
-## 獲取博客列表
+## 獲取文章列表
 
 ### Request
 
-說明：獲取博客列表。
+說明：獲取文章列表。
 
 方法：**Get**
 
 URL：
 
 ```
-http://127.0.0.1:5000/blog/get_blog_list
+http://127.0.0.1:5000/文章/get_文章_list
 ```
 
 參數：
@@ -465,8 +465,8 @@ http://127.0.0.1:5000/blog/get_blog_list
 ```json
 {
 	"code": 200,
-	"name": "get blog list",
-	"msg": "get blog list success",
+	"name": "get 文章 list",
+	"msg": "get 文章 list success",
 	"data": {
         "id": "",
         "content": "",
@@ -497,18 +497,18 @@ http://127.0.0.1:5000/blog/get_blog_list
 ```
 
 
-## 编写Blog
+## 编写文章
 
 ### Request
 
-说明：撰写Blog后的上传
+说明：撰写文章后的上传
 
 请求方法：**Post**
 
 URL：
 
 ```
-http://xx.com/api/user/upload_blog
+http://xx.com/api/user/upload_文章
 ```
 
 #### 参数
@@ -516,7 +516,7 @@ http://xx.com/api/user/upload_blog
 |参数名|必选|类型|说明|
 |:----    |:---|:----- |-----   |
 |username |是  |string |用户名   |
-|blogname |是  |string |博客标题  |
+|文章name |是  |string |文章标题  |
 |content  |是  |string |内容     |
 |tags     |否  |string |标签     |
 
@@ -535,7 +535,7 @@ http://xx.com/api/user/upload_blog
 ```json
 {
 	"code": 200,
-	"name": "Upload blog",
+	"name": "Upload 文章",
 	"msg": "Upload success",
 	"data": null
 }
@@ -561,18 +561,18 @@ http://xx.com/api/user/upload_blog
 }
 ```
 
-## 博客删除
+## 文章删除
 
 ### Request
 
-說明：獲取博客列表。
+說明：獲取文章列表。
 
 方法：**Delete**
 
 URL：
 
 ```
-http://127.0.0.1:5000/blog/delete_blog
+http://127.0.0.1:5000/文章/delete_文章
 ```
 
 參數：
@@ -580,7 +580,7 @@ http://127.0.0.1:5000/blog/delete_blog
 | 欄位 | 類型 | 描述 |
 | --- | --- | --- |
 | user_id | String | 用戶 id |
-| blog_id| String | 博客 id |
+| 文章_id | String | 文章 id |
 
 #### Success 200
 
@@ -596,8 +596,8 @@ http://127.0.0.1:5000/blog/delete_blog
 ```json
 {
 	"code": 200,
-	"name": "delete blog",
-	"msg": "delete blog success",
+	"name": "delete 文章",
+	"msg": "delete 文章 success",
 	"data": true
 }
 ```
@@ -641,7 +641,7 @@ http://xx.com/api/user/upload_file
 |参数名|必选|类型|说明|
 |:----    |:---|:----- |-----   |
 |username |是  |string |用户名   |
-|blogname |是  |string |博客标题  |
+|文章name |是  |string |文章标题  |
 |content  |否  |string |说明     |
 |file     |是  |string |文件 转成流|
 |tags     |否  |string |标签     |
@@ -705,7 +705,7 @@ http://xx.com/api/user/save_md
 |参数名|必选|类型|说明|
 |:----    |:---|:----- |-----   |
 |username |是  |string |用户名   |
-|blogname |否  |string |博客标题  |
+|文章name |否  |string |文章标题  |
 |content  |是  |string |内容     |
 |tags     |否  |string |标签     |
 
@@ -891,7 +891,7 @@ http://127.0.0.1:5000/user/change_data
 URL：
 
 ```
-http://127.0.0.1:5000/blog/test_interface
+http://127.0.0.1:5000/文章/test_interface
 ```
 
 參數：
