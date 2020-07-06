@@ -10,6 +10,7 @@ import verifyEmail from '../views/sign/verifyEmail.vue'
 import forgotPassword from '../views/sign/forgotPassword.vue'
 // blog-manager
 import admin from '../views/blog-admin/admin.vue'
+import posts from '../views/blog-admin/posts.vue'
 // error
 import pageNotFound from '../views/error/pageNotFound.vue'
 
@@ -59,7 +60,12 @@ const routes = [{
     {
         path: '/:id/admin',
         name: 'admin',
-        component: admin
+        component: admin,
+        children: [{
+            path: '/:id/admin/posts',
+            name: 'posts',
+            component: posts
+        }, ]
     },
     {
         path: '*',
