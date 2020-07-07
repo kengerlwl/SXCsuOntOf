@@ -5,6 +5,7 @@ import store from './store'
 import { BootstrapVue, BootstrapVueIcons } from 'bootstrap-vue'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
+import VeLine from 'v-charts/lib/line.common'
 
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
@@ -15,6 +16,8 @@ require('./mock/mock')
 Vue.use(BootstrapVue)
 Vue.use(BootstrapVueIcons)
 Vue.use(VueAxios, axios)
+
+Vue.component(VeLine.name, VeLine)
 
 Vue.config.productionTip = false
 
