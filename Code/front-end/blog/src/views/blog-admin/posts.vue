@@ -1,5 +1,26 @@
 <template>
   <div active>
+    <h1>Your Posts</h1>
+    <hr class="my-4" />
+    <b-alert show>Note: 這裡管理你的 Blog 文章</b-alert>
+    <div class="mb-4">
+      <b-button-toolbar justify aria-label="post create and search">
+        <b-button-group class="mr-4">
+          <b-button variant="success">Create New Post</b-button>
+        </b-button-group>
+        <b-button-group>
+          <b-input-group>
+            <b-form-input class="mr-sm-2" placeholder="Search"></b-form-input>
+          </b-input-group>
+          <b-button-group class="mx-1">
+            <b-button variant="outline-success" type="submit">
+              Search
+            </b-button>
+          </b-button-group>
+        </b-button-group>
+      </b-button-toolbar>
+    </div>
+
     <b-card
       tag="article"
       class="mb-4 post-card"
@@ -20,7 +41,11 @@
         >{{ tag }}</b-badge
       >
       <b-card-text>
-        {{ item.descript }}
+        {{
+          item.descript.length > 200
+            ? item.descript.substring(0, 200) + "..."
+            : item.descript
+        }}
       </b-card-text>
       <b-button href="#" variant="outline-info">READ MORE</b-button>
       <template v-slot:footer>
@@ -53,7 +78,7 @@ const items = [
     title: "Hello world",
     postTime: "2019年7月19日 06:21",
     descript:
-      "Some quick example text to build on the card title and make up the bulk of the card/'s content.",
+      "Some quick example text to build on the card title and make up the bulk of the card/'s content. wfowijeoifjwoeijfwoije",
     tags: ["info", "Helllow", "linux", "GNU"],
   },
   {
@@ -214,5 +239,9 @@ export default {
 <style>
 .post-card {
   box-shadow: 0px 0px 9px rgb(200, 200, 200);
+}
+.page-item.active .page-link {
+  background-color: rgb(100, 100, 100) !important;
+  border-color: rgb(100, 100, 100) !important;
 }
 </style>

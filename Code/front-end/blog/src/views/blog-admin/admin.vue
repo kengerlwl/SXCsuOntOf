@@ -7,7 +7,7 @@
             <b-list-group-item
               :to="{ name: 'charts' }"
               :class="activeClass('charts')"
-              >Data Charts</b-list-group-item
+              >Statistical Data</b-list-group-item
             >
             <b-list-group-item
               :to="{ name: 'posts' }"

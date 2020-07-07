@@ -186,6 +186,16 @@
               </b-collapse>
             </b-card-text>
           </b-card>
+          <hr class="my-4" />
+          <b-button-toolbar>
+            <b-button-group class="mr-3">
+              <b-button variant="warning">Sign Out</b-button>
+            </b-button-group>
+            <b-button-group>
+              <b-button variant="danger">Delete Your Account</b-button>
+            </b-button-group>
+          </b-button-toolbar>
+          <b-alert class="mt-4" show variant="danger">Note: 請小心謹慎。</b-alert>
         </b-container>
       </b-col>
     </b-row>

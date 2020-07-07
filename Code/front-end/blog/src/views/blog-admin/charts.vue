@@ -1,5 +1,8 @@
 <template>
   <div active>
+    <h1>Statistical Data</h1>
+    <hr class="my-4" />
+    <b-alert show>Note: 這裡有你的 Blog 的瀏覽訪問數據統計圖表。</b-alert>
     <div class="mb-4">
       <b-card
         border-variant="dark"
@@ -16,22 +19,22 @@
       </b-card>
     </div>
     <b-card
-      border-variant="primary"
-      header-bg-variant="primary"
+      border-variant="dark"
+      header-bg-variant="dark"
       header-text-variant="white"
     >
       <template v-slot:header>
         <h4 class="mb-0">
-          <b-icon-bar-chart-fill></b-icon-bar-chart-fill> RANK
+          <b-icon-bar-chart-fill></b-icon-bar-chart-fill> Rank
         </h4>
       </template>
       <div class="overflow-auto">
         <b-table
           id="my-table"
+          striped
           :items="items"
           :per-page="perPage"
           :current-page="currentPage"
-          table-variant="info"
         ></b-table>
         <b-pagination
           v-model="currentPage"
@@ -85,3 +88,9 @@ export default {
   },
 };
 </script>
+<style>
+.page-item.active .page-link {
+  background-color: rgb(100, 100, 100) !important;
+  border-color: rgb(100, 100, 100) !important;
+}
+</style>
