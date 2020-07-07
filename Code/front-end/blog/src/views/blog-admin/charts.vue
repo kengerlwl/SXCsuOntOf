@@ -1,6 +1,18 @@
 <template>
   <div active>
-    <ve-line :data="chartData" :settings="chartSettings"></ve-line>
+    <b-card
+      border-variant="dark"
+      header-bg-variant="dark"
+      header-text-variant="white"
+    >
+      <template v-slot:header>
+        <h4 class="mb-0">
+          <b-icon-house-door-fill></b-icon-house-door-fill> Visitor Volume
+        </h4>
+      </template>
+
+      <ve-line :data="chartData" :settings="chartSettings"></ve-line>
+    </b-card>
   </div>
 </template>
 <script>
