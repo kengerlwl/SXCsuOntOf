@@ -5,9 +5,13 @@
       class="mb-4 post-card"
       v-for="(item, i) in currentPageItems"
       :key="i"
+      header-bg-variant="info"
+      header-text-variant="white"
     >
-      <b-card-title>{{ item.id + item.title }}</b-card-title>
-      <b-card-sub-title>ON {{ item.postTime }}</b-card-sub-title>
+      <template v-slot:header>
+        <h4 class="mb-0">{{ item.id + item.title }}</h4>
+      </template>
+      <b-card-sub-title>POST ON {{ item.postTime }}</b-card-sub-title>
       <b-badge
         class="mr-2"
         v-for="(tag, j) in item.tags"
@@ -30,6 +34,7 @@
       :per-page="perPage"
       v-model="currentPage"
       class="my-0"
+      limit="10"
     />
   </div>
 </template>
@@ -208,6 +213,6 @@ export default {
 </script>
 <style>
 .post-card {
-  box-shadow: 0px 0px 9px rgb(150, 150, 150);
+  box-shadow: 0px 0px 9px rgb(200, 200, 200);
 }
 </style>

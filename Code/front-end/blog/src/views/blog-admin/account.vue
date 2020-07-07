@@ -32,11 +32,14 @@
               </h4>
             </template>
             <b-card-title>
-              <b-icon-gear-fill
+              <b-icon-gear-fill id="tooltip-username-gear"
                 @click="editUsernameVisible = !editUsernameVisible"
               ></b-icon-gear-fill>
-              username</b-card-title
-            >
+              username
+            </b-card-title>
+            <b-tooltip target="tooltip-username-gear" triggers="hover">
+              Edit
+            </b-tooltip>
             <!-- Edit username -->
             <b-card-text>
               <b-collapse
@@ -72,11 +75,14 @@
               <h4 class="mb-0"><b-icon-at></b-icon-at> Email</h4>
             </template>
             <b-card-title>
-              <b-icon-gear-fill
+              <b-icon-gear-fill id="tooltip-email-gear"
                 @click="editEmailVisible = !editEmailVisible"
               ></b-icon-gear-fill>
-              email</b-card-title
-            >
+              email
+            </b-card-title>
+            <b-tooltip target="tooltip-email-gear" triggers="hover">
+              Edit
+            </b-tooltip>
             <!-- edit email -->
             <b-card-text>
               <b-collapse
@@ -116,11 +122,14 @@
               </h4>
             </template>
             <b-card-title
-              ><b-icon-gear-fill
+              ><b-icon-gear-fill id="tooltip-password-gear"
                 @click="editPasswordVisible = !editPasswordVisible"
               ></b-icon-gear-fill>
-              password</b-card-title
-            >
+              password
+            </b-card-title>
+            <b-tooltip target="tooltip-password-gear" triggers="hover">
+              Edit
+            </b-tooltip>
             <!-- edit password -->
             <b-card-text>
               <b-collapse

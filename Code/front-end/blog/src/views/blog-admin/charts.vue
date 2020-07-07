@@ -1,17 +1,46 @@
 <template>
   <div active>
+    <div class="mb-4">
+      <b-card
+        border-variant="dark"
+        header-bg-variant="dark"
+        header-text-variant="white"
+      >
+        <template v-slot:header>
+          <h4 class="mb-0">
+            <b-icon-house-door-fill></b-icon-house-door-fill> Visitor Volume
+          </h4>
+        </template>
+
+        <ve-line :data="chartData" :settings="chartSettings"></ve-line>
+      </b-card>
+    </div>
     <b-card
-      border-variant="dark"
-      header-bg-variant="dark"
+      border-variant="primary"
+      header-bg-variant="primary"
       header-text-variant="white"
     >
       <template v-slot:header>
         <h4 class="mb-0">
-          <b-icon-house-door-fill></b-icon-house-door-fill> Visitor Volume
+          <b-icon-bar-chart-fill></b-icon-bar-chart-fill> RANK
         </h4>
       </template>
-
-      <ve-line :data="chartData" :settings="chartSettings"></ve-line>
+      <div class="overflow-auto">
+        <b-table
+          id="my-table"
+          :items="items"
+          :per-page="perPage"
+          :current-page="currentPage"
+          table-variant="info"
+        ></b-table>
+        <b-pagination
+          v-model="currentPage"
+          :total-rows="rows"
+          :per-page="perPage"
+          aria-controls="my-table"
+          limit="10"
+        ></b-pagination>
+      </div>
     </b-card>
   </div>
 </template>
@@ -34,7 +63,25 @@ export default {
           { 日期: "1/6", 访问用户: 4593, 下单用户: 4293, 下单率: 0.78 },
         ],
       },
+      perPage: 5,
+      currentPage: 1,
+      items: [
+        { Blog: 1, post: "Fred", volumns: "Flintstone" },
+        { Blog: 2, post: "Wilma", volumns: "Flintstone" },
+        { Blog: 3, post: "Barney", volumns: "Rubble" },
+        { Blog: 4, post: "Betty", volumns: "Rubble" },
+        { Blog: 5, post: "Pebbles", volumns: "Flintstone" },
+        { Blog: 6, post: "Bamm Bamm", volumns: "Rubble" },
+        { Blog: 7, post: "The Great", volumns: "Gazzoo" },
+        { Blog: 8, post: "Rockhead", volumns: "Slate" },
+        { Blog: 9, post: "Pearl", volumns: "Slaghoople" },
+      ],
     };
+  },
+  computed: {
+    rows() {
+      return this.items.length;
+    },
   },
 };
 </script>
