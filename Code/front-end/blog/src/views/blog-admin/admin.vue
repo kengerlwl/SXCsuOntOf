@@ -4,9 +4,10 @@
       <b-row>
         <b-col cols="3">
           <b-list-group>
-            <b-list-group-item href="#">Data Charts</b-list-group-item>
-            <b-list-group-item :to="{ name:'posts' }">Articles</b-list-group-item>
+            <b-list-group-item :to="{ name: 'charts' }">Data Charts</b-list-group-item>
+            <b-list-group-item :to="{ name: 'posts' }">Articles</b-list-group-item>
             <b-list-group-item href="#">Interfaces</b-list-group-item>
+            <b-list-group-item href="#">Account</b-list-group-item>
           </b-list-group>
         </b-col>
         <b-col id="admin-router-view">

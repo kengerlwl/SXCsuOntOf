@@ -176,7 +176,7 @@ export default {
   data() {
     return {
       currentPage: 1,
-      perPage: 8,
+      perPage: 6,
       totalRows: items.length,
       paginated_items: {},
       currentPageIndex: 0,

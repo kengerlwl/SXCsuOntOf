@@ -11,6 +11,7 @@ import forgotPassword from '../views/sign/forgotPassword.vue'
 // blog-manager
 import admin from '../views/blog-admin/admin.vue'
 import posts from '../views/blog-admin/posts.vue'
+import charts from '../views/blog-admin/charts.vue'
 // error
 import pageNotFound from '../views/error/pageNotFound.vue'
 
@@ -62,10 +63,16 @@ const routes = [{
         name: 'admin',
         component: admin,
         children: [{
-            path: '/:id/admin/posts',
-            name: 'posts',
-            component: posts
-        }, ]
+                path: '/:id/admin/posts',
+                name: 'posts',
+                component: posts
+            },
+            {
+                path: '/:id/admin/charts',
+                name: 'charts',
+                component: charts
+            }
+        ]
     },
     {
         path: '*',
