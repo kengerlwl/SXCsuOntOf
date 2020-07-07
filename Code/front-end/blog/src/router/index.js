@@ -1,12 +1,18 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+// Home
 import Home from '../views/home/Home.vue'
+// Sign
 import Sign from '../views/sign/Sign.vue'
 import SignIn from '../views/sign/SignIn.vue'
 import SignUp from '../views/sign/SignUp.vue'
 import verifyEmail from '../views/sign/verifyEmail.vue'
 import forgotPassword from '../views/sign/forgotPassword.vue'
-
+// blog-manager
+import admin from '../views/blog-admin/admin.vue'
+import posts from '../views/blog-admin/posts.vue'
+// error
+import pageNotFound from '../views/error/pageNotFound.vue'
 
 Vue.use(VueRouter)
 
@@ -51,6 +57,22 @@ const routes = [{
         ],
         redirect: '/sign/signIn'
     },
+    {
+        path: '/:id/admin',
+        name: 'admin',
+        component: admin,
+        children: [{
+            path: '/:id/admin/posts',
+            name: 'posts',
+            component: posts
+        }, ]
+    },
+    {
+        path: '*',
+        name: '404',
+        component: pageNotFound
+    }
+
 ]
 
 const router = new VueRouter({
