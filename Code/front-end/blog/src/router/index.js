@@ -2,21 +2,21 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 // Home
 import Home from '../views/home/Home.vue'
-// Sign
-import Sign from '../views/sign/Sign.vue'
-import SignIn from '../views/sign/SignIn.vue'
-import SignUp from '../views/sign/SignUp.vue'
-import verifyEmail from '../views/sign/verifyEmail.vue'
-import forgotPassword from '../views/sign/forgotPassword.vue'
-// blog-manager
-import admin from '../views/blog-admin/admin.vue'
-import posts from '../views/blog-admin/posts.vue'
-import charts from '../views/blog-admin/charts.vue'
-import account from '../views/blog-admin/account.vue'
-// news
-import news from '../views/news/news.vue'
-// error
-import pageNotFound from '../views/error/pageNotFound.vue'
+// // Sign
+// import Sign from '../views/sign/Sign.vue'
+// import SignIn from '../views/sign/SignIn.vue'
+// import SignUp from '../views/sign/SignUp.vue'
+// import verifyEmail from '../views/sign/verifyEmail.vue'
+// import forgotPassword from '../views/sign/forgotPassword.vue'
+// // blog-manager
+// import admin from '../views/blog-admin/admin.vue'
+// import posts from '../views/blog-admin/posts.vue'
+// import charts from '../views/blog-admin/charts.vue'
+// import account from '../views/blog-admin/account.vue'
+// // news
+// import news from '../views/news/news.vue'
+// // error
+// import pageNotFound from '../views/error/pageNotFound.vue'
 
 Vue.use(VueRouter)
 
@@ -37,26 +37,31 @@ const routes = [{
     {
         path: '/sign',
         name: 'Sign',
-        component: Sign,
+        component: () =>
+            import ( /* webpackChunkName: "Sign" */ '../views/sign/Sign.vue'),
         children: [{
                 path: '/sign/signIn',
                 name: 'SignIn',
-                component: SignIn
+                component: () =>
+                    import ( /* webpackChunkName: "SignIn" */ '../views/sign/SignIn.vue')
             },
             {
                 path: '/sign/signUp',
                 name: 'SignUp',
-                component: SignUp
+                component: () =>
+                    import ( /* webpackChunkName: "SignUp" */ '../views/sign/SignUp.vue')
             },
             {
                 path: '/sign/verifyEmail',
                 name: 'VerifyEmail',
-                component: verifyEmail
+                component: () =>
+                    import ( /* webpackChunkName: "VerifyEmail" */ '../views/sign/verifyEmail.vue')
             },
             {
                 path: '/sign/forgotPassword',
                 name: 'ForgotPassword',
-                component: forgotPassword
+                component: () =>
+                    import ( /* webpackChunkName: "ForgotPassword" */ '../views/sign/forgotPassword.vue')
             }
         ],
         redirect: '/sign/signIn'
@@ -64,33 +69,54 @@ const routes = [{
     {
         path: '/:id/admin',
         name: 'admin',
-        component: admin,
+        component: () =>
+            import ( /* webpackChunkName: "admin" */ '../views/blog-admin/admin.vue'),
         children: [{
                 path: '/:id/admin/posts',
                 name: 'posts',
-                component: posts
+                component: () =>
+                    import ( /* webpackChunkName: "posts" */ '../views/blog-admin/posts.vue')
             },
             {
                 path: '/:id/admin/charts',
                 name: 'charts',
-                component: charts
+                component: () =>
+                    import ( /* webpackChunkName: "charts" */ '../views/blog-admin/charts.vue')
             },
             {
                 path: '/:id/admin/account',
                 name: 'account',
-                component: account
+                component: () =>
+                    import ( /* webpackChunkName: "account" */ '../views/blog-admin/account.vue')
             }
-        ]
+        ],
+        redirect: '/:id/admin/charts'
     },
     {
         path: '/news',
         name: 'news',
-        component: news
+        component: () =>
+            import ( /* webpackChunkName: "news" */ '../views/news/news.vue'),
+        children: [{
+                path: '/news/school',
+                name: 'school',
+                component: () =>
+                    import ( /* webpackChunkName: "school" */ '../views/news/school.vue')
+            },
+            {
+                path: '/news/game',
+                name: 'game',
+                component: () =>
+                    import ( /* webpackChunkName: "game" */ '../views/news/game.vue')
+            }
+        ],
+        redirect: '/news/school'
     },
     {
         path: '*',
         name: '404',
-        component: pageNotFound
+        component: () =>
+            import ( /* webpackChunkName: "404" */ '../views/error/pageNotFound.vue')
     }
 
 ]
