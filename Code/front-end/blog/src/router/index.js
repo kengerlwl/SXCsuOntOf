@@ -13,6 +13,8 @@ import admin from '../views/blog-admin/admin.vue'
 import posts from '../views/blog-admin/posts.vue'
 import charts from '../views/blog-admin/charts.vue'
 import account from '../views/blog-admin/account.vue'
+// news
+import news from '../views/news/news.vue'
 // error
 import pageNotFound from '../views/error/pageNotFound.vue'
 
@@ -79,6 +81,11 @@ const routes = [{
                 component: account
             }
         ]
+    },
+    {
+        path: '/news',
+        name: 'news',
+        component: news
     },
     {
         path: '*',

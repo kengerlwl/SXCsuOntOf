@@ -14,7 +14,6 @@
               :class="activeClass('posts')"
               >Articles</b-list-group-item
             >
-            <b-list-group-item href="#">Interfaces</b-list-group-item>
             <b-list-group-item
               :to="{ name: 'account' }"
               :class="activeClass('account')"
