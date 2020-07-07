@@ -1,8 +1,8 @@
-package com.sx.blog.service.impl;
+package com.sx.sxblog.service.impl;
 
-import com.sx.blog.entity.User;
-import com.sx.blog.mapper.UserMapper;
-import com.sx.blog.service.IUserService;
+import com.sx.sxblog.entity.User;
+import com.sx.sxblog.mapper.UserMapper;
+import com.sx.sxblog.service.IUserService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
  * </p>
  *
  * @author lgx
- * @since 2020-07-06
+ * @since 2020-07-08
  */
 @Service
 public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IUserService {

@@ -9,4 +9,3 @@ server:
   port: 8090
 mybatis-plus:
   mapper-locations: classpath:/mapper/sxblog/**.xml
-
