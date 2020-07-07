@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div active>
     <b-card
       tag="article"
       class="mb-4 post-card"

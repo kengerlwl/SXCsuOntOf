@@ -12,6 +12,7 @@ import forgotPassword from '../views/sign/forgotPassword.vue'
 import admin from '../views/blog-admin/admin.vue'
 import posts from '../views/blog-admin/posts.vue'
 import charts from '../views/blog-admin/charts.vue'
+import account from '../views/blog-admin/account.vue'
 // error
 import pageNotFound from '../views/error/pageNotFound.vue'
 
@@ -71,6 +72,11 @@ const routes = [{
                 path: '/:id/admin/charts',
                 name: 'charts',
                 component: charts
+            },
+            {
+                path: '/:id/admin/account',
+                name: 'account',
+                component: account
             }
         ]
     },
