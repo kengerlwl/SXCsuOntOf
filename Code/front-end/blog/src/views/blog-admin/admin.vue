@@ -42,6 +42,10 @@ export default {
 <style>
 #admin {
   padding-top: 2rem;
+  background: -webkit-linear-gradient(LightSteelBlue, LightSalmon);
+  background: -o-linear-gradient(LightSteelBlue, LightSalmon);
+  background: -moz-linear-gradient(LightSteelBlue, LightSalmon);
+  background: linear-gradient(LightSteelBlue, LightSalmon);
 }
 #admin-router-view {
   padding-left: 2rem;
