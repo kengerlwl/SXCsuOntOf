@@ -1,6 +1,6 @@
-package com.sx.blog.mapper;
+package com.sx.sxblog.mapper;
 
-import com.sx.blog.entity.Blog;
+import com.sx.sxblog.entity.Blog;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**
@@ -9,7 +9,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * </p>
  *
  * @author lgx
- * @since 2020-07-06
+ * @since 2020-07-08
  */
 public interface BlogMapper extends BaseMapper<Blog> {
 

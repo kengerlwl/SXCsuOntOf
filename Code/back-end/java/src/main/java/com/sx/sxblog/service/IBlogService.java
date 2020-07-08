@@ -1,6 +1,6 @@
-package com.sx.blog.service;
+package com.sx.sxblog.service;
 
-import com.sx.blog.entity.Blog;
+import com.sx.sxblog.entity.Blog;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
@@ -9,7 +9,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * </p>
  *
  * @author lgx
- * @since 2020-07-06
+ * @since 2020-07-08
  */
 public interface IBlogService extends IService<Blog> {
 

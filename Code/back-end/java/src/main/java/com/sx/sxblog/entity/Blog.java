@@ -1,8 +1,8 @@
-package com.sx.blog.entity;
+package com.sx.sxblog.entity;
 
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.IdType;
+import java.time.LocalDate;
 import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableField;
 import java.io.Serializable;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -14,24 +14,27 @@ import lombok.experimental.Accessors;
  * </p>
  *
  * @author lgx
- * @since 2020-07-06
+ * @since 2020-07-08
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@TableName("Blog")
 public class Blog implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @TableId("blogID")
-    private String blogID;
+    @TableId(value = "blog_id", type = IdType.AUTO)
+    private Integer blogId;
 
-    @TableField("postTime")
-    private String postTime;
+    private Integer userId;
 
-    @TableField("watchTimes")
-    private Integer watchTimes;
+    private String blogContent;
+
+    private LocalDate postTime;
+
+    private Integer blogViews;
+
+    private String blogName;
 
 
 }
