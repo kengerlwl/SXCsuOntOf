@@ -1,4 +1,4 @@
-package com.sx.demo.sxblogTest;
+package com.sx.sxblog;
 
 import com.sx.sxblog.entity.Blog;
 import com.sx.sxblog.service.impl.BlogServiceImpl;
@@ -12,18 +12,13 @@ import java.util.List;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class BlogServiceTests {
+public class BlogServiceTest {
     @Resource
     private BlogServiceImpl blogService;
 
     @Test
-    public void getBlogList(){
+    public void getBlogsList(){
         List<Blog> blogList = blogService.getBlogList();
         System.out.println(blogList);
     }
-
-
-
-
-
 }

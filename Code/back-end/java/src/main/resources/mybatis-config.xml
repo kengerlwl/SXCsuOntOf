@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+    PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+	<settings>
+		<setting name="lazyLoadingEnabled" value="false" />
+	</settings>
+	<typeAliases>
+		<typeAlias alias="blog" type="com.sx.sxblog.entity.Blog" />
+		<typeAlias alias="collect" type="com.sx.sxblog.entity.Collect" />
+		<typeAlias alias="comment" type="com.sx.sxblog.entity.Comment" />
+		<typeAlias alias="tag" type="com.sx.sxblog.entity.Tag" />
+		<typeAlias alias="user" type="com.sx.sxblog.entity.User"/>
+	</typeAliases>
+
+</configuration>

@@ -1,4 +1,4 @@
-package com.sx.demo;
+package com.sx.sxblog;
 
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
