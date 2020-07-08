@@ -18,7 +18,7 @@ public interface IBlogService extends IService<Blog> {
     int insertBlog(Blog blog);
 
     //对博客进行删除【】
-    int deleteBlog(Blog blog_id);
+    int deleteBlog(int blog_id);
 
     //对博客进行修改【】
     int updateBlog(Blog blog);
