@@ -15,6 +15,11 @@
               >Articles</b-list-group-item
             >
             <b-list-group-item
+              :to="{ name: 'collect' }"
+              :class="activeClass('collect')"
+              >Collect</b-list-group-item
+            >
+            <b-list-group-item
               :to="{ name: 'account' }"
               :class="activeClass('account')"
               >Account</b-list-group-item

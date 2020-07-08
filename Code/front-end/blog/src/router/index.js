@@ -84,6 +84,12 @@ const routes = [{
                     import ( /* webpackChunkName: "charts" */ '../views/blog-admin/charts.vue')
             },
             {
+                path: '/:id/admin/collect',
+                name: 'collect',
+                component: () =>
+                    import ( /* webpackChunkName: "collect" */ '../views/blog-admin/collect.vue')
+            },
+            {
                 path: '/:id/admin/account',
                 name: 'account',
                 component: () =>
