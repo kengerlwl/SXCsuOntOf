@@ -93,6 +93,12 @@ const routes = [{
         redirect: '/:id/admin/charts'
     },
     {
+        path: '/:id/admin/posts/post_edit',
+        name: 'post_edit',
+        component: () =>
+            import ( /* webpackChunkName: "post_edit" */ '../views/blog-admin/edit.vue')
+    },
+    {
         path: '/news',
         name: 'news',
         component: () =>

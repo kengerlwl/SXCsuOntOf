@@ -241,6 +241,51 @@
               </b-collapse>
             </b-card-text>
           </b-card>
+          <!-- company -->
+          <b-card
+            class="mb-4"
+            border-variant="info"
+            header-bg-variant="info"
+            header-text-variant="white"
+          >
+            <template v-slot:header>
+              <h4 class="mb-0"><b-icon-briefcase-fill></b-icon-briefcase-fill> Company</h4>
+            </template>
+            <b-card-title>
+              <b-icon-gear-fill
+                id="tooltip-company-gear"
+                @click="editCompany"
+              ></b-icon-gear-fill>
+              company
+            </b-card-title>
+            <b-tooltip target="tooltip-company-gear" triggers="hover">
+              Edit
+            </b-tooltip>
+            <!-- edit company -->
+            <b-card-text>
+              <b-collapse
+                id="collapse-company"
+                v-model="editCompanyVisible"
+                class="mt-2"
+              >
+                <b-form-group
+                  id="input-group-company"
+                  label="New Company:"
+                  label-for="input-company"
+                  description=""
+                >
+                  <b-form-input
+                    id="input-company"
+                    v-model="form.company"
+                    required
+                    placeholder="Enter New company"
+                  ></b-form-input>
+                </b-form-group>
+                <!-- submit -->
+                <b-button variant="success">SUBMIT</b-button>
+              </b-collapse>
+            </b-card-text>
+          </b-card>
           <!-- password -->
           <b-card
             class="mb-4"
@@ -345,6 +390,7 @@ export default {
       editSexVisible: false,
       editBirthdayVisible: false,
       editDescriptionVisible: false,
+      editCompanyVisible: false,
       editPasswordVisible: false,
       form: {
         username: "",
@@ -352,6 +398,7 @@ export default {
         sex: "",
         birthday: "",
         description: "",
+        company: "",
         originPassword: "",
         newPassword: "",
         comfirmNewPassword: "",
@@ -387,6 +434,12 @@ export default {
       this.editDescriptionVisible = !this.editDescriptionVisible;
       if(this.editDescriptionVisible === false) {
         this.form.description = "";
+      }
+    },
+    editCompany() {
+      this.editCompanyVisible = !this.editCompanyVisible;
+      if(this.editCompanyVisible === false) {
+        this.form.company = "";
       }
     },
     editPassword() {
