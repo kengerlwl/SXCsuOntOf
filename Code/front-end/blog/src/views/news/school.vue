@@ -10,7 +10,7 @@
           {{ item.title }}
         </h4>
         <p>
-          Origin Article:
+          <b-badge variant="info">Origin Article</b-badge>
           <b-link :href="item.url" target="_blank">
             {{ item.url }}
           </b-link>
