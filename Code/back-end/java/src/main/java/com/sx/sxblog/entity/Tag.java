@@ -1,6 +1,6 @@
-package com.sx.blog.entity;
+package com.sx.sxblog.entity;
 
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import java.io.Serializable;
 import lombok.Data;
@@ -13,24 +13,21 @@ import lombok.experimental.Accessors;
  * </p>
  *
  * @author lgx
- * @since 2020-07-06
+ * @since 2020-07-08
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@TableName("User")
-public class User implements Serializable {
+public class Tag implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @TableId("userID")
-    private String userID;
+    @TableId(value = "tag_id", type = IdType.AUTO)
+    private Integer tagId;
 
-    private String username;
+    private Integer blogId;
 
-    private String password;
-
-    private String email;
+    private String tagName;
 
 
 }

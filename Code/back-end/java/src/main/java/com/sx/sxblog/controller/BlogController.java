@@ -1,4 +1,4 @@
-package com.sx.blog.controller;
+package com.sx.sxblog.controller;
 
 
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,10 +11,10 @@ import org.springframework.web.bind.annotation.RestController;
  * </p>
  *
  * @author lgx
- * @since 2020-07-06
+ * @since 2020-07-08
  */
 @RestController
-@RequestMapping("/blog/user")
-public class UserController {
+@RequestMapping("/sxblog/blog")
+public class BlogController {
 
 }
