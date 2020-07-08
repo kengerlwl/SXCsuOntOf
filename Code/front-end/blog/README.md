@@ -33,6 +33,9 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 - **[VueX](https://vuex.vuejs.org/zh/)**，作為 SPA 單頁面組件之間的傳值與各方法，共享數據。
 - **[Axios](https://www.npmjs.com/package/vue-axios)**，前端數據請求工具，具有 JQuery Ajax 效果。
 - **[MockJS](https://github.com/nuysoft/Mock)**，前端獨立開發時作為攔截 axios 請求，給出隨機數據。
+- **[mavon-editor](https://github.com/hinesboy/mavonEditor)**，Markdown 編輯器。
+- **[v-charts](https://v-charts.js.org/#/)**，圖表，基于 Vue2.0 和 **echarts** 封装的 **v-charts** 图表组件。
+- **[vue-typer](https://github.com/cngu/vue-typer)**，打字效果組件。
 
 ## 頁面
 
