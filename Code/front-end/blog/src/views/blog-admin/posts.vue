@@ -20,47 +20,74 @@
         </b-button-group>
       </b-button-toolbar>
     </div>
-
-    <b-card
-      tag="article"
-      class="mb-4 post-card"
-      v-for="(item, i) in currentPageItems"
-      :key="i"
-      header-bg-variant="info"
-      header-text-variant="white"
-    >
-      <template v-slot:header>
-        <h4 class="mb-0">{{ item.id + item.title }}</h4>
-      </template>
-      <b-card-sub-title>POST ON {{ item.postTime }}</b-card-sub-title>
-      <b-badge
-        class="mr-2"
-        v-for="(tag, j) in item.tags"
-        variant="success"
-        :key="j"
-        >{{ tag }}</b-badge
-      >
-      <b-card-text>
-        {{
-          item.descript.length > 200
-            ? item.descript.substring(0, 200) + "..."
-            : item.descript
-        }}
-      </b-card-text>
-      <b-button href="#" variant="outline-info">READ MORE</b-button>
-      <template v-slot:footer>
-        <small class="text-muted">
-          <b-icon-clock></b-icon-clock> Last updated 3 mins ago
-        </small>
-      </template>
-    </b-card>
-    <b-pagination
-      :total-rows="totalRows"
-      :per-page="perPage"
-      v-model="currentPage"
-      class="my-0"
-      limit="10"
-    />
+    <b-row>
+      <b-col cols="3">
+        <b-card header-bg-variant="dark" header-text-variant="white">
+          <template v-slot:header>
+            <h4 class="mb-0">Tags</h4>
+          </template>
+          <b-card-text>
+            <b-button
+              size="sm"
+              class="m-1"
+              variant="outline-secondary"
+              pill
+              v-for="(item, i) in tags"
+              :key="i"
+            >
+              {{ item }}
+            </b-button>
+          </b-card-text>
+        </b-card>
+      </b-col>
+      <b-col cols="9">
+        <b-card
+          tag="article"
+          class="mb-4 post-card"
+          v-for="(item, i) in currentPageItems"
+          :key="i"
+          header-bg-variant="info"
+          header-text-variant="white"
+        >
+          <template v-slot:header>
+            <h4 class="mb-0">{{ item.id + item.title }}</h4>
+          </template>
+          <b-card-sub-title>POST ON {{ item.postTime }}</b-card-sub-title>
+          <b-badge
+            class="mr-2"
+            v-for="(tag, j) in item.tags"
+            variant="success"
+            :key="j"
+            >{{ tag }}</b-badge
+          >
+          <b-card-text>
+            {{
+              item.descript.length > 200
+                ? item.descript.substring(0, 200) + "..."
+                : item.descript
+            }}
+          </b-card-text>
+          <b-button href="#" variant="outline-info" class="mr-3">
+            <b-icon-brush></b-icon-brush> Edit
+          </b-button>
+          <b-button href="#" variant="danger">
+            <b-icon-trash-fill></b-icon-trash-fill> Delete
+          </b-button>
+          <template v-slot:footer>
+            <small class="text-muted">
+              <b-icon-clock></b-icon-clock> Last updated 3 mins ago
+            </small>
+          </template>
+        </b-card>
+        <b-pagination
+          :total-rows="totalRows"
+          :per-page="perPage"
+          v-model="currentPage"
+          class="my-0"
+          limit="10"
+        />
+      </b-col>
+    </b-row>
   </div>
 </template>
 <script>
@@ -212,6 +239,17 @@ export default {
       currentPageIndex: 0,
       nbPages: 0,
       posts: items,
+      tags: [
+        "Hello",
+        "linux",
+        "blog",
+        "archLinux",
+        "macOS",
+        "npm",
+        "bootstrap",
+        "json",
+        "Golang",
+      ],
     };
   },
   computed: {
