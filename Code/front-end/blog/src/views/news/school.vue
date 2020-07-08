@@ -1,41 +1,84 @@
 <template>
   <div>
-    <b-card>
+    <div>
+      <h1>CSU's CS's News</h1>
+    </div>
+    <b-card class="mb-2 news-card" v-for="(item, i) in schools" :key="i">
       <b-media>
-        <template v-slot:aside>
-          <b-img blank blank-color="#ccc" width="64" alt="placeholder"></b-img>
-        </template>
-
-        <h5 class="mt-0">Media Title</h5>
+        <h4 class="mt-0">
+          <h3>{{ "#" + (i + 1) }}</h3>
+          {{ item.title }}
+        </h4>
         <p>
-          Cras sit amet nibh libero, in gravida nulla. Nulla vel metus
-          scelerisque ante sollicitudin. Cras purus odio, vestibulum in
-          vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi
-          vulputate fringilla. Donec lacinia congue felis in faucibus.
+          Origin Article:
+          <b-link :href="item.url" target="_blank">
+            {{ item.url }}
+          </b-link>
         </p>
         <p>
-          Donec sed odio dui. Nullam quis risus eget urna mollis ornare vel eu
-          leo. Cum sociis natoque penatibus et magnis dis parturient montes,
-          nascetur ridiculus mus.
+          <b-button @click="viewNews(item.title, item.content)">Read Here</b-button>
         </p>
-
-        <b-media>
-          <template v-slot:aside>
-            <b-img
-              blank
-              blank-color="#ccc"
-              width="64"
-              alt="placeholder"
-            ></b-img>
-          </template>
-
-          <h5 class="mt-0">Nested Media</h5>
-          <p class="mb-0">
-            Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia
-            congue felis in faucibus.
-          </p>
-        </b-media>
       </b-media>
     </b-card>
+    <b-sidebar
+      v-model="viewNewsTetail"
+      :title="title"
+      width="100%"
+      backdrop
+      shadow
+      bg-variant="dark"
+      text-variant="light"
+    >
+    <div id="news-detail">
+      <b-container>
+        <div class="px-3 py-2" v-html="content"></div>
+      </b-container>
+    </div>
+      
+    </b-sidebar>
   </div>
 </template>
+<script>
+import { school } from "../../static/js/news_school_testData";
+export default {
+  data() {
+    return {
+      schools: school,
+      title: "",
+      content: ``,
+      viewNewsTetail: false,
+    };
+  },
+  methods: {
+    viewNews(title, content) {
+      this.title = title;
+      this.content = content;
+      this.viewNewsTetail = true;
+    },
+  },
+  computed: {
+    libText: function() {
+      // return directly html
+      var str = "<div><p>some html</p></div>";
+      return str;
+    },
+  },
+};
+</script>
+<style>
+#news-detail {
+  background: -webkit-linear-gradient(LightSteelBlue, LightSalmon) !important;
+  background: -o-linear-gradient(LightSteelBlue, LightSalmon) !important;
+  background: -moz-linear-gradient(LightSteelBlue, LightSalmon) !important;
+  background: linear-gradient(LightSteelBlue, LightSalmon) !important;
+}
+#vsb_content p span {
+  background: rgba(0, 0, 0, 0) !important;
+}
+#vsb_content a {
+  background: rgba(0, 0, 0, 0) !important;
+}
+.news-card {
+  opacity: 0.8;
+}
+</style>

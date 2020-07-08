@@ -3,7 +3,7 @@
     <div>
       <h1>Free games from <strong>Epic</strong> in this week</h1>
     </div>
-    <b-card class="mb-2" v-for="(item, i) in games" :key="i">
+    <b-card class="mb-2 news-card" v-for="(item, i) in games" :key="i">
       <b-media>
         <template v-slot:aside>
           <b-img :src="item.image" width="250" alt="placeholder"></b-img>
@@ -15,7 +15,7 @@
           origin price: {{ item.originPrice }}
         </p>
         <p>
-        <b-button :href="item.url" target="_blank">Buy It</b-button>
+        <b-button :href="item.url" target="_blank" variant="primary">Buy It</b-button>
         </p>
       </b-media>
     </b-card>
@@ -83,3 +83,8 @@ export default {
   },
 };
 </script>
+<style>
+.news-card {
+  opacity: 0.8;
+}
+</style>
