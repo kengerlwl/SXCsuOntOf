@@ -8,6 +8,7 @@
     </JAVADOC>
     <SOURCES>
       <root url="jar://$MAVEN_REPOSITORY$/org/springframework/spring-test/5.2.7.RELEASE/spring-test-5.2.7.RELEASE-sources.jar!/" />
+      <root url="file://$MAVEN_REPOSITORY$/org/springframework/spring-test/5.2.7.RELEASE" />
     </SOURCES>
   </library>
 </component>
