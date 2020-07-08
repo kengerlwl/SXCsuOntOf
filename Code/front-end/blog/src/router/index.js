@@ -105,6 +105,18 @@ const routes = [{
             import ( /* webpackChunkName: "post_edit" */ '../views/blog-admin/edit.vue')
     },
     {
+        path: '/:id/blog/home',
+        name: 'user_blog_home',
+        component: () =>
+            import ( /* webpackChunkName: "user_blog_home" */ '../views/blog-view/home.vue'),
+        children: [{
+            path: '/:id/blog/read',
+            name: 'user_blog_read',
+            component: () =>
+                import ( /* webpackChunkName: "user_blog_read" */ '../views/blog-view/read.vue'),
+        }]
+    },
+    {
         path: '/news',
         name: 'news',
         component: () =>
