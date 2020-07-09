@@ -7,7 +7,10 @@
       <b-col md="auto">
         <b-container fluid>
           <div id="avatar-setting" class="mb-4">
-            <b-avatar size="15em"></b-avatar>
+            <b-avatar
+              size="15em"
+              src="https://avatars1.githubusercontent.com/u/48636976?s=460&u=6fc910ffe23ff8ff7ffc210d49ca81fdec486f9f&v=4"
+            ></b-avatar>
           </div>
           <div id="avatar-edit">
             <b-button variant="dark" size="sm"
@@ -164,7 +167,9 @@
             header-text-variant="white"
           >
             <template v-slot:header>
-              <h4 class="mb-0"><b-icon-calendar3-fill></b-icon-calendar3-fill> Birthday</h4>
+              <h4 class="mb-0">
+                <b-icon-calendar3-fill></b-icon-calendar3-fill> Birthday
+              </h4>
             </template>
             <b-card-title>
               <b-icon-gear-fill
@@ -202,7 +207,10 @@
             header-text-variant="white"
           >
             <template v-slot:header>
-              <h4 class="mb-0"><b-icon-chat-square-dots-fill></b-icon-chat-square-dots-fill> Description</h4>
+              <h4 class="mb-0">
+                <b-icon-chat-square-dots-fill></b-icon-chat-square-dots-fill>
+                Description
+              </h4>
             </template>
             <b-card-title>
               <b-icon-gear-fill
@@ -249,7 +257,9 @@
             header-text-variant="white"
           >
             <template v-slot:header>
-              <h4 class="mb-0"><b-icon-briefcase-fill></b-icon-briefcase-fill> Company</h4>
+              <h4 class="mb-0">
+                <b-icon-briefcase-fill></b-icon-briefcase-fill> Company
+              </h4>
             </template>
             <b-card-title>
               <b-icon-gear-fill
@@ -408,49 +418,49 @@ export default {
   methods: {
     editUsername() {
       this.editUsernameVisible = !this.editUsernameVisible;
-      if(this.editUsernameVisible === false) {
+      if (this.editUsernameVisible === false) {
         this.form.username = "";
       }
     },
     editEmail() {
       this.editEmailVisible = !this.editEmailVisible;
-      if(this.editEmailVisible === false) {
+      if (this.editEmailVisible === false) {
         this.form.email = "";
       }
     },
     editSex() {
       this.editSexVisible = !this.editSexVisible;
-      if(this.editSexVisible === false) {
+      if (this.editSexVisible === false) {
         this.form.sex = "";
       }
     },
     editBirthday() {
       this.editBirthdayVisible = !this.editBirthdayVisible;
-      if(this.editBirthdayVisible === false) {
+      if (this.editBirthdayVisible === false) {
         this.form.birthday = "";
       }
     },
     editDescription() {
       this.editDescriptionVisible = !this.editDescriptionVisible;
-      if(this.editDescriptionVisible === false) {
+      if (this.editDescriptionVisible === false) {
         this.form.description = "";
       }
     },
     editCompany() {
       this.editCompanyVisible = !this.editCompanyVisible;
-      if(this.editCompanyVisible === false) {
+      if (this.editCompanyVisible === false) {
         this.form.company = "";
       }
     },
     editPassword() {
       this.editPasswordVisible = !this.editPasswordVisible;
-      if(this.editPasswordVisible === false) {
+      if (this.editPasswordVisible === false) {
         this.form.originPassword = "";
         this.form.newPassword = "";
         this.form.comfirmNewPassword = "";
       }
     },
-  }
+  },
 };
 </script>
 <style>
