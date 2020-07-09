@@ -15,6 +15,11 @@
               >Articles</b-list-group-item
             >
             <b-list-group-item
+              :to="{ name: 'collect' }"
+              :class="activeClass('collect')"
+              >Collect</b-list-group-item
+            >
+            <b-list-group-item
               :to="{ name: 'account' }"
               :class="activeClass('account')"
               >Account</b-list-group-item
@@ -42,6 +47,10 @@ export default {
 <style>
 #admin {
   padding-top: 2rem;
+  background: -webkit-linear-gradient(LightSteelBlue, LightSalmon);
+  background: -o-linear-gradient(LightSteelBlue, LightSalmon);
+  background: -moz-linear-gradient(LightSteelBlue, LightSalmon);
+  background: linear-gradient(LightSteelBlue, LightSalmon);
 }
 #admin-router-view {
   padding-left: 2rem;

@@ -200,10 +200,14 @@ export default {
 </script>
 <style>
 #home {
+  background: -webkit-linear-gradient(LightSteelBlue, LightSalmon);
+  background: -o-linear-gradient(LightSteelBlue, LightSalmon);
+  background: -moz-linear-gradient(LightSteelBlue, LightSalmon);
+  background: linear-gradient(LightSteelBlue, LightSalmon);
 }
 #first-part {
   height: 50rem;
-  background: rgb(235, 152, 28);
+  /*background: rgb(235, 152, 28);*/
   text-align: center;
 }
 #first-part > .title {
@@ -217,9 +221,12 @@ export default {
 }
 #second-part {
   height: 30rem;
-  background: rgb(7, 176, 95);
+  /*background: rgb(7, 176, 95);*/
   display: flex;
   justify-content: space-between;
+}
+.title {
+  font-size: 3rem;
 }
 .descript {
   padding: 5rem;
@@ -250,14 +257,14 @@ export default {
 
 #third-part {
   height: 30rem;
-  background: rgb(7, 114, 176);
+  /*background: rgb(7, 114, 176);*/
   display: flex;
   justify-content: space-around;
 }
 
 #end-part {
   height: 20rem;
-  background: rgb(66, 66, 66);
+  /*background: rgb(66, 66, 66);*/
   color: white;
   padding: 1rem;
 }

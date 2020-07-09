@@ -9,6 +9,8 @@ import VeLine from 'v-charts/lib/line.common'
 
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
+import mavonEditor from 'mavon-editor'
+import 'mavon-editor/dist/css/index.css'
 
 // mockJS
 require('./mock/mock')
@@ -16,6 +18,7 @@ require('./mock/mock')
 Vue.use(BootstrapVue)
 Vue.use(BootstrapVueIcons)
 Vue.use(VueAxios, axios)
+Vue.use(mavonEditor)
 
 Vue.component(VeLine.name, VeLine)
 

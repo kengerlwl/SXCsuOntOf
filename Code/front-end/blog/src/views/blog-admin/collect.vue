@@ -1,12 +1,11 @@
 <template>
-  <div active>
-    <h1>Your Posts</h1>
+  <div>
+    <h1>Collect</h1>
     <hr class="my-4" />
-    <b-alert show>Note: 這裡管理你的 Blog 文章</b-alert>
+    <b-alert show>Note: 查看你的收藏 Blog 文章</b-alert>
     <div class="mb-4">
       <b-button-toolbar justify aria-label="post create and search">
         <b-button-group class="mr-4">
-          <b-button variant="success">Create New Post</b-button>
         </b-button-group>
         <b-button-group>
           <b-input-group>
@@ -52,7 +51,9 @@
           <template v-slot:header>
             <h4 class="mb-0">{{ item.id + item.title }}</h4>
           </template>
-          <b-card-sub-title>POST ON {{ item.postTime }}</b-card-sub-title>
+          <b-card-sub-title>
+            <b-icon-person-fill></b-icon-person-fill> {{ item.username }}
+          </b-card-sub-title>
           <b-badge
             class="mr-2"
             v-for="(tag, j) in item.tags"
@@ -68,14 +69,14 @@
             }}
           </b-card-text>
           <b-button href="#" variant="outline-info" class="mr-3">
-            <b-icon-brush></b-icon-brush> Edit
+            READ MORE
           </b-button>
           <b-button href="#" variant="danger">
             <b-icon-trash-fill></b-icon-trash-fill> Delete
           </b-button>
           <template v-slot:footer>
             <small class="text-muted">
-              <b-icon-clock></b-icon-clock> Last updated 3 mins ago
+              <b-icon-clock></b-icon-clock> COLLECTED ON {{ item.collectTime }}
             </small>
           </template>
         </b-card>
@@ -95,7 +96,8 @@ const items = [
   {
     id: 1,
     title: "Hello world",
-    postTime: "2019年7月19日 06:21",
+    username: "MMMMM",
+    collectTime: "2019年7月19日 06:21",
     descript:
       "Some quick example text to build on the card title and make up the bulk of the card/'s content.",
     tags: ["info", "Helllow", "linux", "GNU"],
@@ -103,7 +105,8 @@ const items = [
   {
     id: 2,
     title: "Hello world",
-    postTime: "2019年7月19日 06:21",
+    username: "MMMMM",
+    collectTime: "2019年7月19日 06:21",
     descript:
       "Some quick example text to build on the card title and make up the bulk of the card/'s content. wfowijeoifjwoeijfwoije",
     tags: ["info", "Helllow", "linux", "GNU"],
@@ -111,7 +114,8 @@ const items = [
   {
     id: 3,
     title: "Hello world",
-    postTime: "2019年7月19日 06:21",
+    username: "MMMMM",
+    collectTime: "2019年7月19日 06:21",
     descript:
       "Some quick example text to build on the card title and make up the bulk of the card/'s content.",
     tags: ["info", "Helllow", "linux", "GNU"],
@@ -119,7 +123,8 @@ const items = [
   {
     id: 4,
     title: "Hello world",
-    postTime: "2019年7月19日 06:21",
+    username: "MMMMM",
+    collectTime: "2019年7月19日 06:21",
     descript:
       "Some quick example text to build on the card title and make up the bulk of the card/'s content.",
     tags: ["info", "Helllow", "linux", "GNU"],
@@ -127,7 +132,8 @@ const items = [
   {
     id: 5,
     title: "Hello world",
-    postTime: "2019年7月19日 06:21",
+    username: "MMMMM",
+    collectTime: "2019年7月19日 06:21",
     descript:
       "Some quick example text to build on the card title and make up the bulk of the card/'s content.",
     tags: ["info", "Helllow", "linux", "GNU"],
@@ -135,7 +141,8 @@ const items = [
   {
     id: 6,
     title: "Hello world",
-    postTime: "2019年7月19日 06:21",
+    username: "MMMMM",
+    collectTime: "2019年7月19日 06:21",
     descript:
       "Some quick example text to build on the card title and make up the bulk of the card/'s content.",
     tags: ["info", "Helllow", "linux", "GNU"],
@@ -143,7 +150,8 @@ const items = [
   {
     id: 7,
     title: "Hello world",
-    postTime: "2019年7月19日 06:21",
+    username: "MMMMM",
+    collectTime: "2019年7月19日 06:21",
     descript:
       "Some quick example text to build on the card title and make up the bulk of the card/'s content.",
     tags: ["info", "Helllow", "linux", "GNU"],
@@ -151,7 +159,8 @@ const items = [
   {
     id: 8,
     title: "Hello world",
-    postTime: "2019年7月19日 06:21",
+    username: "MMMMM",
+    collectTime: "2019年7月19日 06:21",
     descript:
       "Some quick example text to build on the card title and make up the bulk of the card/'s content.",
     tags: ["info", "Helllow", "linux", "GNU"],
@@ -159,7 +168,8 @@ const items = [
   {
     id: 9,
     title: "Hello world",
-    postTime: "2019年7月19日 06:21",
+    username: "MMMMM",
+    collectTime: "2019年7月19日 06:21",
     descript:
       "Some quick example text to build on the card title and make up the bulk of the card/'s content.",
     tags: ["info", "Helllow", "linux", "GNU"],
@@ -167,7 +177,8 @@ const items = [
   {
     id: 10,
     title: "Hello world",
-    postTime: "2019年7月19日 06:21",
+    username: "MMMMM",
+    collectTime: "2019年7月19日 06:21",
     descript:
       "Some quick example text to build on the card title and make up the bulk of the card/'s content.",
     tags: ["info", "Helllow", "linux", "GNU"],
@@ -175,7 +186,8 @@ const items = [
   {
     id: 11,
     title: "Hello world",
-    postTime: "2019年7月19日 06:21",
+    username: "MMMMM",
+    collectTime: "2019年7月19日 06:21",
     descript:
       "Some quick example text to build on the card title and make up the bulk of the card/'s content.",
     tags: ["info", "Helllow", "linux", "GNU"],
@@ -183,7 +195,8 @@ const items = [
   {
     id: 12,
     title: "Hello world",
-    postTime: "2019年7月19日 06:21",
+    username: "MMMMM",
+    collectTime: "2019年7月19日 06:21",
     descript:
       "Some quick example text to build on the card title and make up the bulk of the card/'s content.",
     tags: ["info", "Helllow", "linux", "GNU"],
@@ -191,7 +204,8 @@ const items = [
   {
     id: 13,
     title: "Hello world",
-    postTime: "2019年7月19日 06:21",
+    username: "MMMMM",
+    collectTime: "2019年7月19日 06:21",
     descript:
       "Some quick example text to build on the card title and make up the bulk of the card/'s content.",
     tags: ["info", "Helllow", "linux", "GNU"],
@@ -199,7 +213,8 @@ const items = [
   {
     id: 14,
     title: "Hello world",
-    postTime: "2019年7月19日 06:21",
+    username: "MMMMM",
+    collectTime: "2019年7月19日 06:21",
     descript:
       "Some quick example text to build on the card title and make up the bulk of the card/'s content.",
     tags: ["info", "Helllow", "linux", "GNU"],
@@ -207,7 +222,8 @@ const items = [
   {
     id: 15,
     title: "Hello world",
-    postTime: "2019年7月19日 06:21",
+    username: "MMMMM",
+    collectTime: "2019年7月19日 06:21",
     descript:
       "Some quick example text to build on the card title and make up the bulk of the card/'s content.",
     tags: ["info", "Helllow", "linux", "GNU"],
@@ -215,7 +231,8 @@ const items = [
   {
     id: 16,
     title: "Hello world",
-    postTime: "2019年7月19日 06:21",
+    username: "MMMMM",
+    collectTime: "2019年7月19日 06:21",
     descript:
       "Some quick example text to build on the card title and make up the bulk of the card/'s content.",
     tags: ["info", "Helllow", "linux", "GNU"],
@@ -223,7 +240,8 @@ const items = [
   {
     id: 17,
     title: "Hello world",
-    postTime: "2019年7月19日 06:21",
+    username: "MMMMM",
+    collectTime: "2019年7月19日 06:21",
     descript:
       "Some quick example text to build on the card title and make up the bulk of the card/'s content.",
     tags: ["info", "Helllow", "linux", "GNU"],
@@ -232,13 +250,14 @@ const items = [
 export default {
   data() {
     return {
-      currentPage: 1,
+
+        currentPage: 1,
       perPage: 6,
       totalRows: items.length,
       paginated_items: {},
       currentPageIndex: 0,
       nbPages: 0,
-      posts: items,
+      collectBlog: items,
       tags: [
         "Hello",
         "linux",
@@ -259,10 +278,10 @@ export default {
       return Math.floor(l / s);
     },
     currentPageItems() {
-      let lengthAll = this.posts.length;
+      let lengthAll = this.collectBlog.length;
       this.nbPages = 0;
       for (let i = 0; i < lengthAll; i = i + this.perPage) {
-        this.paginated_items[this.nbPages] = this.posts.slice(
+        this.paginated_items[this.nbPages] = this.collectBlog.slice(
           i,
           i + this.perPage
         );
