@@ -224,6 +224,8 @@ export default {
   /*background: rgb(7, 176, 95);*/
   display: flex;
   justify-content: space-between;
+  padding-right: 3rem;
+  padding-left: 3rem;
 }
 .title {
   font-size: 3rem;
@@ -244,7 +246,7 @@ export default {
 }
 
 .vue-typer {
-  font-size: 3rem;
+  font-size: 2.5rem;
 }
 
 .vue-typer .custom.char.typed {
@@ -260,6 +262,8 @@ export default {
   /*background: rgb(7, 114, 176);*/
   display: flex;
   justify-content: space-around;
+  padding-right: 3rem;
+  padding-left: 3rem;
 }
 
 #end-part {
