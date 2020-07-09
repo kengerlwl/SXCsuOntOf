@@ -1,4 +1,4 @@
-package com.sx.sxblog;
+package com.sx.sxblog.Service;
 
 import com.sx.sxblog.entity.Blog;
 import com.sx.sxblog.service.impl.BlogServiceImpl;
@@ -8,7 +8,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.annotation.Resource;
-import java.util.Date;
 import java.util.List;
 
 @RunWith(SpringRunner.class)
@@ -26,7 +25,7 @@ public class BlogServiceTest {
     @Test
     public void getBlogById()
     {
-        Blog blog = blogService.getBlogById("1000000");
+        Blog blog = blogService.getBlogById(1000000);
         System.out.println(blog);
     }
 
@@ -49,18 +48,18 @@ public class BlogServiceTest {
         System.out.println(result);
     }
 
-//    @Test
-//    public void updateBlog()
-//    {
-//        Blog blog=new Blog();
-//        blog.setBlogId(1000001);
-//        blog.setUserId(10002);
-//        blog.setBlogContent("this is a markdown2333");
-//        blog.setBlogName("title222");
-//
-//        Integer result = blogService.updateBlog(blog);
-//        System.out.println(result);
-//    }
+    @Test
+    public void updateBlog()
+    {
+        Blog blog=new Blog();
+        blog.setBlogId(1000001);
+        blog.setUserId(10002);
+        blog.setBlogContent("this is a markdown2333");
+        blog.setBlogName("title222");
+
+        Integer result = blogService.updateBlog(blog);
+        System.out.println(result);
+    }
 
 
 }

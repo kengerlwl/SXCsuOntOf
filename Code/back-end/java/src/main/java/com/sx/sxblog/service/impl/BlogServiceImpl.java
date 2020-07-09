@@ -32,16 +32,13 @@ public class BlogServiceImpl extends ServiceImpl<BlogMapper, Blog> implements IB
 
     @Override
     public int deleteBlog(int blog_id) {
-//        Map<String,Object> columnMap = new HashMap<>();
-//        columnMap.put("blogId",blog_id);
-//        return blogMapper.deleteByMap(columnMap);
         return blogMapper.deleteById(blog_id);
     }
 
     @Override
     public int updateBlog(Blog blog) {
         return blogMapper.update(blog, new QueryWrapper<Blog>()
-        .eq("blogId",blog.getBlogId())
+        .eq("blog_Id",blog.getBlogId())
         );
     }
 
@@ -51,7 +48,7 @@ public class BlogServiceImpl extends ServiceImpl<BlogMapper, Blog> implements IB
     }
 
     @Override
-    public Blog getBlogById(String blog_id) {
+    public Blog getBlogById(int blog_id) {
         return blogMapper.selectById(blog_id);
     }
 }

@@ -1,9 +1,14 @@
 package com.sx.sxblog.controller;
 
 
-import org.springframework.web.bind.annotation.RequestMapping;
+import com.alibaba.fastjson.JSONObject;
+import com.sx.sxblog.common.ReturnEntity;
+import com.sx.sxblog.entity.Comment;
+import com.sx.sxblog.service.impl.CommentServiceImpl;
+import org.springframework.web.bind.annotation.*;
 
-import org.springframework.web.bind.annotation.RestController;
+import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * <p>
@@ -14,7 +19,39 @@ import org.springframework.web.bind.annotation.RestController;
  * @since 2020-07-08
  */
 @RestController
-@RequestMapping("/sxblog/comment")
 public class CommentController {
+    @Resource
+    private CommentServiceImpl commentService;
+
+    @RequestMapping(value = "/getCommentList",method = RequestMethod.GET)
+    @ResponseBody
+    public ReturnEntity getCommentList(){
+        JSONObject data = new JSONObject();
+        List<Comment> commentList = commentService.getCommentList();
+        data.put("commentList",commentList);
+        return ReturnEntity.successResult(data);
+    }
+
+    @RequestMapping(value = "/insertComment",method = RequestMethod.POST)
+    @ResponseBody
+    public ReturnEntity insertComment(@RequestBody Comment comment){
+        JSONObject data = new JSONObject();
+        int result = commentService.insertComment(comment);
+        data.put("result",result);
+        System.out.println(data);
+        return ReturnEntity.successResult(data);
+    }
+
+    @RequestMapping(value = "/deleteComment",method = RequestMethod.POST)
+    @ResponseBody
+    public ReturnEntity deleteComment(@RequestBody Comment comment){
+        JSONObject data = new JSONObject();
+        int result = commentService.deleteComment(comment.getCommentId());
+        data.put("result",result);
+        return ReturnEntity.successResult(data);
+    }
+
+
+
 
 }
