@@ -31,10 +31,11 @@ public class BlogServiceImpl extends ServiceImpl<BlogMapper, Blog> implements IB
     }
 
     @Override
-    public int deleteBlog(Blog blog_id) {
-        Map<String,Object> columnMap = new HashMap<>();
-        columnMap.put("blogId",blog_id);
-        return blogMapper.deleteByMap(columnMap);
+    public int deleteBlog(int blog_id) {
+//        Map<String,Object> columnMap = new HashMap<>();
+//        columnMap.put("blogId",blog_id);
+//        return blogMapper.deleteByMap(columnMap);
+        return blogMapper.deleteById(blog_id);
     }
 
     @Override
