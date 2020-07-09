@@ -74,7 +74,7 @@
                     : item.descript
                 }}
               </b-card-text>
-              <b-button href="#" variant="outline-info" class="mr-3">
+              <b-button to="read" variant="outline-info" class="mr-3">
                 READ MORE
               </b-button>
               <template v-slot:footer>

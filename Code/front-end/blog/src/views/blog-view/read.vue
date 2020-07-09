@@ -1,22 +1,23 @@
 <template>
   <div>
     <div>
-      <div id="top-bg"></div>
-      <div id="top-avatar">
+      <div id="read-top-bg"></div>
+      <div id="read-top-avatar">
         <b-avatar
           size="15em"
           src="https://avatars1.githubusercontent.com/u/48636976?s=460&u=6fc910ffe23ff8ff7ffc210d49ca81fdec486f9f&v=4"
         ></b-avatar>
-        <span id="username">Username</span>
+        <span id="read-username">Username</span>
       </div>
     </div>
     <div id="markdown-content">
       <b-container>
         <b-navbar type="light" variant="light">
-        <b-navbar-brand @click="goBack" v-b-tooltip.hover title="Back"
-          ><b-icon-arrow-left-circle-fill></b-icon-arrow-left-circle-fill
-        > Back</b-navbar-brand>
-      </b-navbar>
+          <b-navbar-brand @click="goBack" v-b-tooltip.hover title="Back"
+            ><b-icon-arrow-left-circle-fill></b-icon-arrow-left-circle-fill>
+            Back</b-navbar-brand
+          >
+        </b-navbar>
         <div class="box-shadow">
           <h1>{{ blog.title }}</h1>
           <div class="subheader p-1 mb-1">POST ON {{ blog.postTime }}</div>
@@ -35,8 +36,80 @@
 
           <markdown-it-vue :content="blog.content" />
         </div>
-        <div id="comments">
-            
+        <div id="comments" class="mt-4">
+          <h2>Comments</h2>
+          <hr class="my-4" />
+          <b-row class="mt-2">
+            <b-col cols="1">
+              <b-avatar
+                size="64"
+                src="https://avatars1.githubusercontent.com/u/48636976?s=460&u=6fc910ffe23ff8ff7ffc210d49ca81fdec486f9f&v=4"
+              ></b-avatar>
+            </b-col>
+            <b-col>
+              <b-form-textarea
+                id="textarea-default"
+                placeholder="Default textarea"
+              ></b-form-textarea>
+            </b-col>
+          </b-row>
+          <div class="mt-2 send-btn">
+            <b-button variant="success">Send</b-button>
+          </div>
+          <div>
+            <b-row class="mt-2">
+              <b-col cols="1">
+                <b-avatar
+                  size="64"
+                  src="https://avatars1.githubusercontent.com/u/48636976?s=460&u=6fc910ffe23ff8ff7ffc210d49ca81fdec486f9f&v=4"
+                ></b-avatar>
+              </b-col>
+              <b-col>
+                <div>
+                  username
+                </div>
+                <div class="mb-1">
+                  如果上天没有给你想要的，不是你值得拥有更好的，而是你不配。别以为今天是你人生的低谷，在你未来的日子里它都能算得上是巅峰了。见到长辈时，不是我们不想叫他，而是压根就不知道叫他什么。
+                </div>
+                <div>
+                  2020-01-01 00:00
+                </div>
+                <div>
+                  <b-button size="sm" variant="primary" class="mr-2"
+                    >Edit</b-button
+                  >
+                  <b-button size="sm" variant="danger">Delete</b-button>
+                </div>
+              </b-col>
+            </b-row>
+          </div>
+          <div>
+            <b-row class="mt-2">
+              <b-col cols="1">
+                <b-avatar
+                  size="64"
+                  src="https://avatars1.githubusercontent.com/u/48636976?s=460&u=6fc910ffe23ff8ff7ffc210d49ca81fdec486f9f&v=4"
+                ></b-avatar>
+              </b-col>
+              <b-col>
+                <div>
+                  username
+                </div>
+                <div class="mb-1">
+                  如果上天没有给你想要的，不是你值得拥有更好的，而是你不配。别以为今天是你人生的低谷，在你未来的日子里它都能算得上是巅峰了。见到长辈时，不是我们不想叫他，而是压根就不知道叫他什么。
+                </div>
+                <div>
+                  2020-01-01 00:00
+                </div>
+                <div>
+                  <b-button size="sm" variant="primary" class="mr-2"
+                    >Edit</b-button
+                  >
+                  <b-button size="sm" variant="danger">Delete</b-button>
+                </div>
+              </b-col>
+            </b-row>
+          </div>
         </div>
       </b-container>
     </div>
@@ -69,10 +142,7 @@ export default {
 };
 </script>
 <style>
-#blog_home {
-  height: 100vh;
-}
-#top-bg {
+#read-top-bg {
   width: 100%;
   height: 20vh;
   background: url("../../assets/top_bg.jpg") no-repeat fixed center center/cover;
@@ -81,13 +151,13 @@ export default {
   color: white;
   text-shadow: black 0.1em 0.1em 0.2em;
 }
-#top-avatar {
+#read-top-avatar {
   position: relative;
   top: -9em;
   left: 4em;
   display: inline-block;
 }
-#username {
+#read-username {
   font-size: 3em;
   padding-left: 1em;
 }
@@ -98,5 +168,9 @@ export default {
 .box-shadow {
   box-shadow: 0px 0px 9px rgb(200, 200, 200);
   padding: 1.5em;
+}
+.send-btn {
+  display: flex;
+  justify-content: flex-end;
 }
 </style>
