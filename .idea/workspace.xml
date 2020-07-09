@@ -19,13 +19,31 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="323a1024-94c9-45a1-bad7-430a7e716367" name="Default Changelist" comment="解决了日志、测试service异常的问题">
-      <changelist_data name="Huang Po-Hsun" email="fh831.cp9gw@gmail.com" />
+    <list default="true" id="323a1024-94c9-45a1-bad7-430a7e716367" name="Default Changelist" comment="更新 README.md &amp; 工作進度">
+      <change afterPath="$PROJECT_DIR$/Code/back-end/java/src/test/java/com/sx/sxblog/Service/CollectServiceTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Code/back-end/java/src/test/java/com/sx/sxblog/Service/CommentServiceTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Code/back-end/java/src/test/java/com/sx/sxblog/Service/TagServiceTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Code/back-end/java/src/test/java/com/sx/sxblog/controller/BlogControllerTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Code/back-end/java/src/test/java/com/sx/sxblog/controller/CollectControllerTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Code/back-end/java/src/test/java/com/sx/sxblog/controller/CommentControllerTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Code/back-end/java/src/test/java/com/sx/sxblog/controller/TagControllerTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Code/back-end/java/src/main/java/com/sx/sxblog/controller/BlogController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Code/back-end/java/src/main/java/com/sx/sxblog/controller/BlogController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Code/back-end/java/src/main/java/com/sx/sxblog/controller/CollectController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Code/back-end/java/src/main/java/com/sx/sxblog/controller/CollectController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Code/back-end/java/src/main/java/com/sx/sxblog/controller/CommentController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Code/back-end/java/src/main/java/com/sx/sxblog/controller/CommentController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Code/back-end/java/src/main/java/com/sx/sxblog/controller/TagController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Code/back-end/java/src/main/java/com/sx/sxblog/controller/TagController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Code/back-end/java/src/main/java/com/sx/sxblog/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Code/back-end/java/src/main/java/com/sx/sxblog/controller/UserController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Code/back-end/java/src/main/java/com/sx/sxblog/service/IBlogService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Code/back-end/java/src/main/java/com/sx/sxblog/service/IBlogService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Code/back-end/java/src/main/java/com/sx/sxblog/service/ICollectService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Code/back-end/java/src/main/java/com/sx/sxblog/service/ICollectService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Code/back-end/java/src/main/java/com/sx/sxblog/service/ICommentService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Code/back-end/java/src/main/java/com/sx/sxblog/service/ICommentService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Code/back-end/java/src/main/java/com/sx/sxblog/service/ITagService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Code/back-end/java/src/main/java/com/sx/sxblog/service/ITagService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Code/back-end/java/src/main/java/com/sx/sxblog/service/impl/BlogServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/Code/back-end/java/src/main/java/com/sx/sxblog/service/impl/BlogServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/back-end/java/src/test/java/com/sx/sxblog/BlogServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Code/back-end/java/src/test/java/com/sx/sxblog/BlogServiceTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/工作进度-2020.7.8.md" beforeDir="false" afterPath="$PROJECT_DIR$/工作进度-2020.7.8.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Code/back-end/java/src/main/java/com/sx/sxblog/service/impl/CollectServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/Code/back-end/java/src/main/java/com/sx/sxblog/service/impl/CollectServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Code/back-end/java/src/main/java/com/sx/sxblog/service/impl/CommentServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/Code/back-end/java/src/main/java/com/sx/sxblog/service/impl/CommentServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Code/back-end/java/src/main/java/com/sx/sxblog/service/impl/TagServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/Code/back-end/java/src/main/java/com/sx/sxblog/service/impl/TagServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Code/back-end/java/src/test/java/com/sx/Tests.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Code/back-end/java/src/test/java/com/sx/sxblog/BlogServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Code/back-end/java/src/test/java/com/sx/sxblog/Service/BlogServiceTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/工作进度-2020.7.9.md" beforeDir="false" afterPath="$PROJECT_DIR$/工作进度-2020.7.9.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -40,6 +58,11 @@
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="PREVIOUS_COMMIT_AUTHORS">
+      <list>
+        <option value="Huang Po-Hsun &lt;fh831.cp9gw@gmail.com&gt;" />
+      </list>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="MavenImportPreferences">
@@ -88,86 +111,87 @@
       <recent name="$PROJECT_DIR$/Code/back-end/java/src/main/resources" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/Code/back-end/java/src/main/java/com/sx/sxblog/service/impl" />
       <recent name="$PROJECT_DIR$/Code/back-end/java/src/main/resources" />
       <recent name="$PROJECT_DIR$/Code/back-end/java" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.BlogServiceTest.updateBlog">
-    <configuration name="BlogServiceTest.deleteBlog" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="Spring Boot.DemoApplication">
+    <configuration name="TagControllerTest.deleteTag" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="sxblog" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="com.sx.sxblog.*" />
+          <option name="PATTERN" value="com.sx.sxblog.controller.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="com.sx.sxblog" />
-      <option name="MAIN_CLASS_NAME" value="com.sx.sxblog.BlogServiceTest" />
-      <option name="METHOD_NAME" value="deleteBlog" />
+      <option name="PACKAGE_NAME" value="com.sx.sxblog.controller" />
+      <option name="MAIN_CLASS_NAME" value="com.sx.sxblog.controller.TagControllerTest" />
+      <option name="METHOD_NAME" value="deleteTag" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="BlogServiceTest.getBlogById" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="TagControllerTest.getTagById" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="sxblog" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="com.sx.sxblog.*" />
+          <option name="PATTERN" value="com.sx.sxblog.controller.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="com.sx.sxblog" />
-      <option name="MAIN_CLASS_NAME" value="com.sx.sxblog.BlogServiceTest" />
-      <option name="METHOD_NAME" value="getBlogById" />
+      <option name="PACKAGE_NAME" value="com.sx.sxblog.controller" />
+      <option name="MAIN_CLASS_NAME" value="com.sx.sxblog.controller.TagControllerTest" />
+      <option name="METHOD_NAME" value="getTagById" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="BlogServiceTest.getBlogsList" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="TagControllerTest.getTagList" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="sxblog" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="com.sx.sxblog.*" />
+          <option name="PATTERN" value="com.sx.sxblog.controller.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="com.sx.sxblog" />
-      <option name="MAIN_CLASS_NAME" value="com.sx.sxblog.BlogServiceTest" />
-      <option name="METHOD_NAME" value="getBlogsList" />
+      <option name="PACKAGE_NAME" value="com.sx.sxblog.controller" />
+      <option name="MAIN_CLASS_NAME" value="com.sx.sxblog.controller.TagControllerTest" />
+      <option name="METHOD_NAME" value="getTagList" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="BlogServiceTest.insertBlog" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="TagControllerTest.insertTag" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="sxblog" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="com.sx.sxblog.*" />
+          <option name="PATTERN" value="com.sx.sxblog.controller.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="com.sx.sxblog" />
-      <option name="MAIN_CLASS_NAME" value="com.sx.sxblog.BlogServiceTest" />
-      <option name="METHOD_NAME" value="insertBlog" />
+      <option name="PACKAGE_NAME" value="com.sx.sxblog.controller" />
+      <option name="MAIN_CLASS_NAME" value="com.sx.sxblog.controller.TagControllerTest" />
+      <option name="METHOD_NAME" value="insertTag" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="BlogServiceTest.updateBlog" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="TagControllerTest.updateTag" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="sxblog" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="com.sx.sxblog.*" />
+          <option name="PATTERN" value="com.sx.sxblog.controller.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="com.sx.sxblog" />
-      <option name="MAIN_CLASS_NAME" value="com.sx.sxblog.BlogServiceTest" />
-      <option name="METHOD_NAME" value="updateBlog" />
+      <option name="PACKAGE_NAME" value="com.sx.sxblog.controller" />
+      <option name="MAIN_CLASS_NAME" value="com.sx.sxblog.controller.TagControllerTest" />
+      <option name="METHOD_NAME" value="updateTag" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -247,19 +271,19 @@
     <list>
       <item itemvalue="Spring Boot.DemoApplication" />
       <item itemvalue="Tomcat Server.Tomcat" />
-      <item itemvalue="JUnit.BlogServiceTest.getBlogsList" />
-      <item itemvalue="JUnit.BlogServiceTest.getBlogById" />
-      <item itemvalue="JUnit.BlogServiceTest.insertBlog" />
-      <item itemvalue="JUnit.BlogServiceTest.deleteBlog" />
-      <item itemvalue="JUnit.BlogServiceTest.updateBlog" />
+      <item itemvalue="JUnit.TagControllerTest.getTagList" />
+      <item itemvalue="JUnit.TagControllerTest.getTagById" />
+      <item itemvalue="JUnit.TagControllerTest.insertTag" />
+      <item itemvalue="JUnit.TagControllerTest.updateTag" />
+      <item itemvalue="JUnit.TagControllerTest.deleteTag" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.BlogServiceTest.updateBlog" />
-        <item itemvalue="JUnit.BlogServiceTest.insertBlog" />
-        <item itemvalue="JUnit.BlogServiceTest.deleteBlog" />
-        <item itemvalue="JUnit.BlogServiceTest.getBlogById" />
-        <item itemvalue="JUnit.BlogServiceTest.getBlogsList" />
+        <item itemvalue="JUnit.TagControllerTest.deleteTag" />
+        <item itemvalue="JUnit.TagControllerTest.updateTag" />
+        <item itemvalue="JUnit.TagControllerTest.insertTag" />
+        <item itemvalue="JUnit.TagControllerTest.getTagById" />
+        <item itemvalue="JUnit.TagControllerTest.getTagList" />
       </list>
     </recent_temporary>
   </component>
@@ -278,7 +302,7 @@
       <workItem from="1594137457793" duration="349000" />
       <workItem from="1594137873708" duration="13963000" />
       <workItem from="1594190731365" duration="4899000" />
-      <workItem from="1594211886199" duration="10269000" />
+      <workItem from="1594211886199" duration="31617000" />
     </task>
     <task id="LOCAL-00001" summary="lgx init.">
       <created>1594021802225</created>
@@ -336,7 +360,14 @@
       <option name="project" value="LOCAL" />
       <updated>1594219018683</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="更新 README.md &amp; 工作進度">
+      <created>1594230597936</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1594230597936</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -362,17 +393,18 @@
     <MESSAGE value="有些小问题，增加了日志" />
     <MESSAGE value="解决了日志、测试service异常的问题" />
     <MESSAGE value="测试增删查Blog" />
-    <option name="LAST_COMMIT_MESSAGE" value="测试增删查Blog" />
+    <MESSAGE value="更新 README.md &amp; 工作進度" />
+    <option name="LAST_COMMIT_MESSAGE" value="更新 README.md &amp; 工作進度" />
   </component>
   <component name="WindowStateProjectService">
     <state x="496" y="237" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1594217745017">
       <screen x="0" y="23" width="1792" height="1097" />
     </state>
     <state x="496" y="237" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.23.1792.1097@0.23.1792.1097" timestamp="1594217745017" />
-    <state x="709" y="285" key="#com.intellij.ide.util.MemberChooser" timestamp="1594189018102">
+    <state x="709" y="285" key="#com.intellij.ide.util.MemberChooser" timestamp="1594281218700">
       <screen x="0" y="23" width="1792" height="1097" />
     </state>
-    <state x="709" y="285" key="#com.intellij.ide.util.MemberChooser/0.23.1792.1097@0.23.1792.1097" timestamp="1594189018102" />
+    <state x="709" y="285" key="#com.intellij.ide.util.MemberChooser/0.23.1792.1097@0.23.1792.1097" timestamp="1594281218700" />
     <state x="769" y="372" key="#com.intellij.ide.util.TreeClassChooserDialog" timestamp="1594139186061">
       <screen x="0" y="23" width="1792" height="1097" />
     </state>
@@ -389,54 +421,54 @@
       <screen x="0" y="23" width="1792" height="1097" />
     </state>
     <state x="666" y="460" key="#com.intellij.refactoring.move.moveClassesOrPackages.MoveClassesOrPackagesDialog.packages/0.23.1792.1097@0.23.1792.1097" timestamp="1594135142638" />
-    <state width="1750" height="305" key="GridCell.Tab.0.bottom" timestamp="1594230338501">
+    <state width="1750" height="300" key="GridCell.Tab.0.bottom" timestamp="1594300234001">
       <screen x="0" y="23" width="1792" height="1097" />
     </state>
     <state width="1750" height="521" key="GridCell.Tab.0.bottom/0.0.1792.1120@0.0.1792.1120" timestamp="1594213241058" />
-    <state width="1750" height="305" key="GridCell.Tab.0.bottom/0.23.1792.1097@0.23.1792.1097" timestamp="1594230338501" />
+    <state width="1750" height="300" key="GridCell.Tab.0.bottom/0.23.1792.1097@0.23.1792.1097" timestamp="1594300234001" />
     <state width="1750" height="237" key="GridCell.Tab.0.bottom/1792.0.2560.1440/0.23.1792.1097@0.23.1792.1097" timestamp="1594028130030" />
     <state width="2518" height="416" key="GridCell.Tab.0.bottom/1792.0.2560.1440/0.23.1792.1097@1792.0.2560.1440" timestamp="1594028067245" />
-    <state width="1750" height="305" key="GridCell.Tab.0.center" timestamp="1594230338500">
+    <state width="1750" height="300" key="GridCell.Tab.0.center" timestamp="1594300234000">
       <screen x="0" y="23" width="1792" height="1097" />
     </state>
     <state width="1750" height="521" key="GridCell.Tab.0.center/0.0.1792.1120@0.0.1792.1120" timestamp="1594213241057" />
-    <state width="1750" height="305" key="GridCell.Tab.0.center/0.23.1792.1097@0.23.1792.1097" timestamp="1594230338500" />
+    <state width="1750" height="300" key="GridCell.Tab.0.center/0.23.1792.1097@0.23.1792.1097" timestamp="1594300234000" />
     <state width="1750" height="237" key="GridCell.Tab.0.center/1792.0.2560.1440/0.23.1792.1097@0.23.1792.1097" timestamp="1594028130029" />
     <state width="2518" height="416" key="GridCell.Tab.0.center/1792.0.2560.1440/0.23.1792.1097@1792.0.2560.1440" timestamp="1594028067243" />
-    <state width="1750" height="305" key="GridCell.Tab.0.left" timestamp="1594230338499">
+    <state width="1750" height="300" key="GridCell.Tab.0.left" timestamp="1594300234000">
       <screen x="0" y="23" width="1792" height="1097" />
     </state>
     <state width="1750" height="521" key="GridCell.Tab.0.left/0.0.1792.1120@0.0.1792.1120" timestamp="1594213241057" />
-    <state width="1750" height="305" key="GridCell.Tab.0.left/0.23.1792.1097@0.23.1792.1097" timestamp="1594230338499" />
+    <state width="1750" height="300" key="GridCell.Tab.0.left/0.23.1792.1097@0.23.1792.1097" timestamp="1594300234000" />
     <state width="1750" height="237" key="GridCell.Tab.0.left/1792.0.2560.1440/0.23.1792.1097@0.23.1792.1097" timestamp="1594028130028" />
     <state width="2518" height="416" key="GridCell.Tab.0.left/1792.0.2560.1440/0.23.1792.1097@1792.0.2560.1440" timestamp="1594028067242" />
-    <state width="1750" height="305" key="GridCell.Tab.0.right" timestamp="1594230338500">
+    <state width="1750" height="300" key="GridCell.Tab.0.right" timestamp="1594300234001">
       <screen x="0" y="23" width="1792" height="1097" />
     </state>
     <state width="1750" height="521" key="GridCell.Tab.0.right/0.0.1792.1120@0.0.1792.1120" timestamp="1594213241058" />
-    <state width="1750" height="305" key="GridCell.Tab.0.right/0.23.1792.1097@0.23.1792.1097" timestamp="1594230338500" />
+    <state width="1750" height="300" key="GridCell.Tab.0.right/0.23.1792.1097@0.23.1792.1097" timestamp="1594300234001" />
     <state width="1750" height="237" key="GridCell.Tab.0.right/1792.0.2560.1440/0.23.1792.1097@0.23.1792.1097" timestamp="1594028130029" />
     <state width="2518" height="416" key="GridCell.Tab.0.right/1792.0.2560.1440/0.23.1792.1097@1792.0.2560.1440" timestamp="1594028067244" />
-    <state width="1750" height="427" key="GridCell.Tab.1.bottom" timestamp="1594218726591">
+    <state width="1750" height="300" key="GridCell.Tab.1.bottom" timestamp="1594300202716">
       <screen x="0" y="23" width="1792" height="1097" />
     </state>
     <state width="1750" height="521" key="GridCell.Tab.1.bottom/0.0.1792.1120@0.0.1792.1120" timestamp="1594213241060" />
-    <state width="1750" height="427" key="GridCell.Tab.1.bottom/0.23.1792.1097@0.23.1792.1097" timestamp="1594218726591" />
-    <state width="1750" height="427" key="GridCell.Tab.1.center" timestamp="1594218726591">
+    <state width="1750" height="300" key="GridCell.Tab.1.bottom/0.23.1792.1097@0.23.1792.1097" timestamp="1594300202716" />
+    <state width="1750" height="300" key="GridCell.Tab.1.center" timestamp="1594300202715">
       <screen x="0" y="23" width="1792" height="1097" />
     </state>
     <state width="1750" height="521" key="GridCell.Tab.1.center/0.0.1792.1120@0.0.1792.1120" timestamp="1594213241059" />
-    <state width="1750" height="427" key="GridCell.Tab.1.center/0.23.1792.1097@0.23.1792.1097" timestamp="1594218726591" />
-    <state width="1750" height="427" key="GridCell.Tab.1.left" timestamp="1594218726590">
+    <state width="1750" height="300" key="GridCell.Tab.1.center/0.23.1792.1097@0.23.1792.1097" timestamp="1594300202715" />
+    <state width="1750" height="300" key="GridCell.Tab.1.left" timestamp="1594300202715">
       <screen x="0" y="23" width="1792" height="1097" />
     </state>
     <state width="1750" height="521" key="GridCell.Tab.1.left/0.0.1792.1120@0.0.1792.1120" timestamp="1594213241059" />
-    <state width="1750" height="427" key="GridCell.Tab.1.left/0.23.1792.1097@0.23.1792.1097" timestamp="1594218726590" />
-    <state width="1750" height="427" key="GridCell.Tab.1.right" timestamp="1594218726591">
+    <state width="1750" height="300" key="GridCell.Tab.1.left/0.23.1792.1097@0.23.1792.1097" timestamp="1594300202715" />
+    <state width="1750" height="300" key="GridCell.Tab.1.right" timestamp="1594300202716">
       <screen x="0" y="23" width="1792" height="1097" />
     </state>
     <state width="1750" height="521" key="GridCell.Tab.1.right/0.0.1792.1120@0.0.1792.1120" timestamp="1594213241060" />
-    <state width="1750" height="427" key="GridCell.Tab.1.right/0.23.1792.1097@0.23.1792.1097" timestamp="1594218726591" />
+    <state width="1750" height="300" key="GridCell.Tab.1.right/0.23.1792.1097@0.23.1792.1097" timestamp="1594300202716" />
     <state x="784" y="445" key="MultipleFileMergeDialog" timestamp="1594208510525">
       <screen x="0" y="23" width="1792" height="1097" />
     </state>
@@ -453,15 +485,15 @@
       <screen x="0" y="23" width="1792" height="1097" />
     </state>
     <state x="397" y="210" key="SettingsEditor/0.23.1792.1097@0.23.1792.1097" timestamp="1594176636926" />
-    <state x="496" y="311" key="Vcs.Push.Dialog.v2" timestamp="1594219030985">
+    <state x="496" y="311" key="Vcs.Push.Dialog.v2" timestamp="1594230611148">
       <screen x="0" y="23" width="1792" height="1097" />
     </state>
-    <state x="496" y="311" key="Vcs.Push.Dialog.v2/0.23.1792.1097@0.23.1792.1097" timestamp="1594219030985" />
+    <state x="496" y="311" key="Vcs.Push.Dialog.v2/0.23.1792.1097@0.23.1792.1097" timestamp="1594230611148" />
     <state x="496" y="311" key="Vcs.Push.Dialog.v2/1792.0.2560.1440/0.23.1792.1097@0.23.1792.1097" timestamp="1594028833478" />
-    <state x="684" y="492" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1594137883508">
+    <state x="684" y="492" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1594300342497">
       <screen x="0" y="23" width="1792" height="1097" />
     </state>
-    <state x="684" y="492" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.23.1792.1097@0.23.1792.1097" timestamp="1594137883508" />
+    <state x="684" y="492" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.23.1792.1097@0.23.1792.1097" timestamp="1594300342497" />
     <state x="571" y="367" key="git4idea.merge.GitPullDialog" timestamp="1594226886988">
       <screen x="0" y="23" width="1792" height="1097" />
     </state>
