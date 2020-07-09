@@ -109,12 +109,18 @@ const routes = [{
         name: 'user_blog_home',
         component: () =>
             import ( /* webpackChunkName: "user_blog_home" */ '../views/blog-view/home.vue'),
-        children: [{
-            path: '/:id/blog/read',
-            name: 'user_blog_read',
-            component: () =>
-                import ( /* webpackChunkName: "user_blog_read" */ '../views/blog-view/read.vue'),
-        }]
+    },
+    {
+        path: '/:id/blog/read',
+        name: 'user_blog_read',
+        component: () =>
+            import ( /* webpackChunkName: "user_blog_read" */ '../views/blog-view/read.vue'),
+    },
+    {
+        path: '/:id/blog/about',
+        name: 'user_blog_about',
+        component: () =>
+            import ( /* webpackChunkName: "user_blog_about" */ '../views/blog-view/about.vue'),
     },
     {
         path: '/news',

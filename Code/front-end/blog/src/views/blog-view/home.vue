@@ -9,9 +9,7 @@
           size="15em"
           src="https://avatars1.githubusercontent.com/u/48636976?s=460&u=6fc910ffe23ff8ff7ffc210d49ca81fdec486f9f&v=4"
         ></b-avatar>
-      </div>
-      <div id="top-username">
-        <h1>Username</h1>
+        <span id="username">Username</span>
       </div>
     </div>
     <div id="blog-list">
@@ -307,18 +305,18 @@ export default {
   position: relative;
   top: -9em;
   left: 4em;
+  display: inline-block;
 }
-#top-username {
-  position: relative;
-  top: -18em;
-  left: 20em;
+#username {
+  font-size: 3em;
+  padding-left: 1em;
 }
 #top-desc {
   padding-top: 5em;
 }
 #blog-list {
   position: relative;
-  top: -14em;
+  top: -13em;
 }
 .post-card {
   box-shadow: 0px 0px 9px rgb(200, 200, 200);
