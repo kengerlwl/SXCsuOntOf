@@ -33,11 +33,25 @@
   </div>
 </template>
 <script>
+// import VueX
+import { mapState, mapMutations } from "vuex";
+
 export default {
   data() {
     return {
       email: "",
     };
+  },
+  computed: {
+    // get data from vuex
+    ...mapState({
+      baseURL: (state) => {
+        return state.api.baseURL;
+      },
+      forgotPasswordURL: (state) => {
+        return state.api.forgotPasswordURL;
+      },
+    }),
   },
 };
 </script>

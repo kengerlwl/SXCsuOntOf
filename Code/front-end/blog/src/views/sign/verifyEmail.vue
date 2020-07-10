@@ -22,11 +22,25 @@
   </div>
 </template>
 <script>
+// import VueX
+import { mapState, mapMutations } from "vuex";
+
 export default {
   data() {
     return {
       captcha: "",
     };
+  },
+  computed: {
+    // get data from vuex
+    ...mapState({
+      baseURL: (state) => {
+        return state.api.baseURL;
+      },
+      verifyEmailURL: (state) => {
+        return state.api.verifyEmailURL;
+      },
+    }),
   },
 };
 </script>
