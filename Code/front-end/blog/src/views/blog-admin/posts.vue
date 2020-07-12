@@ -6,7 +6,9 @@
     <div class="mb-4">
       <b-button-toolbar justify aria-label="post create and search">
         <b-button-group class="mr-4">
-          <b-button variant="success">Create New Post</b-button>
+          <b-button variant="success" :to="{ name: 'post_edit' }"
+            >Create New Post</b-button
+          >
         </b-button-group>
         <b-button-group>
           <b-input-group>

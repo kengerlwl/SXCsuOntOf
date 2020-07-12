@@ -433,6 +433,7 @@ import { mapState, mapMutations } from "vuex";
 export default {
   data() {
     return {
+      // setting visible
       editUsernameVisible: false,
       editEmailVisible: false,
       editSexVisible: false,
@@ -440,6 +441,7 @@ export default {
       editDescriptionVisible: false,
       editCompanyVisible: false,
       editPasswordVisible: false,
+      // update data
       form: {
         username: "",
         email: "",
@@ -454,6 +456,7 @@ export default {
     };
   },
   methods: {
+    // edit control func
     editUsername() {
       this.editUsernameVisible = !this.editUsernameVisible;
       if (this.editUsernameVisible === false) {
@@ -498,6 +501,7 @@ export default {
         this.form.comfirmNewPassword = "";
       }
     },
+    // validate email
     validateEmail(email) {
       const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
       return re.test(String(email).toLowerCase());
@@ -513,6 +517,7 @@ export default {
         return state.api.signUpURL;
       },
     }),
+    // feedback validate
     newUsernameState() {
       return this.form.username.length > 2 ? true : false;
     },

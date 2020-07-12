@@ -11,11 +11,13 @@
 
         <h5 class="mt-0">{{ item.name }}</h5>
         <p>
-          effective date: {{ item.data }}<br>
+          effective date: {{ item.data }}<br />
           origin price: {{ item.originPrice }}
         </p>
         <p>
-        <b-button :href="item.url" target="_blank" variant="primary">Buy It</b-button>
+          <b-button :href="item.url" target="_blank" variant="primary"
+            >Buy It</b-button
+          >
         </p>
       </b-media>
     </b-card>
@@ -80,7 +82,7 @@ const games = [
 export default {
   data() {
     return {
-        games: games
+      games: games,
     };
   },
   computed: {

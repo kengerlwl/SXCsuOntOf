@@ -5,8 +5,7 @@
     <b-alert show>Note: 查看你的收藏 Blog 文章</b-alert>
     <div class="mb-4">
       <b-button-toolbar justify aria-label="post create and search">
-        <b-button-group class="mr-4">
-        </b-button-group>
+        <b-button-group class="mr-4"> </b-button-group>
         <b-button-group>
           <b-input-group>
             <b-form-input class="mr-sm-2" placeholder="Search"></b-form-input>
@@ -21,6 +20,7 @@
     </div>
     <b-row>
       <b-col cols="3">
+        <!-- left tags -->
         <b-card header-bg-variant="dark" header-text-variant="white">
           <template v-slot:header>
             <h4 class="mb-0">Tags</h4>
@@ -40,6 +40,7 @@
         </b-card>
       </b-col>
       <b-col cols="9">
+        <!-- collect article -->
         <b-card
           tag="article"
           class="mb-4 post-card"
@@ -92,6 +93,7 @@
   </div>
 </template>
 <script>
+// test data
 const items = [
   {
     id: 1,
@@ -250,14 +252,15 @@ const items = [
 export default {
   data() {
     return {
-
-        currentPage: 1,
+      // control pages
+      currentPage: 1,
       perPage: 6,
       totalRows: items.length,
       paginated_items: {},
       currentPageIndex: 0,
       nbPages: 0,
       collectBlog: items,
+      // tags
       tags: [
         "Hello",
         "linux",
