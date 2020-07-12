@@ -15,8 +15,17 @@
           placeholder="Enter Captcha"
         ></b-form-input>
       </b-form-group>
-      <b-button id="sign-btn" pill size="lg" block variant="danger"
+      <b-button class="sign-btn" pill size="lg" block variant="danger"
         >VERIFY</b-button
+      >
+      <b-button
+        class="sign-btn"
+        pill
+        size="lg"
+        block
+        variant="outline-secondary"
+        to="/sign/signUp"
+        >BACK</b-button
       >
     </div>
   </div>
@@ -49,7 +58,7 @@ export default {
 #verify-email {
   padding: 2rem;
 }
-#sign-btn {
+.sign-btn {
   margin-top: 1rem;
 }
 .title {

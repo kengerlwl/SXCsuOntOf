@@ -18,6 +18,18 @@
         </b-navbar-nav>
       </b-navbar>
     </div>
+    <div id="tag-input-box">
+      <b-form-tags
+      input-id="tags-pills"
+      v-model="blogTags"
+      tag-variant="primary"
+      tag-pills
+      size="lg"
+      separator=" "
+      placeholder="Enter new tags separated by space"
+      class="mb-2"
+    ></b-form-tags>
+    </div>
     <mavon-editor
       id="posts-edit"
       v-model="blogContent"
@@ -31,6 +43,7 @@ export default {
   data() {
     return {
       blogContent: "",
+      blogTags: []
     };
   },
   methods: {
@@ -43,5 +56,9 @@ export default {
 <style>
 #posts-edit {
   height: 100vh;
+}
+
+#tag-input-box {
+  padding: 1em 5em 1em;
 }
 </style>

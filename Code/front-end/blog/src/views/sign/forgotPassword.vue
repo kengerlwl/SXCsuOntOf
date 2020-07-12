@@ -14,14 +14,18 @@
           type="email"
           required
           placeholder="Enter Email"
+          :state="emailState"
         ></b-form-input>
+        <b-form-invalid-feedback :state="emailState">
+          Enter a valid email
+        </b-form-invalid-feedback>
       </b-form-group>
-      <b-button id="sign-btn" pill size="lg" block variant="danger"
+      <b-button class="sign-btn" pill size="lg" block variant="danger"
         >GET NEW PASSWORD</b-button
       >
       <!-- Sign In -->
       <b-button
-        id="sign-btn"
+        calss="sign-btn"
         pill
         size="lg"
         block
@@ -42,6 +46,12 @@ export default {
       email: "",
     };
   },
+  methods: {
+    validateEmail(email) {
+      const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+      return re.test(String(email).toLowerCase());
+    },
+  },
   computed: {
     // get data from vuex
     ...mapState({
@@ -52,6 +62,9 @@ export default {
         return state.api.forgotPasswordURL;
       },
     }),
+    emailState() {
+      return this.validateEmail(this.email);
+    },
   },
 };
 </script>
@@ -60,7 +73,7 @@ export default {
 #forgot-password {
   padding: 2rem;
 }
-#sign-btn {
+.sign-btn {
   margin-top: 1rem;
 }
 .title {

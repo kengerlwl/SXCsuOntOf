@@ -36,15 +36,15 @@
 
       <!-- checkbox -->
       <b-form-checkbox id="checkbox-1" v-model="checkbox" name="checkbox-1">
-        I accept
+        Auto Sign In
       </b-form-checkbox>
       <!-- Sign In -->
-      <b-button id="sign-btn" pill size="lg" block variant="success"
+      <b-button class="sign-btn" pill size="lg" block variant="success"
         >SIGN IN</b-button
       >
       <!-- Sign Up -->
       <b-button
-        id="sign-btn"
+        class="sign-btn"
         pill
         size="lg"
         block
@@ -64,7 +64,7 @@ export default {
     return {
       username: "",
       password: "",
-      checkbox: "",
+      checkbox: true,
     };
   },
   computed: {
@@ -88,7 +88,7 @@ export default {
   display: flex;
   justify-content: flex-end;
 }
-#sign-btn {
+.sign-btn {
   margin-top: 1rem;
 }
 .title {
