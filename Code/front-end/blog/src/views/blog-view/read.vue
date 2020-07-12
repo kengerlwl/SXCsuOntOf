@@ -36,8 +36,8 @@
 
           <markdown-it-vue :content="blog.content" />
         </div>
-        <div id="comments" class="mt-4">
-          <h2>Comments</h2>
+        <div id="comments" class="mt-5">
+          <h2><b-icon-chat-square-dots-fill></b-icon-chat-square-dots-fill> Comments</h2>
           <hr class="my-4" />
           <b-row class="mt-2">
             <b-col cols="1">

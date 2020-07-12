@@ -22,6 +22,8 @@
   </div>
 </template>
 <script>
+import { mapState, mapMutations } from "vuex";
+
 const games = [
   {
     name: "Hades OLD",
@@ -80,6 +82,17 @@ export default {
     return {
         games: games
     };
+  },
+  computed: {
+    // get data from vuex
+    ...mapState({
+      baseURL: (state) => {
+        return state.api.baseURL;
+      },
+      getGamesNewsURL: (state) => {
+        return state.api.getGamesNewsURL;
+      },
+    }),
   },
 };
 </script>

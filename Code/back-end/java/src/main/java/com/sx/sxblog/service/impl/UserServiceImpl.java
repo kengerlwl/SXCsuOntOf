@@ -1,7 +1,9 @@
 package com.sx.sxblog.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+
 import com.sx.sxblog.entity.Tag;
+
 import com.sx.sxblog.entity.User;
 import com.sx.sxblog.mapper.TagMapper;
 import com.sx.sxblog.mapper.UserMapper;
@@ -12,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.List;
+
 
 /**
  * <p>
@@ -40,8 +43,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     @Override
     public int updateUser(User user) {
         return userMapper.update(user, new QueryWrapper<User>()
-                .eq("user_Id",user.getUserId())
-        );
+                .eq("user_Id",user.getUserId()));
     }
 
     @Override
@@ -63,5 +65,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         user = userMapper.selectOne(queryWrapper);
 
         return user;
+
     }
 }

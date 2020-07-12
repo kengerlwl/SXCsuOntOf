@@ -17,7 +17,7 @@
   width: 40rem;
   position: absolute;
   top: 7rem;
-  max-height: 40rem;
+  max-height: 50rem;
   opacity: 0.95;
   border-radius: 30px;
   background-color: white;

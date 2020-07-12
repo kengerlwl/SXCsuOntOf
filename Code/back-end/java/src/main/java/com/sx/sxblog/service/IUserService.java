@@ -15,6 +15,7 @@ import java.util.List;
  * @since 2020-07-08
  */
 public interface IUserService extends IService<User> {
+
     //增加用户
     int insertUser(User user);
 
@@ -32,5 +33,6 @@ public interface IUserService extends IService<User> {
 
     //查询特定用户名的用户
     User getUserByUsername(String username);
+
 
 }

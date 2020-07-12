@@ -40,6 +40,9 @@
 </template>
 <script>
 import { school } from "../../static/js/news_school_testData";
+// import VueX
+import { mapState, mapMutations } from "vuex";
+
 export default {
   data() {
     return {
@@ -57,6 +60,15 @@ export default {
     },
   },
   computed: {
+    // get data from vuex
+    ...mapState({
+      baseURL: (state) => {
+        return state.api.baseURL;
+      },
+      getSchoolNewsURL: (state) => {
+        return state.api.getSchoolNewsURL;
+      },
+    }),
     libText: function() {
       // return directly html
       var str = "<div><p>some html</p></div>";
