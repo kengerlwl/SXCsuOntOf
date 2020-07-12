@@ -62,7 +62,14 @@
                     v-model="form.username"
                     required
                     placeholder="Enter New Username"
+                    :state="newUsernameState"
                   ></b-form-input>
+                  <b-form-valid-feedback :state="newUsernameState">
+                    Looks Good.
+                  </b-form-valid-feedback>
+                  <b-form-invalid-feedback :state="newUsernameState">
+                    Enter at least 3 letters
+                  </b-form-invalid-feedback>
                 </b-form-group>
                 <b-button variant="success">SUBMIT</b-button>
               </b-collapse>
@@ -107,7 +114,14 @@
                     type="email"
                     required
                     placeholder="Enter New Email"
+                    :state="newEmailState"
                   ></b-form-input>
+                  <b-form-valid-feedback :state="newEmailState">
+                    Looks Good.
+                  </b-form-valid-feedback>
+                  <b-form-invalid-feedback :state="newEmailState">
+                    Enter a valid email
+                  </b-form-invalid-feedback>
                 </b-form-group>
                 <!-- get captcha -->
                 <b-button variant="success">GET CAPTCHA</b-button>
@@ -338,7 +352,14 @@
                     required
                     type="password"
                     placeholder="Enter Origin Password"
+                    :state="originPasswordState"
                   ></b-form-input>
+                  <b-form-valid-feedback :state="originPasswordState">
+                    Make sure this password is your original password.
+                  </b-form-valid-feedback>
+                  <b-form-invalid-feedback :state="originPasswordState">
+                    Enter at least 8 letters
+                  </b-form-invalid-feedback>
                 </b-form-group>
                 <!-- new password -->
                 <b-form-group
@@ -353,7 +374,14 @@
                     required
                     type="password"
                     placeholder="Enter New Password"
+                    :state="newPasswordState"
                   ></b-form-input>
+                  <b-form-valid-feedback :state="newPasswordState">
+                    Looks Good.
+                  </b-form-valid-feedback>
+                  <b-form-invalid-feedback :state="newPasswordState">
+                    Enter at least 8 letters
+                  </b-form-invalid-feedback>
                 </b-form-group>
                 <!-- confirm new password -->
                 <b-form-group
@@ -364,11 +392,18 @@
                 >
                   <b-form-input
                     id="iinput-confirm-new-password"
-                    v-model="form.comfirmNewPassword"
+                    v-model="form.confirmNewPassword"
                     required
                     type="password"
                     placeholder="Confirm New Password"
+                    :state="confirmNewPasswordState"
                   ></b-form-input>
+                  <b-form-valid-feedback :state="confirmNewPasswordState">
+                    Looks Good.
+                  </b-form-valid-feedback>
+                  <b-form-invalid-feedback :state="confirmNewPasswordState">
+                    Must same as the password
+                  </b-form-invalid-feedback>
                 </b-form-group>
                 <b-button variant="success">SUBMIT</b-button>
               </b-collapse>
@@ -392,6 +427,9 @@
   </div>
 </template>
 <script>
+// import VueX
+import { mapState, mapMutations } from "vuex";
+
 export default {
   data() {
     return {
@@ -411,7 +449,7 @@ export default {
         company: "",
         originPassword: "",
         newPassword: "",
-        comfirmNewPassword: "",
+        confirmNewPassword: "",
       },
     };
   },
@@ -459,6 +497,39 @@ export default {
         this.form.newPassword = "";
         this.form.comfirmNewPassword = "";
       }
+    },
+    validateEmail(email) {
+      const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+      return re.test(String(email).toLowerCase());
+    },
+  },
+  computed: {
+    // get data from vuex
+    ...mapState({
+      baseURL: (state) => {
+        return state.api.baseURL;
+      },
+      signUpURL: (state) => {
+        return state.api.signUpURL;
+      },
+    }),
+    newUsernameState() {
+      return this.form.username.length > 2 ? true : false;
+    },
+    newEmailState() {
+      return this.validateEmail(this.form.email);
+    },
+    originPasswordState() {
+      return this.form.originPassword.length > 7 ? true : false;
+    },
+    newPasswordState() {
+      return this.form.newPassword.length > 7 ? true : false;
+    },
+    confirmNewPasswordState() {
+      return (
+        this.form.confirmNewPassword.length > 7 &&
+        this.form.confirmNewPassword === this.form.newPassword
+      );
     },
   },
 };
