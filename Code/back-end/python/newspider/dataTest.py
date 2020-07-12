@@ -11,6 +11,12 @@ output = open(FileDir+'/data.pkl', 'rb')
 data=pickle.load(output)
 
 print(len(data))
+print(type(str(data[0]['content'])))
+
+for i in data:
+    i['content'] = str(i['content'])
 
 
+print(data[0])
+print(type(data[0]['content']))
 output.close()
