@@ -124,10 +124,45 @@
                   </b-form-invalid-feedback>
                 </b-form-group>
                 <!-- get captcha -->
-                <b-button variant="success">GET CAPTCHA</b-button>
+                <b-button variant="success" @click="openVerifyEmailModal"
+                  >GET CAPTCHA</b-button
+                >
               </b-collapse>
             </b-card-text>
           </b-card>
+          <!-- verify email modal -->
+          <b-modal
+            v-model="verifyEmailModal"
+            no-close-on-backdrop
+            no-close-on-esc
+            centered
+            title="Verify Captcha"
+            header-bg-variant="dark"
+            header-text-variant="light"
+          >
+            <!-- captcha -->
+            <b-form-group
+              id="input-group-1"
+              label="Captcha"
+              label-for="input-1"
+            >
+              <b-form-input
+                id="input-1"
+                v-model="form.captcha"
+                required
+                placeholder="Enter Captcha"
+              ></b-form-input>
+            </b-form-group>
+            <b-button class="sign-btn" pill block variant="success"
+              >VERIFY</b-button
+            >
+            <template v-slot:modal-footer="{ ok, cancel, hide }">
+              <!-- Emulate built in modal footer ok and cancel button actions -->
+              <b-button size="sm" variant="danger" @click="cancel()">
+                Cancel
+              </b-button>
+            </template>
+          </b-modal>
           <!-- sex -->
           <b-card
             class="mb-4"
@@ -452,7 +487,10 @@ export default {
         originPassword: "",
         newPassword: "",
         confirmNewPassword: "",
+        captcha: "",
       },
+      // verify email dialog
+      verifyEmailModal: false,
     };
   },
   methods: {
@@ -505,6 +543,9 @@ export default {
     validateEmail(email) {
       const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
       return re.test(String(email).toLowerCase());
+    },
+    openVerifyEmailModal() {
+      this.verifyEmailModal = true;
     },
   },
   computed: {
