@@ -130,7 +130,7 @@
             ></b-avatar>
           </div>
         </div>
-        
+
         <div id="copy">
           <div>{{ new Date().getFullYear() }} — <strong>MD-BLOG</strong></div>
         </div>

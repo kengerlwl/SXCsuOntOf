@@ -1,6 +1,7 @@
 <template>
   <div>
     <div>
+      <!-- title -->
       <b-navbar type="light" variant="light">
         <b-navbar-brand @click="goBack" v-b-tooltip.hover title="Back"
           ><b-icon-arrow-left-circle-fill></b-icon-arrow-left-circle-fill
@@ -18,18 +19,20 @@
         </b-navbar-nav>
       </b-navbar>
     </div>
+    <!-- tags -->
     <div id="tag-input-box">
       <b-form-tags
-      input-id="tags-pills"
-      v-model="blogTags"
-      tag-variant="primary"
-      tag-pills
-      size="lg"
-      separator=" "
-      placeholder="Enter new tags separated by space"
-      class="mb-2"
-    ></b-form-tags>
+        input-id="tags-pills"
+        v-model="blogTags"
+        tag-variant="primary"
+        tag-pills
+        size="lg"
+        separator=" "
+        placeholder="Enter new tags separated by space"
+        class="mb-2"
+      ></b-form-tags>
     </div>
+    <!-- blog content -->
     <mavon-editor
       id="posts-edit"
       v-model="blogContent"
@@ -43,7 +46,7 @@ export default {
   data() {
     return {
       blogContent: "",
-      blogTags: []
+      blogTags: [],
     };
   },
   methods: {

@@ -15,99 +15,98 @@
         <h2>Profile</h2>
         <hr class="my-4" />
         <!-- username -->
-          <b-card
-            class="mb-4"
-            border-variant="dark"
-            header-bg-variant="dark"
-            header-text-variant="white"
-          >
-            <template v-slot:header>
-              <h4 class="mb-0">
-                <b-icon-person-fill></b-icon-person-fill> Username
-              </h4>
-            </template>
-            <b-card-title>
-              username
-            </b-card-title>
-
-          </b-card>
-          <!-- email -->
-          <b-card
-            class="mb-4"
-            border-variant="info"
-            header-bg-variant="info"
-            header-text-variant="white"
-          >
-            <template v-slot:header>
-              <h4 class="mb-0"><b-icon-at></b-icon-at> Email</h4>
-            </template>
-            <b-card-title>
-              email
-            </b-card-title>
-          </b-card>
-          <!-- sex -->
-          <b-card
-            class="mb-4"
-            border-variant="info"
-            header-bg-variant="info"
-            header-text-variant="white"
-          >
-            <template v-slot:header>
-              <h4 class="mb-0"><b-icon-asterisk></b-icon-asterisk> Sex</h4>
-            </template>
-            <b-card-title>
-              sex
-            </b-card-title>
-          </b-card>
-          <!-- birthday -->
-          <b-card
-            class="mb-4"
-            border-variant="info"
-            header-bg-variant="info"
-            header-text-variant="white"
-          >
-            <template v-slot:header>
-              <h4 class="mb-0">
-                <b-icon-calendar3-fill></b-icon-calendar3-fill> Birthday
-              </h4>
-            </template>
-            <b-card-title>
-              birthday
-            </b-card-title>
-          </b-card>
-          <!-- description -->
-          <b-card
-            class="mb-4"
-            border-variant="info"
-            header-bg-variant="info"
-            header-text-variant="white"
-          >
-            <template v-slot:header>
-              <h4 class="mb-0">
-                <b-icon-chat-square-dots-fill></b-icon-chat-square-dots-fill>
-                Description
-              </h4>
-            </template>
-            <b-card-title>
-              description
-            </b-card-title>
-          </b-card>
-          <!-- company -->
-          <b-card
-            class="mb-4"
-            border-variant="info"
-            header-bg-variant="info"
-            header-text-variant="white"
-          >
-            <template v-slot:header>
-              <h4 class="mb-0">
-                <b-icon-briefcase-fill></b-icon-briefcase-fill> Company
-              </h4>
-            </template>
-            <b-card-title>
-              company
-            </b-card-title>
-          </b-card>
+        <b-card
+          class="mb-4"
+          border-variant="dark"
+          header-bg-variant="dark"
+          header-text-variant="white"
+        >
+          <template v-slot:header>
+            <h4 class="mb-0">
+              <b-icon-person-fill></b-icon-person-fill> Username
+            </h4>
+          </template>
+          <b-card-title>
+            username
+          </b-card-title>
+        </b-card>
+        <!-- email -->
+        <b-card
+          class="mb-4"
+          border-variant="info"
+          header-bg-variant="info"
+          header-text-variant="white"
+        >
+          <template v-slot:header>
+            <h4 class="mb-0"><b-icon-at></b-icon-at> Email</h4>
+          </template>
+          <b-card-title>
+            email
+          </b-card-title>
+        </b-card>
+        <!-- sex -->
+        <b-card
+          class="mb-4"
+          border-variant="info"
+          header-bg-variant="info"
+          header-text-variant="white"
+        >
+          <template v-slot:header>
+            <h4 class="mb-0"><b-icon-asterisk></b-icon-asterisk> Sex</h4>
+          </template>
+          <b-card-title>
+            sex
+          </b-card-title>
+        </b-card>
+        <!-- birthday -->
+        <b-card
+          class="mb-4"
+          border-variant="info"
+          header-bg-variant="info"
+          header-text-variant="white"
+        >
+          <template v-slot:header>
+            <h4 class="mb-0">
+              <b-icon-calendar3-fill></b-icon-calendar3-fill> Birthday
+            </h4>
+          </template>
+          <b-card-title>
+            birthday
+          </b-card-title>
+        </b-card>
+        <!-- description -->
+        <b-card
+          class="mb-4"
+          border-variant="info"
+          header-bg-variant="info"
+          header-text-variant="white"
+        >
+          <template v-slot:header>
+            <h4 class="mb-0">
+              <b-icon-chat-square-dots-fill></b-icon-chat-square-dots-fill>
+              Description
+            </h4>
+          </template>
+          <b-card-title>
+            description
+          </b-card-title>
+        </b-card>
+        <!-- company -->
+        <b-card
+          class="mb-4"
+          border-variant="info"
+          header-bg-variant="info"
+          header-text-variant="white"
+        >
+          <template v-slot:header>
+            <h4 class="mb-0">
+              <b-icon-briefcase-fill></b-icon-briefcase-fill> Company
+            </h4>
+          </template>
+          <b-card-title>
+            company
+          </b-card-title>
+        </b-card>
       </b-container>
     </div>
   </div>

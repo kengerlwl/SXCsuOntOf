@@ -146,6 +146,7 @@ export default {
         return state.api.signUpURL;
       },
     }),
+    // feedback validate
     usernameState() {
       return this.username.length > 2 ? true : false;
     },

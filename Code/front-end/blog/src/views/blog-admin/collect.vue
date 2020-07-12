@@ -5,8 +5,7 @@
     <b-alert show>Note: 查看你的收藏 Blog 文章</b-alert>
     <div class="mb-4">
       <b-button-toolbar justify aria-label="post create and search">
-        <b-button-group class="mr-4">
-        </b-button-group>
+        <b-button-group class="mr-4"> </b-button-group>
         <b-button-group>
           <b-input-group>
             <b-form-input class="mr-sm-2" placeholder="Search"></b-form-input>
@@ -21,6 +20,7 @@
     </div>
     <b-row>
       <b-col cols="3">
+        <!-- left tags -->
         <b-card header-bg-variant="dark" header-text-variant="white">
           <template v-slot:header>
             <h4 class="mb-0">Tags</h4>
@@ -40,6 +40,7 @@
         </b-card>
       </b-col>
       <b-col cols="9">
+        <!-- collect article -->
         <b-card
           tag="article"
           class="mb-4 post-card"
@@ -71,7 +72,7 @@
           <b-button href="#" variant="outline-info" class="mr-3">
             READ MORE
           </b-button>
-          <b-button href="#" variant="danger">
+          <b-button variant="danger" @click="openDeleteModal(i, item.id)">
             <b-icon-trash-fill></b-icon-trash-fill> Delete
           </b-button>
           <template v-slot:footer>
@@ -89,9 +90,31 @@
         />
       </b-col>
     </b-row>
+    <!-- delete modal -->
+    <b-modal
+      v-model="deletePostModal"
+      no-close-on-backdrop
+      no-close-on-esc
+      centered
+      title="Delete collection"
+      header-bg-variant="danger"
+      header-text-variant="light"
+    >
+      <h4><strong>Are you sure you want to delete this collection?</strong></h4>
+      <template v-slot:modal-footer="{ ok, cancel, hide }">
+        <!-- Emulate built in modal footer ok and cancel button actions -->
+        <b-button variant="success" @click="cancel()">
+          Cancel
+        </b-button>
+        <b-button variant="danger" @click="deletePost()">
+          Delete
+        </b-button>
+      </template>
+    </b-modal>
   </div>
 </template>
 <script>
+// test data
 const items = [
   {
     id: 1,
@@ -250,14 +273,15 @@ const items = [
 export default {
   data() {
     return {
-
-        currentPage: 1,
+      // control pages
+      currentPage: 1,
       perPage: 6,
       totalRows: items.length,
       paginated_items: {},
       currentPageIndex: 0,
       nbPages: 0,
       collectBlog: items,
+      // tags
       tags: [
         "Hello",
         "linux",
@@ -269,7 +293,29 @@ export default {
         "json",
         "Golang",
       ],
+      // delete post modal
+      deletePostModal: false,
+      deleteItem: {}
     };
+  },
+  methods: {
+    openDeleteModal(index, id) {
+      this.deletePostModal = true;
+      this.deleteItem.index = index;
+      this.deleteItem.id = id;
+    },
+    deletePost() {
+      // this.paginated_items[this.currentPage - 1].splice(this.deleteItem.index, 1);
+      console.log("delete collection id: " + this.deleteItem.id)
+      for(let i = 0; i < this.collectBlog.length; i++) {
+        if(this.collectBlog[i].id === this.deleteItem.id) {
+          this.collectBlog.splice(i, 1);
+        }
+      }
+      this.deletePostModal = false;
+      // change totalRows
+      this.totalRows = this.collectBlog.length;
+    }
   },
   computed: {
     pageCount() {

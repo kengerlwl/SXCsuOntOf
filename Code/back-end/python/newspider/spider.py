@@ -12,7 +12,7 @@ from bs4 import BeautifulSoup
 
 ans = []
 
-async def newsSpider(url):
+async def newsSpider(url, title):
     #print(f"started at {time.strftime('%X')}")
 
     async with aiohttp.ClientSession() as session:
@@ -23,7 +23,12 @@ async def newsSpider(url):
             soup = BeautifulSoup(html, 'html.parser')
             content = soup.find(attrs={'id':'vsb_content'})
             #ans[url]=content
-            ans.append({url:content})
+            news = {
+                'content':str(content),
+                'url':url,
+                'title':title
+            }
+            ans.append(news)
             #print(content)
     #print(f"finished at {time.strftime('%X')}")
 
@@ -43,7 +48,7 @@ async def spider():
             urls = []
 
             for i in lis:
-                # print(i.text)
+                #print(i.text)
                 temp  = i.find('a')
                 href = temp.get('href')
 
@@ -54,7 +59,7 @@ async def spider():
 
                 url = url + href
 
-                urls.append(url)
+                urls.append([url,i.text])
 
             print(f"started at {time.strftime('%X')}")
 
@@ -62,7 +67,7 @@ async def spider():
             task = []
 
             for i in urls:
-                t = newsSpider(i)
+                t = newsSpider(i[0],i[1])
                 task.append(t)
 
 

@@ -16,7 +16,9 @@
           </b-link>
         </p>
         <p>
-          <b-button @click="viewNews(item.title, item.content)">Read Here</b-button>
+          <b-button @click="viewNews(item.title, item.content)"
+            >Read Here</b-button
+          >
         </p>
       </b-media>
     </b-card>
@@ -29,12 +31,11 @@
       bg-variant="dark"
       text-variant="light"
     >
-    <div id="news-detail">
-      <b-container>
-        <div class="px-3 py-2" v-html="content"></div>
-      </b-container>
-    </div>
-      
+      <div id="news-detail">
+        <b-container>
+          <div class="px-3 py-2" v-html="content"></div>
+        </b-container>
+      </div>
     </b-sidebar>
   </div>
 </template>
