@@ -1,5 +1,6 @@
 from flask import Flask
 import json
+from flask_cors import CORS # 跨域
 from epicSpider import *
 import pickle
 #设置递归深度，为了解决数据存储问题
@@ -8,6 +9,9 @@ sys.setrecursionlimit(10000)
 
 app = Flask(__name__)
 from path import *
+
+# enable CORS
+CORS(app)
 
 @app.route('/getEpicFreeGame')
 def getEpicFreeGame():

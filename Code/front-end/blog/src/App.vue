@@ -23,7 +23,7 @@
             <b-dropdown-divider></b-dropdown-divider>
             <b-dropdown-item href="#">Sign Out</b-dropdown-item>
           </b-nav-item-dropdown>
-          <b-nav-item to="/news">Sign In</b-nav-item>
+          <b-nav-item to="/sign">Sign In</b-nav-item>
         </b-navbar-nav>
       </b-collapse>
     </b-navbar>
