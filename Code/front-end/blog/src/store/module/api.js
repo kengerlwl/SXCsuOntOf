@@ -1,12 +1,15 @@
 const api = {
     state: {
-        springBaseURL: "",
+        // spring flask base url
+        springBaseURL: "http://127.0.0.1:8090",
         flaskBaseURL: "http://127.0.0.1:5000",
-        signInURL: "",
-        signUpURL: "",
+        // account signIn signUp
+        signInURL: "/user/signIn",
+        signUpURL: "/user/signUp",
         verifyEmailURL: "",
         forgotPasswordURL: "",
         // account setting
+        getUserData: " /user/get_data",
         updateUsernameURL: "",
         updateEmailURL: "",
         verityNewEmailURL: "",

@@ -6,7 +6,7 @@ import { BootstrapVue, BootstrapVueIcons } from 'bootstrap-vue'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
 import VeLine from 'v-charts/lib/line.common'
-
+import VueLocalStorage from 'vue-localstorage'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 import  mavonEditor from 'mavon-editor'
@@ -19,6 +19,7 @@ Vue.use(BootstrapVue)
 Vue.use(BootstrapVueIcons)
 Vue.use(VueAxios, axios)
 Vue.use(mavonEditor)
+Vue.use(VueLocalStorage)
 
 Vue.component(VeLine.name, VeLine)
 

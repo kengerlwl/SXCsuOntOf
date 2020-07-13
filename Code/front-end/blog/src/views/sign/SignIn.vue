@@ -58,6 +58,7 @@
 <script>
 // import VueX
 import { mapState, mapMutations } from "vuex";
+import axios from 'axios';
 
 export default {
   data() {
@@ -67,10 +68,30 @@ export default {
       checkbox: true,
     };
   },
+  methods: {
+    signIn() {},
+    async signInRequest() {
+      axios({
+        method: "post",
+        url: this.springBaseURL + this.signInURL,
+        headers: {},
+        data: {
+          username: this.username,
+          password: this.password,
+        },
+      })
+        .then((response) => {
+          console.log(response.data)
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+  },
   computed: {
     // get data from vuex
     ...mapState({
-      baseURL: (state) => {
+      springBaseURL: (state) => {
         return state.api.baseURL;
       },
       signInURL: (state) => {
