@@ -76,7 +76,6 @@ public class UserController {
                     isusername = false;
                 }
                 else {
-                    data.put("test1","test1");
                     user = userService.getUserByUsername(username);
                     if (user!=null && user.getPassword().equals(password)){
                         isusername = true;
@@ -99,6 +98,7 @@ public class UserController {
 
         }catch (Exception ex){
             //日志输出错误
+            msg = "Service Worng";
             System.out.println("dberro");
         }
 
@@ -240,16 +240,22 @@ public class UserController {
         //正则判断是否数字
         Pattern pattern = Pattern.compile("[0-9]*");
         isNum = pattern.matcher(username).matches();
+        try {
+            if(isNum){
+                int id = Integer.valueOf(username);
+                user = userService.getUserById(id);
+                data = UserUtil.putUserInJson(user);
+            }
+            else {
+                user = userService.getUserByUsername(username);
+                data = UserUtil.putUserInJson(user);
+            }
+        }catch (Exception exception){
+            data = new JSONObject();
+            status = false;
+            msg = "user not exitds";
+        }
 
-        if(isNum){
-            int id = Integer.valueOf(username);
-            user = userService.getUserById(id);
-            data = UserUtil.putUserInJson(user);
-        }
-        else {
-            user = userService.getUserByUsername(username);
-            data = UserUtil.putUserInJson(user);
-        }
         ReturnEntity returnEntity=new  ReturnEntity(status,msg,data);
         return returnEntity;
     }

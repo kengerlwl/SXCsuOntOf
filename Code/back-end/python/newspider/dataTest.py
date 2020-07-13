@@ -17,6 +17,6 @@ for i in data:
     i['content'] = str(i['content'])
 
 
-print(data[0])
+print(data[1])
 print(type(data[0]['content']))
 output.close()

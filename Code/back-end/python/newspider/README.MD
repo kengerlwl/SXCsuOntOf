@@ -7,12 +7,6 @@
 ├── path.py    ---路径文件
 ├── __pycache__
 │   └── path.cpython-38.pyc
-├── pythonPackag
-│   ├── BaiduPic
-│   ├── PathPro
-│   ├── picPro
-│   ├── README.md
-│   └── sms
 ├── README.MD
 ├── spider.py   ---爬虫文件
 ├── test.html

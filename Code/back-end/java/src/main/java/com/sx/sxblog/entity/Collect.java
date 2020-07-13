@@ -30,6 +30,42 @@ public class Collect implements Serializable {
 
     private Integer blogId;
 
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
+    }
+
+    public Integer getCollectId() {
+        return collectId;
+    }
+
+    public void setCollectId(Integer collectId) {
+        this.collectId = collectId;
+    }
+
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
+    }
+
+    public Integer getBlogId() {
+        return blogId;
+    }
+
+    public void setBlogId(Integer blogId) {
+        this.blogId = blogId;
+    }
+
+    public LocalDate getCollectDate() {
+        return collectDate;
+    }
+
+    public void setCollectDate(LocalDate collectDate) {
+        this.collectDate = collectDate;
+    }
+
     private LocalDate collectDate;
 
 
