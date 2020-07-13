@@ -2,7 +2,7 @@
   <div id="home">
     <div id="first-part">
       <div class="title">
-        Welcome Come To MD-BLOG
+        Welcome To MD-BLOG
       </div>
       <div>
         <b-button variant="danger" size="lg">CREATE YOUR BLOG</b-button>
