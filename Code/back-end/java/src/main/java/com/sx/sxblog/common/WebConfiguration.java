@@ -44,9 +44,13 @@ public class WebConfiguration implements WebMvcConfigurer {
                 .addPathPatterns("/**")
 //                .excludePathPatterns("/**");//测试不拦截
                 .excludePathPatterns("/error")
+                //user放行
                 .excludePathPatterns("/user/signIn")
                 .excludePathPatterns("/user/signUp")
                 .excludePathPatterns("/user/username_verify")
+                //blog放行
+                .excludePathPatterns("/getBlogList")
+                .excludePathPatterns("/getBlogById")
                 .excludePathPatterns("/static/**")
                 .excludePathPatterns("/assets/**");
         WebMvcConfigurer.super.addInterceptors(registry);
