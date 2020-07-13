@@ -98,6 +98,7 @@ public class UserController {
 
         }catch (Exception ex){
             //日志输出错误
+            msg = "Service Worng";
             System.out.println("dberro");
         }
 
