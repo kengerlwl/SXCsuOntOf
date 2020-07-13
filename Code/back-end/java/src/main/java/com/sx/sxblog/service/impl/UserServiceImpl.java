@@ -1,15 +1,20 @@
 package com.sx.sxblog.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+
+import com.sx.sxblog.entity.Tag;
+
 import com.sx.sxblog.entity.User;
+import com.sx.sxblog.mapper.TagMapper;
 import com.sx.sxblog.mapper.UserMapper;
 import com.sx.sxblog.service.IUserService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+//import org.graalvm.compiler.lir.LIRInstruction;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
+
 
 /**
  * <p>
@@ -24,29 +29,42 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     @Resource
     private UserMapper userMapper;
 
-    @Override
-    public User getUserByUserId(String user_name) {
-        return userMapper.selectById(user_name);
-    }
 
     @Override
-    public User getUserByUserIdAndPassword(String user_name, String password) {
-        return userMapper.selectOne(new QueryWrapper<User>()
-                .eq("user_name",user_name)
-                .eq("password",password)
-        );
-    }
-
-    @Override
-    public int insertUserInfo(User user) {
+    public int insertUser(User user) {
         return userMapper.insert(user);
     }
 
     @Override
-    public int updateUserInfo(User user) {
+    public int deleteUser(int user_id) {
+        return userMapper.deleteById(user_id);
+    }
+
+    @Override
+    public int updateUser(User user) {
         return userMapper.update(user, new QueryWrapper<User>()
-                .eq("user_name",user.getUserName())
-                .eq("password",user.getPassword())
-        );
+                .eq("user_Id",user.getUserId()));
+    }
+
+    @Override
+    public List<User> getUserList() {
+        return userMapper.selectList(null);
+    }
+
+    @Override
+    public User getUserById(int user_id) {
+        return userMapper.selectById(user_id);
+    }
+
+    @Override
+    public User getUserByUsername(String username){
+
+        User user;
+        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("user_name",username);
+        user = userMapper.selectOne(queryWrapper);
+
+        return user;
+
     }
 }

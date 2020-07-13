@@ -17,13 +17,13 @@ public class UserServiceTest {
 
     @Test
     public void getUserByUserId(){
-        System.out.println(userService.getUserByUserId("lgx"));
+        System.out.println(userService.getUserByUsername("lgx"));
     }
 
     @Test
     public void getUserByUserIdAndPassword(){
-        User user = userService.getUserByUserIdAndPassword("lgx","123");
-        System.out.println(user);
+//        User user = userService.getUserByUserIdAndPassword("lgx","123");
+//        System.out.println(user);
     }
 
     @Test
@@ -37,8 +37,8 @@ public class UserServiceTest {
         user.setDescription(null);
         user.setCompany(null);
 
-        Integer result = userService.insertUserInfo(user);
-        System.out.println(result);
+//        Integer result = userService.insertUserInfo(user);
+//        System.out.println(result);
     }
 
     @Test
@@ -53,8 +53,8 @@ public class UserServiceTest {
         user.setDescription(null);
         user.setCompany("中南大学");
 
-        Integer result = userService.updateUserInfo(user);
-        System.out.println(result);
+//        Integer result = userService.updateUserInfo(user);
+//        System.out.println(result);
     }
 
 
