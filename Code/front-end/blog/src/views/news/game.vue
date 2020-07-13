@@ -25,7 +25,7 @@
 </template>
 <script>
 import { mapState, mapMutations } from "vuex";
-import axios from 'axios'
+import axios from "axios";
 
 const games = [
   {
@@ -83,7 +83,7 @@ const games = [
 export default {
   data() {
     return {
-      games: games,
+      games: [],
     };
   },
   created() {
@@ -98,6 +98,7 @@ export default {
         .get(this.flaskBaseURL + this.getGamesNewsURL)
         .then((response) => {
           console.log(response.data);
+          this.games = response.data.content;
         })
         .catch((error) => {
           console.log(error);
