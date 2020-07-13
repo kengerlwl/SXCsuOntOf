@@ -26,5 +26,6 @@ target/
 /nbdist/
 /.nb-gradle/
 build/
-Code/back-end/java/src/main/resources/application.yml### VS Code ###
+Code/back-end/java/src/main/resources/application.yml
+### VS Code ###
 .vscode/
