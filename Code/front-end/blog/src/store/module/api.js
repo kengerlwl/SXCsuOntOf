@@ -1,6 +1,7 @@
 const api = {
     state: {
-        baseURL: "",
+        springBaseURL: "",
+        flaskBaseURL: "http://127.0.0.1:5000",
         signInURL: "",
         signUpURL: "",
         verifyEmailURL: "",
@@ -24,8 +25,8 @@ const api = {
         searchCollectURL: "",
         deleteCollectURL: "",
         // news
-        getSchoolNewsURL: "",
-        getGamesNewsURL: ""
+        getSchoolNewsURL: "/getNews",
+        getGamesNewsURL: "/getEpicFreeGame"
     },
     mutations: {
 

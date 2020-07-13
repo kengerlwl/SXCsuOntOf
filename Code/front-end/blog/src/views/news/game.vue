@@ -25,6 +25,7 @@
 </template>
 <script>
 import { mapState, mapMutations } from "vuex";
+import axios from "axios";
 
 const games = [
   {
@@ -82,14 +83,33 @@ const games = [
 export default {
   data() {
     return {
-      games: games,
+      games: [],
     };
+  },
+  created() {
+    this.getFreeGameNews();
+  },
+  methods: {
+    getFreeGameNews() {
+      this.getFreeGameNewsRequest();
+    },
+    async getFreeGameNewsRequest() {
+      axios
+        .get(this.flaskBaseURL + this.getGamesNewsURL)
+        .then((response) => {
+          console.log(response.data);
+          this.games = response.data.content;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
   },
   computed: {
     // get data from vuex
     ...mapState({
-      baseURL: (state) => {
-        return state.api.baseURL;
+      flaskBaseURL: (state) => {
+        return state.api.flaskBaseURL;
       },
       getGamesNewsURL: (state) => {
         return state.api.getGamesNewsURL;

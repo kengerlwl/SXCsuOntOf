@@ -33,50 +33,50 @@
       <div class="footer-space"></div>
     </b-container>
     <div id="footer">
-        <b-container>
-          <!-- Content here -->
+      <b-container>
+        <!-- Content here -->
+        <div>
+          <div class="title">
+            About
+          </div>
           <div>
-            <div class="title">
-              About
-            </div>
-            <div>
-              Developer
-            </div>
-            <div>
-              <b-avatar
-                class="about-avatar"
-                variant="info"
-                v-for="(item, i) in aboutDeveloper"
-                :src="item.avatar"
-                :key="i"
-                size="3rem"
-                v-b-tooltip.hover
-                :title="item.developer"
-                :href="item.url"
-                target="_blank"
-              ></b-avatar>
-            </div>
-            <div>
-              Github repositor
-            </div>
-            <div>
-              <b-avatar
-                class="about-avatar"
-                :src="require(`../../assets/github-logo.png`)"
-                size="3rem"
-                v-b-tooltip.hover
-                title="Github"
-                href="https://github.com/2892211452/SXCsuOntOf"
-                target="_blank"
-              ></b-avatar>
-            </div>
+            Developer
           </div>
+          <div>
+            <b-avatar
+              class="about-avatar"
+              variant="info"
+              v-for="(item, i) in aboutDeveloper"
+              :src="item.avatar"
+              :key="i"
+              size="3rem"
+              v-b-tooltip.hover
+              :title="item.developer"
+              :href="item.url"
+              target="_blank"
+            ></b-avatar>
+          </div>
+          <div>
+            Github repositor
+          </div>
+          <div>
+            <b-avatar
+              class="about-avatar"
+              :src="require(`../../assets/github-logo.png`)"
+              size="3rem"
+              v-b-tooltip.hover
+              title="Github"
+              href="https://github.com/2892211452/SXCsuOntOf"
+              target="_blank"
+            ></b-avatar>
+          </div>
+        </div>
 
-          <div id="copy">
-            <div>{{ new Date().getFullYear() }} — <strong>MD-BLOG</strong></div>
-          </div>
-        </b-container>
-      </div>
+        <div id="copy">
+          <div>{{ new Date().getFullYear() }} — <strong>MD-BLOG</strong></div>
+        </div>
+      </b-container>
+    </div>
   </div>
 </template>
 <script>
@@ -114,7 +114,7 @@ export default {
             "https://avatars1.githubusercontent.com/u/48636976?s=460&u=6fc910ffe23ff8ff7ffc210d49ca81fdec486f9f&v=4",
         },
       ],
-    }
+    };
   },
   methods: {
     activeClass: function(...names) {
@@ -142,7 +142,7 @@ export default {
   height: 10rem;
 }
 #footer {
-  background-color: rgb(50, 50,50);
+  background-color: rgb(50, 50, 50);
   color: white;
 }
 </style>

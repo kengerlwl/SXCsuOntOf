@@ -64,6 +64,7 @@ const routes = [{
                     import ( /* webpackChunkName: "ForgotPassword" */ '../views/sign/forgotPassword.vue')
             }
         ],
+        //强制重定向
         redirect: '/sign/signIn'
     },
     {

@@ -9,7 +9,7 @@ import VeLine from 'v-charts/lib/line.common'
 
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
-import mavonEditor from 'mavon-editor'
+import  mavonEditor from 'mavon-editor'
 import 'mavon-editor/dist/css/index.css'
 
 // mockJS
