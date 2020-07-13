@@ -119,6 +119,7 @@ export default {
           if (response.data.status === true) {
             // localstorage jwt_token
             Vue.localStorage.set("jwt_token", response.data.data.token);
+            Vue.localStorage.set("user_name", response.data.data.username);
             // route push
             this.$router.push("/" + response.data.data.username + "/admin");
           } else {
