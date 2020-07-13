@@ -7,7 +7,9 @@
 
       <b-collapse id="nav-collapse" is-nav>
         <b-navbar-nav>
-          <b-nav-item v-if="isSignIn" :to="{ name: 'user_blog_home' }">Your Blog</b-nav-item>
+          <b-nav-item v-if="isSignIn" :to="{ name: 'user_blog_home' }"
+            >Your Blog</b-nav-item
+          >
         </b-navbar-nav>
         <b-navbar-nav>
           <b-nav-item to="/news">News</b-nav-item>
@@ -69,13 +71,13 @@
   </div>
 </template>
 <script>
+// import VueX
+import { mapState, mapMutations } from "vuex";
 import Vue from "vue";
 
 export default {
   data() {
     return {
-      isSignIn: false,
-      username: "",
       signOutModal: false,
     };
   },
@@ -83,13 +85,17 @@ export default {
     this.verifyIsSignIn();
   },
   methods: {
+    ...mapMutations({
+      updateUsername: 'updateUsername',
+      updateIsSignIn: 'updateIsSignIn',
+    }),
     verifyIsSignIn() {
       let jwt_token = Vue.localStorage.get("jwt_token");
       if (jwt_token !== "" && jwt_token !== null && jwt_token !== undefined) {
-        this.isSignIn = true;
-        this.username = Vue.localStorage.get("user_name");
+        this.updateIsSignIn(true);
+        this.updateUsername(Vue.localStorage.get("user_name"));
       } else {
-        this.isSignIn = false;
+        this.updateIsSignIn(false);
       }
     },
     auto_login() {},
@@ -99,11 +105,22 @@ export default {
     signOut() {
       Vue.localStorage.set("jwt_token", "");
       Vue.localStorage.set("user_name", "");
-      this.isSignIn = false;
-      this.username = "";
+      this.updateIsSignIn(false);
+      this.updateUsername("");
       this.signOutModal = false;
       this.$router.push("/");
     },
+  },
+  computed: {
+    // get data from vuex
+    ...mapState({
+      username: (state) => {
+        return state.user.username;
+      },
+      isSignIn: (state) => {
+        return state.user.isSignIn;
+      },
+    }),
   },
 };
 </script>

@@ -99,6 +99,10 @@ export default {
     };
   },
   methods: {
+    ...mapMutations({
+      updateUsername: 'updateUsername',
+      updateIsSignIn: 'updateIsSignIn',
+    }),
     signIn() {
       if (this.username !== "" && this.password !== "") {
         this.signInRequest();
@@ -120,6 +124,8 @@ export default {
             // localstorage jwt_token
             Vue.localStorage.set("jwt_token", response.data.data.token);
             Vue.localStorage.set("user_name", response.data.data.username);
+            this.updateIsSignIn(true);
+            this.updateUsername(response.data.data.username);
             // route push
             this.$router.push("/" + response.data.data.username + "/admin");
           } else {
@@ -140,6 +146,12 @@ export default {
       },
       signInURL: (state) => {
         return state.api.signInURL;
+      },
+      username: (state) => {
+        return state.user.username;
+      },
+      isSignIn: (state) => {
+        return state.user.isSignIn;
       },
     }),
   },
