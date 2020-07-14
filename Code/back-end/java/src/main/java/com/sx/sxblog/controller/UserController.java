@@ -211,15 +211,14 @@ public class UserController {
         }
 
         int id = userService.getUserByUsername(username).getUserId();
-        String password = userService.getUserByUsername(username).getPassword();
         JSONObject data = new JSONObject();
-        data.put("username",username);
-        data.put("birthday",birthday);
-        data.put("company",company);
-        data.put("description",description);
-        data.put("email",email);
-        data.put("sex",sex);
-        data.put("password",password);
+        data.put("username",user.getUserName());
+        data.put("birthday",user.getBirthday());
+        data.put("company",user.getCompany());
+        data.put("description",user.getDescription());
+        data.put("email",user.getEmail());
+        data.put("sex",user.getSex());
+        data.put("password",user.getPassword());
 
         ReturnEntity returnEntity = new ReturnEntity(status,msg,data);
         return returnEntity;
