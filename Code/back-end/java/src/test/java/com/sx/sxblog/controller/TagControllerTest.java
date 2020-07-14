@@ -1,7 +1,6 @@
 package com.sx.sxblog.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.sx.sxblog.entity.Blog;
 import com.sx.sxblog.entity.Tag;
 import org.junit.Before;
 import org.junit.Test;
@@ -105,6 +104,17 @@ public class TagControllerTest {
         mvc.perform(MockMvcRequestBuilders.post("/deleteTag")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(json))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andDo(MockMvcResultHandlers.print());
+    }
+
+
+    @Test
+    public void getTagsByBlogId() throws Exception
+    {
+        mvc.perform(MockMvcRequestBuilders.get("/getTagsByBlogId?blog_id=1000001")
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andDo(MockMvcResultHandlers.print());
     }
