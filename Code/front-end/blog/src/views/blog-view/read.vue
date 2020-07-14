@@ -7,7 +7,13 @@
           size="15em"
           src="https://avatars1.githubusercontent.com/u/48636976?s=460&u=6fc910ffe23ff8ff7ffc210d49ca81fdec486f9f&v=4"
         ></b-avatar>
-        <span id="read-username">Username</span>
+        <span
+          id="read-username"
+          @click="toUserBlogHome"
+          v-b-tooltip.hover
+          title="Home Blog List"
+          >Username</span
+        >
       </div>
     </div>
     <div id="markdown-content">
@@ -216,6 +222,9 @@ export default {
   methods: {
     goBack() {
       window.history.length > 1 ? this.$router.go(-1) : this.$router.push("/");
+    },
+    toUserBlogHome() {
+      this.$router.push("/" + this.$route.params.id + "/blog/home");
     },
   },
 };

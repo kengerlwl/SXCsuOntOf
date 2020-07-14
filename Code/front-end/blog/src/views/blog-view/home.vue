@@ -10,6 +10,14 @@
           src="https://avatars1.githubusercontent.com/u/48636976?s=460&u=6fc910ffe23ff8ff7ffc210d49ca81fdec486f9f&v=4"
         ></b-avatar>
         <span id="username">Username</span>
+        <b-button
+          id="about-btn"
+          variant="dark"
+          size="sm"
+          @click="toViewUserAbout"
+          ><b-icon-brightness-alt-high></b-icon-brightness-alt-high>
+          About
+        </b-button>
       </div>
     </div>
     <div id="blog-list">
@@ -342,6 +350,11 @@ export default {
       ],
     };
   },
+  methods: {
+    toViewUserAbout() {
+      this.$router.push("/" + this.$route.params.id + "/blog/about");
+    },
+  },
   computed: {
     pageCount() {
       let l = this.totalRows,
@@ -386,6 +399,11 @@ export default {
 #username {
   font-size: 3em;
   padding-left: 1em;
+}
+#about-btn {
+  position: relative;
+  top: -1em;
+  left: 1em;
 }
 #top-desc {
   padding-top: 5em;
