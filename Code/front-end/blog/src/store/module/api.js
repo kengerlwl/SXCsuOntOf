@@ -6,10 +6,12 @@ const api = {
         // account signIn signUp
         signInURL: "/user/signIn",
         signUpURL: "/user/signUp",
+        // check the username if it is exist
+        usernameVerifyURL: "/user/username_verify",
         verifyEmailURL: "",
         forgotPasswordURL: "",
         // account setting
-        getUserData: " /user/get_data",
+        getUserDataURL: "/user/get_data",
         updateUsernameURL: "",
         updateEmailURL: "",
         verityNewEmailURL: "",

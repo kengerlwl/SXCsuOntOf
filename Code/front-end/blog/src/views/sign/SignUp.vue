@@ -87,7 +87,7 @@
         I accept MD-blog's policy
       </b-form-checkbox>
       <b-form-invalid-feedback :state="checkbox">
-          Must accept it
+        Must accept it
       </b-form-invalid-feedback>
       <b-button
         class="sign-btn"
@@ -95,7 +95,7 @@
         size="lg"
         block
         variant="info"
-        to="/sign/verifyEmail"
+        @click="usernameVerifyRequest"
         >SIGN UP</b-button
       >
       <b-button
@@ -108,11 +108,54 @@
         >SIGN IN</b-button
       >
     </div>
+    <!-- sign up fail modal -->
+    <b-modal
+      v-model="signUpFailModal"
+      no-close-on-backdrop
+      no-close-on-esc
+      centered
+      title="Sign Up Fail"
+      header-bg-variant="danger"
+      header-text-variant="light"
+      body-text-variant="danger"
+    >
+      <h4>
+        <strong>{{ signUpFailMsg }}</strong>
+      </h4>
+      <template v-slot:modal-footer="{ ok, cancel, hide }">
+        <!-- Emulate built in modal footer ok and cancel button actions -->
+        <b-button variant="success" @click="ok()">
+          OK
+        </b-button>
+      </template>
+    </b-modal>
+    <!-- sign up success modal -->
+    <b-modal
+      v-model="signUpSuccessModal"
+      no-close-on-backdrop
+      no-close-on-esc
+      centered
+      title="Sign Up Success"
+      header-bg-variant="success"
+      header-text-variant="light"
+      body-text-variant="success"
+    >
+      <h4>
+        <strong>{{ signUpSuccessMsg }}</strong>
+      </h4>
+      <template v-slot:modal-footer="{ ok, cancel, hide }">
+        <!-- Emulate built in modal footer ok and cancel button actions -->
+        <b-button variant="success" @click="toSignIn">
+          OK
+        </b-button>
+      </template>
+    </b-modal>
   </div>
 </template>
 <script>
 // import VueX
 import { mapState, mapMutations } from "vuex";
+import axios from "axios";
 
 export default {
   data() {
@@ -122,6 +165,16 @@ export default {
       password: "",
       confirmPassword: "",
       checkbox: true,
+      // input error
+      usernameError: true,
+      emailError: true,
+      passwordError: true,
+      confirmPasswordError: true,
+      // sign up modal and msg
+      signUpFailModal: false,
+      signUpFailMsg: "",
+      signUpSuccessModal: false,
+      signUpSuccessMsg: "",
     };
   },
   methods: {
@@ -129,35 +182,117 @@ export default {
       const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
       return re.test(String(email).toLowerCase());
     },
+    // avoid same username
+    // first check username
+    usernameVerifyRequest() {
+      if (
+        !this.usernameError &&
+        !this.emailError &&
+        !this.passwordError &&
+        !this.confirmPasswordError &&
+        this.checkbox
+      ) {
+        axios({
+          method: "post",
+          url: this.springBaseURL + this.usernameVerifyURL,
+          headers: {},
+          data: {
+            username: this.username,
+          },
+        })
+          .then((response) => {
+            console.log(response.data);
+            if (response.data.status === false) {
+              this.signUpFailModal = true;
+              this.signUpFailMsg =
+                "This username has existed, please change one.";
+            } else {
+              this.signUp();
+            }
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      }
+    },
+    // second sign up
     signUp() {
-
+      if (
+        !this.usernameError &&
+        !this.emailError &&
+        !this.passwordError &&
+        !this.confirmPasswordError &&
+        this.checkbox
+      ) {
+        this.signUpRequest();
+      }
     },
     async signUpRequest() {
-
-    }
+      axios({
+        method: "post",
+        url: this.springBaseURL + this.signUpURL,
+        headers: {},
+        data: {
+          username: this.username,
+          email: this.email,
+          birthday: "yyyy-mm-dd",
+          company: "None",
+          description: "None",
+          sex: "None",
+          password: this.password,
+        },
+      })
+        .then((response) => {
+          console.log(response.data);
+          if (response.data.status === true) {
+            this.signUpSuccessModal = true;
+            this.signUpSuccessMsg = response.data.msg;
+          } else {
+            this.signUpFailModal = true;
+            this.signUpFailMsg = "Sign Up Fail";
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+    toSignIn() {
+      // route push
+      this.$router.push("/sign/signIn");
+    },
   },
   computed: {
     // get data from vuex
     ...mapState({
-      baseURL: (state) => {
-        return state.api.baseURL;
+      springBaseURL: (state) => {
+        return state.api.springBaseURL;
       },
       signUpURL: (state) => {
         return state.api.signUpURL;
       },
+      usernameVerifyURL: (state) => {
+        return state.api.usernameVerifyURL;
+      },
     }),
     // feedback validate
     usernameState() {
-      return this.username.length > 2 ? true : false;
+      this.usernameError = this.username.length > 2 ? false : true;
+      return !this.usernameError;
     },
     emailState() {
-      return this.validateEmail(this.email);
+      this.emailError = !this.validateEmail(this.email);
+      return !this.emailError;
     },
     passwordState() {
-      return this.password.length > 7 ? true : false;
+      this.passwordError = this.password.length > 7 ? false : true;
+      return !this.passwordError;
     },
     confirmPasswordState() {
-      return (this.confirmPassword === this.password && this.confirmPassword.length > 7 );
+      this.confirmPasswordError = !(
+        this.confirmPassword === this.password &&
+        this.confirmPassword.length > 7
+      );
+      return !this.confirmPasswordError;
     },
   },
 };

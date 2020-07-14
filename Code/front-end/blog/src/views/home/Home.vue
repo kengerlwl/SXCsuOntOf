@@ -76,8 +76,8 @@
       <div class="des-image">
         <img
           src="../../assets/markdown.png"
-          width="480"
-          height="480"
+          width="450"
+          height="450"
           alt="markdown"
         />
       </div>

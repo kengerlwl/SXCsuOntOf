@@ -39,7 +39,7 @@
                 id="tooltip-username-gear"
                 @click="editUsername"
               ></b-icon-gear-fill>
-              username
+              {{ user.username }}
             </b-card-title>
             <b-tooltip target="tooltip-username-gear" triggers="hover">
               Edit
@@ -90,7 +90,7 @@
                 id="tooltip-email-gear"
                 @click="editEmail"
               ></b-icon-gear-fill>
-              email
+              {{ user.email }}
             </b-card-title>
             <b-tooltip target="tooltip-email-gear" triggers="hover">
               Edit
@@ -178,7 +178,7 @@
                 id="tooltip-sex-gear"
                 @click="editSex"
               ></b-icon-gear-fill>
-              sex
+              {{ user.sex }}
             </b-card-title>
             <b-tooltip target="tooltip-sex-gear" triggers="hover">
               Edit
@@ -225,7 +225,7 @@
                 id="tooltip-birthday-gear"
                 @click="editBirthday"
               ></b-icon-gear-fill>
-              birthday
+              {{ user.birthday }}
             </b-card-title>
             <b-tooltip target="tooltip-birthday-gear" triggers="hover">
               Edit
@@ -266,7 +266,7 @@
                 id="tooltip-description-gear"
                 @click="editDescription"
               ></b-icon-gear-fill>
-              description
+              {{ user.description }}
             </b-card-title>
             <b-tooltip target="tooltip-description-gear" triggers="hover">
               Edit
@@ -315,7 +315,7 @@
                 id="tooltip-company-gear"
                 @click="editCompany"
               ></b-icon-gear-fill>
-              company
+              {{ user.company }}
             </b-card-title>
             <b-tooltip target="tooltip-company-gear" triggers="hover">
               Edit
@@ -362,7 +362,7 @@
                 id="tooltip-password-gear"
                 @click="editPassword"
               ></b-icon-gear-fill>
-              password
+              {{ user.password }}
             </b-card-title>
             <b-tooltip target="tooltip-password-gear" triggers="hover">
               Edit
@@ -447,7 +447,9 @@
           <hr class="my-4" />
           <b-button-toolbar>
             <b-button-group class="mr-3">
-              <b-button variant="warning">Sign Out</b-button>
+              <b-button variant="warning" @click="updateSignOutModal(true)"
+                >Sign Out</b-button
+              >
             </b-button-group>
             <b-button-group>
               <b-button variant="danger">Delete Your Account</b-button>
@@ -464,6 +466,8 @@
 <script>
 // import VueX
 import { mapState, mapMutations } from "vuex";
+import Vue from "vue";
+import axios from "axios";
 
 export default {
   data() {
@@ -476,6 +480,16 @@ export default {
       editDescriptionVisible: false,
       editCompanyVisible: false,
       editPasswordVisible: false,
+      // here user data
+      user: {
+        username: "",
+        email: "",
+        description: "",
+        birthday: "",
+        sex: "",
+        company: "",
+        password: "********",
+      },
       // update data
       form: {
         username: "",
@@ -493,7 +507,49 @@ export default {
       verifyEmailModal: false,
     };
   },
+  created() {
+    console.log('created');
+    this.getUserDataRequest();
+  },
   methods: {
+    // vueX mutation
+    ...mapMutations({
+      updateUsername: "updateUsername",
+      updateIsSignIn: "updateIsSignIn",
+      updateSignOutModal: "updateSignOutModal",
+      updateTokenVerifyFailModal: "updateTokenVerifyFailModal",
+    }),
+    // get user's data
+    async getUserDataRequest() {
+      console.log('getUserDataRequest');
+      axios({
+        method: "post",
+        url: this.springBaseURL + this.getUserDataURL,
+        headers: {
+          token: Vue.localStorage.get("jwt_token"),
+        },
+        data: {
+          username: Vue.localStorage.get("user_name"),
+        },
+      })
+        .then((response) => {
+          console.log(response.data);
+          // token verify fail
+          if (response.data.status === true) {
+            this.user.username = response.data.data.username;
+            this.user.email = response.data.data.email;
+            this.user.description = response.data.data.description;
+            this.user.sex = response.data.data.sex;
+            this.user.company = response.data.data.company;
+            this.user.birthday = response.data.data.birthday;
+          } else {
+            this.updateTokenVerifyFailModal(true);
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
     // edit control func
     editUsername() {
       this.editUsernameVisible = !this.editUsernameVisible;
@@ -551,11 +607,14 @@ export default {
   computed: {
     // get data from vuex
     ...mapState({
-      baseURL: (state) => {
-        return state.api.baseURL;
+      springBaseURL: (state) => {
+        return state.api.springBaseURL;
       },
-      signUpURL: (state) => {
-        return state.api.signUpURL;
+      getUserDataURL: (state) => {
+        return state.api.getUserDataURL;
+      },
+      tokenVerifyFailModal: (state) => {
+        return state.user.tokenVerifyFailModal;
       },
     }),
     // feedback validate

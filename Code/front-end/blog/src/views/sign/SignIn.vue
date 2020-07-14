@@ -39,7 +39,13 @@
         Auto Sign In
       </b-form-checkbox>
       <!-- Sign In -->
-      <b-button class="sign-btn" pill size="lg" block variant="success"
+      <b-button
+        class="sign-btn"
+        pill
+        size="lg"
+        block
+        variant="success"
+        @click="signIn"
         >SIGN IN</b-button
       >
       <!-- Sign Up -->
@@ -53,12 +59,34 @@
         >SIGN UP</b-button
       >
     </div>
+    <!-- sign in fail modal -->
+    <b-modal
+      v-model="signInFailModal"
+      no-close-on-backdrop
+      no-close-on-esc
+      centered
+      title="Sign In Fail"
+      header-bg-variant="danger"
+      header-text-variant="light"
+      body-text-variant="danger"
+    >
+      <h4>
+        <strong>{{ signInFailMsg }}</strong>
+      </h4>
+      <template v-slot:modal-footer="{ ok, cancel, hide }">
+        <!-- Emulate built in modal footer ok and cancel button actions -->
+        <b-button variant="success" @click="ok()">
+          Ok
+        </b-button>
+      </template>
+    </b-modal>
   </div>
 </template>
 <script>
 // import VueX
 import { mapState, mapMutations } from "vuex";
-import axios from 'axios';
+import axios from "axios";
+import Vue from "vue";
 
 export default {
   data() {
@@ -66,10 +94,20 @@ export default {
       username: "",
       password: "",
       checkbox: true,
+      signInFailMsg: "",
+      signInFailModal: false,
     };
   },
   methods: {
-    signIn() {},
+    ...mapMutations({
+      updateUsername: 'updateUsername',
+      updateIsSignIn: 'updateIsSignIn',
+    }),
+    signIn() {
+      if (this.username !== "" && this.password !== "") {
+        this.signInRequest();
+      }
+    },
     async signInRequest() {
       axios({
         method: "post",
@@ -81,7 +119,19 @@ export default {
         },
       })
         .then((response) => {
-          console.log(response.data)
+          console.log(response.data);
+          if (response.data.status === true) {
+            // localstorage jwt_token
+            Vue.localStorage.set("jwt_token", response.data.data.token);
+            Vue.localStorage.set("user_name", response.data.data.username);
+            this.updateIsSignIn(true);
+            this.updateUsername(response.data.data.username);
+            // route push
+            this.$router.push("/" + response.data.data.username + "/admin");
+          } else {
+            this.signInFailModal = true;
+            this.signInFailMsg = response.data.msg;
+          }
         })
         .catch((error) => {
           console.log(error);
@@ -92,10 +142,13 @@ export default {
     // get data from vuex
     ...mapState({
       springBaseURL: (state) => {
-        return state.api.baseURL;
+        return state.api.springBaseURL;
       },
       signInURL: (state) => {
         return state.api.signInURL;
+      },
+      isSignIn: (state) => {
+        return state.user.isSignIn;
       },
     }),
   },
