@@ -65,6 +65,29 @@
         </b-button>
       </template>
     </b-modal>
+    <!-- token verify fail modal -->
+    <b-modal
+      v-model="tokenVerifyFailModal"
+      no-close-on-backdrop
+      no-close-on-esc
+      centered
+      header-bg-variant="danger"
+      header-text-variant="light"
+      body-text-variant="danger"
+    >
+      <template v-slot:modal-header="{ close }">
+      <h5>Token Expired</h5>
+    </template>
+      <h4>
+        <strong>You must sign in again.</strong>
+      </h4>
+      <template v-slot:modal-footer="{ ok, cancel, hide }">
+        <!-- Emulate built in modal footer ok and cancel button actions -->
+        <b-button variant="success" @click="signOut">
+          OK
+        </b-button>
+      </template>
+    </b-modal>
     <!--<div id="nav">
       <router-link to="/">Home</router-link> |
       <router-link to="/about">About</router-link>
@@ -90,6 +113,7 @@ export default {
       updateUsername: 'updateUsername',
       updateIsSignIn: 'updateIsSignIn',
       updateSignOutModal: 'updateSignOutModal',
+      updateTokenVerifyFailModal: 'updateTokenVerifyFailModal'
     }),
     verifyIsSignIn() {
       let jwt_token = Vue.localStorage.get("jwt_token");
@@ -113,6 +137,7 @@ export default {
       this.updateIsSignIn(false);
       this.updateUsername("");
       this.updateSignOutModal(false);
+      this.updateTokenVerifyFailModal(false);
       this.$router.push("/");
     },
   },
@@ -127,6 +152,9 @@ export default {
       },
       signOutModal: (state) => {
         return state.user.signOutModal;
+      },
+      tokenVerifyFailModal: (state) => {
+        return state.user.tokenVerifyFailModal;
       },
     }),
   },
