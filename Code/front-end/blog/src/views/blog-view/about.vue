@@ -22,99 +22,101 @@
       <b-container>
         <h2>Profile</h2>
         <hr class="my-4" />
-        <!-- username -->
-        <b-card
-          class="mb-4"
-          border-variant="dark"
-          header-bg-variant="dark"
-          header-text-variant="white"
-        >
-          <template v-slot:header>
-            <h4 class="mb-0">
-              <b-icon-person-fill></b-icon-person-fill> Username
-            </h4>
-          </template>
-          <b-card-title>
-            username
-          </b-card-title>
-        </b-card>
-        <!-- email -->
-        <b-card
-          class="mb-4"
-          border-variant="info"
-          header-bg-variant="info"
-          header-text-variant="white"
-        >
-          <template v-slot:header>
-            <h4 class="mb-0"><b-icon-at></b-icon-at> Email</h4>
-          </template>
-          <b-card-title>
-            email
-          </b-card-title>
-        </b-card>
-        <!-- sex -->
-        <b-card
-          class="mb-4"
-          border-variant="info"
-          header-bg-variant="info"
-          header-text-variant="white"
-        >
-          <template v-slot:header>
-            <h4 class="mb-0"><b-icon-asterisk></b-icon-asterisk> Sex</h4>
-          </template>
-          <b-card-title>
-            sex
-          </b-card-title>
-        </b-card>
-        <!-- birthday -->
-        <b-card
-          class="mb-4"
-          border-variant="info"
-          header-bg-variant="info"
-          header-text-variant="white"
-        >
-          <template v-slot:header>
-            <h4 class="mb-0">
-              <b-icon-calendar3-fill></b-icon-calendar3-fill> Birthday
-            </h4>
-          </template>
-          <b-card-title>
-            birthday
-          </b-card-title>
-        </b-card>
-        <!-- description -->
-        <b-card
-          class="mb-4"
-          border-variant="info"
-          header-bg-variant="info"
-          header-text-variant="white"
-        >
-          <template v-slot:header>
-            <h4 class="mb-0">
-              <b-icon-chat-square-dots-fill></b-icon-chat-square-dots-fill>
-              Description
-            </h4>
-          </template>
-          <b-card-title>
-            description
-          </b-card-title>
-        </b-card>
-        <!-- company -->
-        <b-card
-          class="mb-4"
-          border-variant="info"
-          header-bg-variant="info"
-          header-text-variant="white"
-        >
-          <template v-slot:header>
-            <h4 class="mb-0">
-              <b-icon-briefcase-fill></b-icon-briefcase-fill> Company
-            </h4>
-          </template>
-          <b-card-title>
-            company
-          </b-card-title>
-        </b-card>
+        <b-container>
+          <!-- username -->
+          <b-card
+            class="mb-4"
+            border-variant="dark"
+            header-bg-variant="dark"
+            header-text-variant="white"
+          >
+            <template v-slot:header>
+              <h4 class="mb-0">
+                <b-icon-person-fill></b-icon-person-fill> Username
+              </h4>
+            </template>
+            <b-card-title>
+              {{ user.username }}
+            </b-card-title>
+          </b-card>
+          <!-- email -->
+          <b-card
+            class="mb-4"
+            border-variant="info"
+            header-bg-variant="info"
+            header-text-variant="white"
+          >
+            <template v-slot:header>
+              <h4 class="mb-0"><b-icon-at></b-icon-at> Email</h4>
+            </template>
+            <b-card-title>
+              {{ user.email }}
+            </b-card-title>
+          </b-card>
+          <!-- sex -->
+          <b-card
+            class="mb-4"
+            border-variant="info"
+            header-bg-variant="info"
+            header-text-variant="white"
+          >
+            <template v-slot:header>
+              <h4 class="mb-0"><b-icon-asterisk></b-icon-asterisk> Sex</h4>
+            </template>
+            <b-card-title>
+              {{ user.sex }}
+            </b-card-title>
+          </b-card>
+          <!-- birthday -->
+          <b-card
+            class="mb-4"
+            border-variant="info"
+            header-bg-variant="info"
+            header-text-variant="white"
+          >
+            <template v-slot:header>
+              <h4 class="mb-0">
+                <b-icon-calendar3-fill></b-icon-calendar3-fill> Birthday
+              </h4>
+            </template>
+            <b-card-title>
+              {{ user.birthday }}
+            </b-card-title>
+          </b-card>
+          <!-- description -->
+          <b-card
+            class="mb-4"
+            border-variant="info"
+            header-bg-variant="info"
+            header-text-variant="white"
+          >
+            <template v-slot:header>
+              <h4 class="mb-0">
+                <b-icon-chat-square-dots-fill></b-icon-chat-square-dots-fill>
+                Description
+              </h4>
+            </template>
+            <b-card-title>
+              {{ user.description }}
+            </b-card-title>
+          </b-card>
+          <!-- company -->
+          <b-card
+            class="mb-4"
+            border-variant="info"
+            header-bg-variant="info"
+            header-text-variant="white"
+          >
+            <template v-slot:header>
+              <h4 class="mb-0">
+                <b-icon-briefcase-fill></b-icon-briefcase-fill> Company
+              </h4>
+            </template>
+            <b-card-title>
+              {{ user.company }}
+            </b-card-title>
+          </b-card>
+        </b-container>
       </b-container>
     </div>
     <div id="footer">
@@ -165,9 +167,23 @@
   </div>
 </template>
 <script>
+import { mapState, mapMutations } from "vuex";
+import Vue from "vue";
+import axios from "axios";
+
 export default {
   data() {
     return {
+      // here user data
+      user: {
+        username: "",
+        email: "",
+        description: "",
+        birthday: "",
+        sex: "",
+        company: "",
+        password: "********",
+      },
       aboutDeveloper: [
         {
           developer: "2892211452",
@@ -201,10 +217,58 @@ export default {
       ],
     };
   },
+  created() {
+    this.getUserDataRequest();
+  },
   methods: {
     toUserBlogHome() {
       this.$router.push("/" + this.$route.params.id + "/blog/home");
     },
+    // get user's data
+    async getUserDataRequest() {
+      console.log("getUserDataRequest");
+      axios({
+        method: "post",
+        url: this.springBaseURL + this.getUserDataURL,
+        headers: {
+          token: Vue.localStorage.get("jwt_token"),
+        },
+        data: {
+          username: this.$route.params.id,
+        },
+      })
+        .then((response) => {
+          console.log(response.data);
+          // token verify fail
+          if (response.data.code === "500000") {
+            this.updateTokenVerifyFailModal(true);
+          } else {
+            if (response.data.status === true) {
+              this.user.username = response.data.data.username;
+              this.user.email = response.data.data.email;
+              this.user.description = response.data.data.description;
+              this.user.sex = response.data.data.sex;
+              this.user.company = response.data.data.company;
+              this.user.birthday = response.data.data.birthday;
+            } else {
+            }
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+  },
+  computed: {
+    // get data from vuex
+    ...mapState({
+      springBaseURL: (state) => {
+        return state.api.springBaseURL;
+      },
+      getUserDataURL: (state) => {
+        return state.api.getUserDataURL;
+      },
+    }),
   },
 };
 </script>
