@@ -12,14 +12,14 @@ const api = {
         forgotPasswordURL: "",
         // account setting
         getUserDataURL: "/user/get_data",
-        updateUsernameURL: "",
-        updateEmailURL: "",
+        updateUsernameURL: "/user/change_data",
+        updateEmailURL: "/user/change_data",
         verityNewEmailURL: "",
-        updateSexURL: "",
-        updateCompanyURL: "",
-        updateBirthdayURL: "",
-        updateDescriptionURL: "",
-        updatePasswordURL: "",
+        updateSexURL: "/user/change_data",
+        updateCompanyURL: "/user/change_data",
+        updateBirthdayURL: "/user/change_data",
+        updateDescriptionURL: "/user/change_data",
+        updatePasswordURL: "/user/change_data",
         // posts
         createNewPostURL: "",
         updatePostURL: "",
@@ -29,6 +29,7 @@ const api = {
         addCollectURL: "",
         searchCollectURL: "",
         deleteCollectURL: "",
+        getCollectURL: "",
         // news
         getSchoolNewsURL: "/getNews",
         getGamesNewsURL: "/getEpicFreeGame"

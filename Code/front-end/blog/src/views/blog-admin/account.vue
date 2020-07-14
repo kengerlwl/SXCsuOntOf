@@ -71,7 +71,9 @@
                     Enter at least 3 letters
                   </b-form-invalid-feedback>
                 </b-form-group>
-                <b-button variant="success">SUBMIT</b-button>
+                <b-button variant="success" @click="usernameVerifyRequest"
+                  >SUBMIT</b-button
+                >
               </b-collapse>
             </b-card-text>
           </b-card>
@@ -461,6 +463,48 @@
         </b-container>
       </b-col>
     </b-row>
+    <!-- update fail modal -->
+    <b-modal
+      v-model="updateFailModal"
+      no-close-on-backdrop
+      no-close-on-esc
+      centered
+      title="Update Fail"
+      header-bg-variant="danger"
+      header-text-variant="light"
+      body-text-variant="danger"
+    >
+      <h4>
+        <strong>{{ updateFailMsg }}</strong>
+      </h4>
+      <template v-slot:modal-footer="{ ok, cancel, hide }">
+        <!-- Emulate built in modal footer ok and cancel button actions -->
+        <b-button variant="success" @click="ok()">
+          OK
+        </b-button>
+      </template>
+    </b-modal>
+    <!-- update success modal -->
+    <b-modal
+      v-model="updateSuccessModal"
+      no-close-on-backdrop
+      no-close-on-esc
+      centered
+      title="Update Success"
+      header-bg-variant="success"
+      header-text-variant="light"
+      body-text-variant="success"
+    >
+      <h4>
+        <strong>{{ updateSuccessMsg }}</strong>
+      </h4>
+      <template v-slot:modal-footer="{ ok, cancel, hide }">
+        <!-- Emulate built in modal footer ok and cancel button actions -->
+        <b-button variant="success" @click="ok()">
+          OK
+        </b-button>
+      </template>
+    </b-modal>
   </div>
 </template>
 <script>
@@ -503,12 +547,26 @@ export default {
         confirmNewPassword: "",
         captcha: "",
       },
+      // new data input error
+      newDataError: {
+        username: true,
+        email: true,
+        originPassword: true,
+        newPassword: true,
+        confirmNewPassword: true,
+        captcha: true,
+      },
       // verify email dialog
       verifyEmailModal: false,
+      // update modal and msg
+      updateFailModal: false,
+      updateFailMsg: "",
+      updateSuccessModal: false,
+      updateSuccessMsg: "",
     };
   },
   created() {
-    console.log('created');
+    console.log("created");
     this.getUserDataRequest();
   },
   methods: {
@@ -521,7 +579,7 @@ export default {
     }),
     // get user's data
     async getUserDataRequest() {
-      console.log('getUserDataRequest');
+      console.log("getUserDataRequest");
       axios({
         method: "post",
         url: this.springBaseURL + this.getUserDataURL,
@@ -535,21 +593,259 @@ export default {
         .then((response) => {
           console.log(response.data);
           // token verify fail
-          if (response.data.status === true) {
-            this.user.username = response.data.data.username;
-            this.user.email = response.data.data.email;
-            this.user.description = response.data.data.description;
-            this.user.sex = response.data.data.sex;
-            this.user.company = response.data.data.company;
-            this.user.birthday = response.data.data.birthday;
-          } else {
+          if (response.data.code === "500000") {
             this.updateTokenVerifyFailModal(true);
+          } else {
+            if (response.data.status === true) {
+              this.user.username = response.data.data.username;
+              this.user.email = response.data.data.email;
+              this.user.description = response.data.data.description;
+              this.user.sex = response.data.data.sex;
+              this.user.company = response.data.data.company;
+              this.user.birthday = response.data.data.birthday;
+            } else {
+            }
           }
         })
         .catch((error) => {
           console.log(error);
         });
     },
+    usernameVerifyRequest() {
+      if (!this.newDataError.username) {
+        axios({
+          method: "post",
+          url: this.springBaseURL + this.usernameVerifyURL,
+          headers: {},
+          data: {
+            username: this.form.username,
+          },
+        })
+          .then((response) => {
+            console.log(response.data);
+            if (response.data.code === "500000") {
+              this.updateTokenVerifyFailModal(true);
+            } else {
+              if (response.data.status === false) {
+                this.updateFailModal = true;
+                this.updateFailMsg =
+                  "This username has existed, please change one.";
+              } else {
+              }
+            }
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      }
+    },
+    async updateUsernameRequest() {
+      if (!this.newDataError.username) {
+        axios({
+          method: "post",
+          url: this.springBaseURL + this.updateUsernameURL,
+          headers: {
+            token: Vue.localStorage.get("jwt_token"),
+          },
+          data: {
+            username: this.form.username,
+          },
+        })
+          .then((response) => {
+            console.log(response.data);
+            if (response.data.code === "500000") {
+              this.updateTokenVerifyFailModal(true);
+            } else {
+              if (response.data.status === false) {
+                this.updateFailModal = true;
+                this.updateFailMsg =
+                  "This username has existed, please change one.";
+              } else {
+              }
+            }
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      }
+    },
+    async updateEmailRequest() {
+      if (!this.newDataError.email) {
+        axios({
+          method: "post",
+          url: this.springBaseURL + this.updateEmailURL,
+          headers: {
+            token: Vue.localStorage.get("jwt_token"),
+          },
+          data: {
+            username: this.form.username,
+          },
+        })
+          .then((response) => {
+            console.log(response.data);
+            if (response.data.code === "500000") {
+              this.updateTokenVerifyFailModal(true);
+            } else {
+              if (response.data.status === false) {
+                this.updateFailModal = true;
+                this.updateFailMsg =
+                  "This username has existed, please change one.";
+              } else {
+              }
+            }
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      }
+    },
+    async updateDescriptionRequest() {
+      axios({
+        method: "post",
+        url: this.springBaseURL + this.updateDescriptionURL,
+        headers: {
+          token: Vue.localStorage.get("jwt_token"),
+        },
+        data: {
+          username: this.form.username,
+        },
+      })
+        .then((response) => {
+          console.log(response.data);
+          if (response.data.code === "500000") {
+            this.updateTokenVerifyFailModal(true);
+          } else {
+            if (response.data.status === false) {
+              this.updateFailModal = true;
+              this.updateFailMsg =
+                "This username has existed, please change one.";
+            } else {
+            }
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+    async updateSexRequest() {
+      axios({
+        method: "post",
+        url: this.springBaseURL + this.updateSexURL,
+        headers: {
+          token: Vue.localStorage.get("jwt_token"),
+        },
+        data: {
+          username: this.form.username,
+        },
+      })
+        .then((response) => {
+          console.log(response.data);
+          if (response.data.code === "500000") {
+            this.updateTokenVerifyFailModal(true);
+          } else {
+            if (response.data.status === false) {
+              this.updateFailModal = true;
+              this.updateFailMsg =
+                "This username has existed, please change one.";
+            } else {
+            }
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+    async updateBirthdayRequest() {
+      axios({
+        method: "post",
+        url: this.springBaseURL + this.updateBirthdayURL,
+        headers: {
+          token: Vue.localStorage.get("jwt_token"),
+        },
+        data: {
+          username: this.form.username,
+        },
+      })
+        .then((response) => {
+          console.log(response.data);
+          if (response.data.code === "500000") {
+            this.updateTokenVerifyFailModal(true);
+          } else {
+            if (response.data.status === false) {
+              this.updateFailModal = true;
+              this.updateFailMsg =
+                "This username has existed, please change one.";
+            } else {
+            }
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+    async updateCompanyRequest() {
+      axios({
+        method: "post",
+        url: this.springBaseURL + this.updateCompanyURL,
+        headers: {
+          token: Vue.localStorage.get("jwt_token"),
+        },
+        data: {
+          username: this.form.username,
+        },
+      })
+        .then((response) => {
+          console.log(response.data);
+          if (response.data.code === "500000") {
+            this.updateTokenVerifyFailModal(true);
+          } else {
+            if (response.data.status === false) {
+              this.updateFailModal = true;
+              this.updateFailMsg =
+                "This username has existed, please change one.";
+            } else {
+            }
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+    async updatePasswordRequest() {
+      if (
+        !this.newDataError.originPassword &&
+        !this.this.newDataError.newPassword &&
+        !this.newDataError.confirmNewPassword
+      ) {
+        axios({
+          method: "post",
+          url: this.springBaseURL + this.updatePasswordURL,
+          headers: {
+            token: Vue.localStorage.get("jwt_token"),
+          },
+          data: {
+            username: this.form.username,
+          },
+        })
+          .then((response) => {
+            console.log(response.data);
+            if (response.data.code === "500000") {
+              this.updateTokenVerifyFailModal(true);
+            } else {
+              if (response.data.status === false) {
+                this.updateFailModal = true;
+                this.updateFailMsg =
+                  "This username has existed, please change one.";
+              } else {
+              }
+            }
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      }
+    },
+
     // edit control func
     editUsername() {
       this.editUsernameVisible = !this.editUsernameVisible;
@@ -616,25 +912,53 @@ export default {
       tokenVerifyFailModal: (state) => {
         return state.user.tokenVerifyFailModal;
       },
+      updateUsernameURL: (state) => {
+        return state.api.updateUsernameURL;
+      },
+      updateEmailURL: (state) => {
+        return state.api.updateEmailURL;
+      },
+      updateSexURL: (state) => {
+        return state.api.updateSexURL;
+      },
+      updateCompanyURL: (state) => {
+        return state.api.updateCompanyURL;
+      },
+      updateBirthdayURL: (state) => {
+        return state.api.updateBirthdayURL;
+      },
+      updateDescriptionURL: (state) => {
+        return state.api.updateDescriptionURL;
+      },
+      updatePasswordURL: (state) => {
+        return state.api.updatePasswordURL;
+      },
     }),
     // feedback validate
     newUsernameState() {
-      return this.form.username.length > 2 ? true : false;
+      this.newDataError.username = this.form.username.length > 2 ? false : true;
+      return !this.newDataError.username;
     },
     newEmailState() {
-      return this.validateEmail(this.form.email);
+      this.newDataError.email = !this.validateEmail(this.form.email);
+      return !this.newDataError.email;
     },
     originPasswordState() {
-      return this.form.originPassword.length > 7 ? true : false;
+      this.newDataError.originPassword =
+        this.form.originPassword.length > 7 ? false : true;
+      return !this.newDataError.originPassword;
     },
     newPasswordState() {
-      return this.form.newPassword.length > 7 ? true : false;
+      this.newDataError.newPassword =
+        this.form.newPassword.length > 7 ? false : true;
+      return !this.newDataError.newPassword;
     },
     confirmNewPasswordState() {
-      return (
+      this.newDataError.confirmNewPassword = !(
         this.form.confirmNewPassword.length > 7 &&
         this.form.confirmNewPassword === this.form.newPassword
       );
+      return !this.newDataError.confirmNewPassword;
     },
   },
 };

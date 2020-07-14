@@ -114,6 +114,11 @@
   </div>
 </template>
 <script>
+// import VueX
+import { mapState, mapMutations } from "vuex";
+import Vue from "vue";
+import axios from "axios";
+
 // test data
 const items = [
   {
@@ -299,6 +304,13 @@ export default {
     };
   },
   methods: {
+    // vueX mutation
+    ...mapMutations({
+      updateUsername: "updateUsername",
+      updateIsSignIn: "updateIsSignIn",
+      updateSignOutModal: "updateSignOutModal",
+      updateTokenVerifyFailModal: "updateTokenVerifyFailModal",
+    }),
     openDeleteModal(index, id) {
       this.deletePostModal = true;
       this.deleteItem.index = index;
@@ -315,9 +327,33 @@ export default {
       this.deletePostModal = false;
       // change totalRows
       this.totalRows = this.collectBlog.length;
-    }
+    },
+    async deleteCollectRequest() {
+
+    },
+    async getCollectRequest() {
+
+    },
+    
   },
   computed: {
+    ...mapState({
+      springBaseURL: (state) => {
+        return state.api.springBaseURL;
+      },
+      getUserDataURL: (state) => {
+        return state.api.getUserDataURL;
+      },
+      tokenVerifyFailModal: (state) => {
+        return state.user.tokenVerifyFailModal;
+      },
+      getCollectURL: (state) => {
+        return state.user.getCollectURL;
+      },
+      tokenVerifyFailModal: (state) => {
+        return state.user.tokenVerifyFailModal;
+      },
+    }),
     pageCount() {
       let l = this.totalRows,
         s = this.perPage;
