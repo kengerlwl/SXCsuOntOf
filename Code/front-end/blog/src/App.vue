@@ -45,17 +45,19 @@
       no-close-on-backdrop
       no-close-on-esc
       centered
-      title="Sign In Fail"
       header-bg-variant="danger"
       header-text-variant="light"
       body-text-variant="danger"
     >
+      <template v-slot:modal-header="{ close }">
+      <h5>Sign Out</h5>
+    </template>
       <h4>
         <strong>Are you sure you wnat to sign out?</strong>
       </h4>
       <template v-slot:modal-footer="{ ok, cancel, hide }">
         <!-- Emulate built in modal footer ok and cancel button actions -->
-        <b-button variant="success" @click="ok()">
+        <b-button variant="success" @click="cancelSignOut">
           Cancel
         </b-button>
         <b-button variant="danger" @click="signOut">
@@ -78,7 +80,6 @@ import Vue from "vue";
 export default {
   data() {
     return {
-      signOutModal: false,
     };
   },
   created() {
@@ -88,6 +89,7 @@ export default {
     ...mapMutations({
       updateUsername: 'updateUsername',
       updateIsSignIn: 'updateIsSignIn',
+      updateSignOutModal: 'updateSignOutModal',
     }),
     verifyIsSignIn() {
       let jwt_token = Vue.localStorage.get("jwt_token");
@@ -100,14 +102,17 @@ export default {
     },
     auto_login() {},
     openSignOutModal() {
-      this.signOutModal = true;
+      this.updateSignOutModal(true);
+    },
+    cancelSignOut() {
+      this.updateSignOutModal(false);
     },
     signOut() {
       Vue.localStorage.set("jwt_token", "");
       Vue.localStorage.set("user_name", "");
       this.updateIsSignIn(false);
       this.updateUsername("");
-      this.signOutModal = false;
+      this.updateSignOutModal(false);
       this.$router.push("/");
     },
   },
@@ -119,6 +124,9 @@ export default {
       },
       isSignIn: (state) => {
         return state.user.isSignIn;
+      },
+      signOutModal: (state) => {
+        return state.user.signOutModal;
       },
     }),
   },

@@ -447,7 +447,7 @@
           <hr class="my-4" />
           <b-button-toolbar>
             <b-button-group class="mr-3">
-              <b-button variant="warning">Sign Out</b-button>
+              <b-button variant="warning" @click="updateSignOutModal(true)">Sign Out</b-button>
             </b-button-group>
             <b-button-group>
               <b-button variant="danger">Delete Your Account</b-button>
@@ -464,6 +464,7 @@
 <script>
 // import VueX
 import { mapState, mapMutations } from "vuex";
+import Vue from "vue";
 
 export default {
   data() {
@@ -494,6 +495,41 @@ export default {
     };
   },
   methods: {
+    // vueX mutation
+    ...mapMutations({
+      updateUsername: 'updateUsername',
+      updateIsSignIn: 'updateIsSignIn',
+      updateSignOutModal: 'updateSignOutModal',
+    }),
+    // get user's data
+    async getUserDataRequest() {
+      let username = Vue.localStroage.get("user_name");
+      let token = Vue.localStroage.get("jwt_token");
+
+      axios({
+        method: "post",
+        url: this.springBaseURL + this.getUserDataURL,
+        headers: {
+          token: token,
+        },
+        data: {
+          username: username,
+        },
+      })
+        .then((response) => {
+          console.log(response.data);
+          // token verify fail
+          if (response.data.code === "500000") {
+          } else {
+            if (response.data.status === true) {
+            } else {
+            }
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
     // edit control func
     editUsername() {
       this.editUsernameVisible = !this.editUsernameVisible;
@@ -551,11 +587,11 @@ export default {
   computed: {
     // get data from vuex
     ...mapState({
-      baseURL: (state) => {
-        return state.api.baseURL;
+      springBaseURL: (state) => {
+        return state.api.springBaseURL;
       },
-      signUpURL: (state) => {
-        return state.api.signUpURL;
+      getUserDataURL: (state) => {
+        return state.api.getUserDataURL;
       },
     }),
     // feedback validate

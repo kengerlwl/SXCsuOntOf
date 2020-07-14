@@ -2,6 +2,7 @@ const user = {
     state: {
         username: "",
         isSignIn: false,
+        signOutModal: false,
     },
     mutations: {
         updateUsername(state, username) {
@@ -9,6 +10,9 @@ const user = {
         },
         updateIsSignIn(state, isSignIn) {
             state.isSignIn = isSignIn;
+        },
+        updateSignOutModal(state, signOutModal) {
+            state.signOutModal = signOutModal;
         }
     },
     actions: {},
