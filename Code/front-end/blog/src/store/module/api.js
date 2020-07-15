@@ -24,7 +24,7 @@ const api = {
         // posts
         createNewPostURL: "",
         updatePostURL: "",
-        deletePostURL: "",
+        deletePostURL: "/deleteBlog",
         searchPostURL: "",
         getPostsURL: "/getBlogListByUser",
         // collect

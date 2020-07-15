@@ -120,6 +120,24 @@
         </b-button>
       </template>
     </b-modal>
+    <!-- delete success modal -->
+    <b-modal
+      v-model="deletePostSuccessModal"
+      no-close-on-backdrop
+      no-close-on-esc
+      centered
+      title="Delete Post"
+      header-bg-variant="success"
+      header-text-variant="light"
+    >
+      <h4><strong>Delete Success</strong></h4>
+      <template v-slot:modal-footer="{ ok, cancel, hide }">
+        <!-- Emulate built in modal footer ok and cancel button actions -->
+        <b-button variant="success" @click="ok()">
+          OK
+        </b-button>
+      </template>
+    </b-modal>
   </div>
 </template>
 <script>
@@ -291,6 +309,7 @@ export default {
       // delete post modal
       deletePostModal: false,
       deleteItem: {},
+      deletePostSuccessModal: false,
       // search
       search: "",
     };
@@ -317,6 +336,8 @@ export default {
           this.posts.splice(i, 1);
         }
       }
+      // axios request
+      this.deletePostRequest(this.deleteItem.id);
 
       this.deletePostModal = false;
       // change totalRows
@@ -380,7 +401,29 @@ export default {
           console.log(error);
         });
     },
-    async deletePostRequest() {},
+    async deletePostRequest(postId) {
+      axios({
+        method: "post",
+        url: this.springBaseURL + this.deletePostURL,
+        headers: {
+          token: Vue.localStorage.get("jwt_token"),
+        },
+        data: {
+          blogId: postId,
+        },
+      })
+        .then((response) => {
+          console.log(response.data);
+          if (response.data.code === "500000") {
+            this.updateTokenVerifyFailModal(true);
+          } else {
+            this.deletePostSuccessModal = true;
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
   },
   computed: {
     // get data from vuex
@@ -390,6 +433,9 @@ export default {
       },
       getPostsURL: (state) => {
         return state.api.getPostsURL;
+      },
+      deletePostURL: (state) => {
+        return state.api.deletePostURL;
       },
     }),
     pageCount() {
