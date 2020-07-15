@@ -1,6 +1,9 @@
 <template>
   <div active>
-    <h1>Your Posts</h1>
+    <!--
+    {{ posts }}<br /><br /><br />
+    {{ showPosts }}<br />
+    <h1>Your Posts</h1>-->
     <hr class="my-4" />
     <b-alert show>Note: 這裡管理你的 Blog 文章</b-alert>
     <div class="mb-4">
@@ -12,10 +15,14 @@
         </b-button-group>
         <b-button-group>
           <b-input-group>
-            <b-form-input class="mr-sm-2" placeholder="Search"></b-form-input>
+            <b-form-input
+              v-model="search"
+              class="mr-sm-2"
+              placeholder="Search"
+            ></b-form-input>
           </b-input-group>
           <b-button-group class="mx-1">
-            <b-button variant="outline-success" type="submit">
+            <b-button variant="outline-success" @click="searchBlogList">
               Search
             </b-button>
           </b-button-group>
@@ -262,6 +269,7 @@ export default {
       currentPageIndex: 0,
       nbPages: 0,
       posts: items,
+      showPosts: [],
       tags: [
         "Hello",
         "linux",
@@ -275,8 +283,13 @@ export default {
       ],
       // delete post modal
       deletePostModal: false,
-      deleteItem: {}
+      deleteItem: {},
+      // search
+      search: "",
     };
+  },
+  created() {
+    this.showPosts = this.posts;
   },
   methods: {
     openDeleteModal(index, id) {
@@ -286,16 +299,33 @@ export default {
     },
     deletePost() {
       // this.paginated_items[this.currentPage - 1].splice(this.deleteItem.index, 1);
-      console.log("delete post id: " + this.deleteItem.id)
-      for(let i = 0; i < this.posts.length; i++) {
-        if(this.posts[i].id === this.deleteItem.id) {
+      console.log("delete post id: " + this.deleteItem.id);
+      for (let i = 0; i < this.showPosts.length; i++) {
+        if (this.showPosts[i].id === this.deleteItem.id) {
+          this.showPosts.splice(i, 1);
+        }
+      }
+      for (let i = 0; i < this.posts.length; i++) {
+        if (this.posts[i].id === this.deleteItem.id) {
           this.posts.splice(i, 1);
         }
       }
+
       this.deletePostModal = false;
       // change totalRows
-      this.totalRows = this.posts.length;
-    }
+      this.totalRows = this.showPosts.length;
+    },
+    searchBlogList() {
+      let v = this.search;
+      this.showPosts = this.posts.filter(function(item, index, array) {
+        return (
+          item.title.toLowerCase().indexOf(v.toLowerCase()) > -1 ||
+          item.descript.toLowerCase().indexOf(v.toLowerCase()) > -1 ||
+          item.postTime.toLowerCase().indexOf(v.toLowerCase()) > -1
+        );
+      });
+      this.totalRows = this.showPosts.length;
+    },
   },
   computed: {
     pageCount() {
@@ -304,10 +334,13 @@ export default {
       return Math.floor(l / s);
     },
     currentPageItems() {
-      let lengthAll = this.posts.length;
+      if (this.showPosts.length === 0) {
+        this.showPosts = this.posts;
+      }
+      let lengthAll = this.showPosts.length;
       this.nbPages = 0;
       for (let i = 0; i < lengthAll; i = i + this.perPage) {
-        this.paginated_items[this.nbPages] = this.posts.slice(
+        this.paginated_items[this.nbPages] = this.showPosts.slice(
           i,
           i + this.perPage
         );

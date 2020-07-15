@@ -1,5 +1,5 @@
 <template>
-  <div active @click='updateUser'>
+  <div active @click="updateUser">
     <h1>Account Profile</h1>
     <hr class="my-4" />
     <b-row>
@@ -296,7 +296,7 @@
                   ></b-form-textarea>
                 </b-form-group>
                 <!-- submit -->
-                <b-button variant="success" >SUBMIT</b-button>
+                <b-button variant="success">SUBMIT</b-button>
               </b-collapse>
             </b-card-text>
           </b-card>
@@ -454,7 +454,9 @@
               >
             </b-button-group>
             <b-button-group>
-              <b-button variant="danger"  v-on:click.stop='deleteAccount' >Delete Your Account</b-button>
+              <b-button variant="danger" v-on:click.stop="deleteAccount"
+                >Delete Your Account</b-button
+              >
             </b-button-group>
           </b-button-toolbar>
           <b-alert class="mt-4" show variant="danger"
@@ -502,6 +504,30 @@
         <!-- Emulate built in modal footer ok and cancel button actions -->
         <b-button variant="success" @click="ok()">
           OK
+        </b-button>
+      </template>
+    </b-modal>
+    <!-- delete account modal -->
+    <b-modal
+      v-model="deleteAccountModal"
+      no-close-on-backdrop
+      no-close-on-esc
+      centered
+      title="Delete Account"
+      header-bg-variant="danger"
+      header-text-variant="light"
+      body-text-variant="danger"
+    >
+      <h4>
+        <strong>Are you sure you want to delete this account?</strong>
+      </h4>
+      <template v-slot:modal-footer="{ ok, cancel, hide }">
+        <!-- Emulate built in modal footer ok and cancel button actions -->
+        <b-button variant="success" @click="cancel()">
+          Cancel
+        </b-button>
+        <b-button variant="danger" @click="deleteAccount">
+          Delete Account
         </b-button>
       </template>
     </b-modal>
@@ -566,6 +592,8 @@ export default {
       updateFailMsg: "",
       updateSuccessModal: false,
       updateSuccessMsg: "",
+      // delete account modal
+      deleteAccountModal: false,
     };
   },
   created() {
@@ -573,29 +601,31 @@ export default {
     this.getUserDataRequest();
   },
   methods: {
-    deleteAccount(){
-      console.log('delete account');
+    openDeleteAccountModal() {
+      this.deleteAccountModal = true;
+    },
+    async deleteAccount() {
+      console.log("delete account");
+      
     },
 
-    updateUser(){
-
+    async updateUser() {
       console.log(this.user);
-    axios({  
+      axios({
         method: "post",
         url: this.springBaseURL + this.updateUserUrl,
         headers: {
           token: Vue.localStorage.get("jwt_token"),
         },
         data: {
-            "birthday": this.user.birthday,
-            "sex": this.user.sex,
-            "description": this.user.description,
-            "company": this.user.company,
-            "email": this.user.email,
-            "username": this.user.username,
-            "password":this.user.password
-
-  },
+          birthday: this.user.birthday,
+          sex: this.user.sex,
+          description: this.user.description,
+          company: this.user.company,
+          email: this.user.email,
+          username: this.user.username,
+          password: this.user.password,
+        },
       })
         .then((response) => {
           console.log(response.data);
@@ -604,7 +634,6 @@ export default {
             this.updateTokenVerifyFailModal(true);
           } else {
             if (response.data.status === true) {
-              
             } else {
             }
           }
@@ -641,7 +670,7 @@ export default {
             this.updateTokenVerifyFailModal(true);
           } else {
             if (response.data.status === true) {
-              console.log()
+              console.log();
               this.user.username = response.data.data.username;
               this.user.email = response.data.data.email;
               this.user.description = response.data.data.description;
@@ -951,7 +980,7 @@ export default {
       springBaseURL: (state) => {
         return state.api.springBaseURL;
       },
-      updateUserUrl:(state) =>{
+      updateUserUrl: (state) => {
         return state.api.updateUserUrl;
       },
       getUserDataURL: (state) => {
