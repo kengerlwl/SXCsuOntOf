@@ -454,7 +454,7 @@
               >
             </b-button-group>
             <b-button-group>
-              <b-button variant="danger" v-on:click.stop="deleteAccount"
+              <b-button variant="danger" @click="openDeleteAccountModal"
                 >Delete Your Account</b-button
               >
             </b-button-group>
@@ -558,7 +558,7 @@ export default {
         birthday: "",
         sex: "",
         company: "",
-        password: "123",
+        password: "*******",
         originPassword: "123",
         newPassword: "123",
         confirmNewPassword: "123",

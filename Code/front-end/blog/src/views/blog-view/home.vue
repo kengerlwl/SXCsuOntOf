@@ -406,7 +406,7 @@ export default {
   left: 1em;
 }
 #top-desc {
-  padding-top: 5em;
+  padding-top: 4em;
 }
 #blog-list {
   position: relative;
