@@ -100,9 +100,9 @@ public class TagController {
         boolean status = true;
         int id = 10;//不存在的id 如果错误说明try catch 有问题
 
-        String userid = (String) user_post_id.get("userid");
+//        String userid = (String) user_post_id.get("userid");
         try{
-            id = UserUtil.switchToint(userid);
+            id = (Integer) user_post_id.get("userid");
         }catch (Exception e){
             status = false;
             msg = "worng id";
