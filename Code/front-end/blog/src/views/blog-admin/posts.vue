@@ -347,8 +347,8 @@ export default {
       let v = this.search;
       this.showPosts = this.posts.filter(function(item, index, array) {
         return (
-          item.title.toLowerCase().indexOf(v.toLowerCase()) > -1 ||
-          item.descript.toLowerCase().indexOf(v.toLowerCase()) > -1 ||
+          item.blogName.toLowerCase().indexOf(v.toLowerCase()) > -1 ||
+          item.blogContent.toLowerCase().indexOf(v.toLowerCase()) > -1 ||
           item.postTime.toLowerCase().indexOf(v.toLowerCase()) > -1
         );
       });
