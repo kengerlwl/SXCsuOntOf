@@ -34,12 +34,12 @@ import java.util.Set;
 @RestController
 public class CollectController {
     @Resource
-    private CollectServiceImpl collectService;
-
-    @Resource
     private BlogServiceImpl blogService;
     @Resource
     private TagServiceImpl tagService;
+    @Resource
+    private CollectServiceImpl collectService;
+    @Resource
     private UserServiceImpl userService;
 
     @RequestMapping(value = "/getCollectList",method = RequestMethod.GET)
