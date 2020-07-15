@@ -9,7 +9,7 @@
     <div class="mb-4">
       <b-button-toolbar justify aria-label="post create and search">
         <b-button-group class="mr-4">
-          <b-button variant="success" :to="{ name: 'post_edit' }"
+          <b-button variant="success" @click="toEditBlog(-1)"
             >Create New Post</b-button
           >
         </b-button-group>
@@ -78,7 +78,7 @@
             }}-->
             {{ item.previewContent }}
           </b-card-text>
-          <b-button href="#" variant="outline-info" class="mr-3">
+          <b-button @click="toEditBlog(item.blogId)" variant="outline-info" class="mr-3">
             <b-icon-brush></b-icon-brush> Edit
           </b-button>
           <b-button variant="danger" @click="openDeleteModal(i, item.blogId)">
@@ -337,7 +337,7 @@ export default {
         }
       }
       // axios request
-      this.deletePostRequest(this.deleteItem.id);
+      //this.deletePostRequest(this.deleteItem.id);
 
       this.deletePostModal = false;
       // change totalRows
@@ -353,6 +353,14 @@ export default {
         );
       });
       this.totalRows = this.showPosts.length;
+    },
+    toEditBlog(blogId) {
+      // 跳轉到 viewProduct 子組件檢視產品詳細，并添加 query string 作為参数
+      this.$router.push({
+        path:
+          "/" + Vue.localStorage.get("user_name") + "/admin/posts/post_edit",
+        query: { blogId: blogId },
+      });
     },
     async getUserPostsRequest() {
       axios({
