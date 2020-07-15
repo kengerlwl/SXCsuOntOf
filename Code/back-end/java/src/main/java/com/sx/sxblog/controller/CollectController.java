@@ -3,21 +3,18 @@ package com.sx.sxblog.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.sx.sxblog.common.ReturnEntity;
-<<<<<<< HEAD
 import com.sx.sxblog.entity.Blog;
 import com.sx.sxblog.entity.Collect;
 import com.sx.sxblog.entity.Tag;
 import com.sx.sxblog.service.impl.BlogServiceImpl;
 import com.sx.sxblog.service.impl.CollectServiceImpl;
 import com.sx.sxblog.service.impl.TagServiceImpl;
-=======
 import com.sx.sxblog.common.UserUtil;
 import com.sx.sxblog.entity.Collect;
 import com.sx.sxblog.entity.Tag;
 import com.sx.sxblog.entity.User;
 import com.sx.sxblog.service.impl.CollectServiceImpl;
 import com.sx.sxblog.service.impl.UserServiceImpl;
->>>>>>> 1c6685b531341a57e0fa3353ad60172cd64ee39a
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -76,17 +73,22 @@ public class CollectController {
                 int blog_id = collect.getBlogId();
 
                 String  s = String.valueOf(blog_id);
-
                 Blog blog = blogService.getBlogById(blog_id);
+                User user = userService.getUserById(blog.getUserId());
+                String username = user.getUserName();
+                System.out.println(username);
+
                 List<Tag> tagList = tagService.getTagsByBlogId(blog_id);
                 System.out.println(blog.getBlogContent());
                 data.put(s, blog);
                 data.put(s + "tag", tagList);
+                data.put(s + "username", username);
 
             }
         }
 
         data.put("collectList",collectList);
+
 
 
 
