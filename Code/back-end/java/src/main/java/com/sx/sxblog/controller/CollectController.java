@@ -3,6 +3,12 @@ package com.sx.sxblog.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.sx.sxblog.common.ReturnEntity;
+import com.sx.sxblog.entity.Blog;
+import com.sx.sxblog.entity.Collect;
+import com.sx.sxblog.entity.Tag;
+import com.sx.sxblog.service.impl.BlogServiceImpl;
+import com.sx.sxblog.service.impl.CollectServiceImpl;
+import com.sx.sxblog.service.impl.TagServiceImpl;
 import com.sx.sxblog.common.UserUtil;
 import com.sx.sxblog.entity.Collect;
 import com.sx.sxblog.entity.Tag;
@@ -31,6 +37,9 @@ public class CollectController {
     private CollectServiceImpl collectService;
 
     @Resource
+    private BlogServiceImpl blogService;
+    @Resource
+    private TagServiceImpl tagService;
     private UserServiceImpl userService;
 
     @RequestMapping(value = "/getCollectList",method = RequestMethod.GET)
@@ -39,6 +48,52 @@ public class CollectController {
         JSONObject data = new JSONObject();
         List<Collect> collectList = collectService.getCollectList();
         data.put("collectList",collectList);
+        return ReturnEntity.successResult(data);
+    }
+
+    @RequestMapping(value = "/getCollectListByUser",method = RequestMethod.GET)
+    @ResponseBody
+    public ReturnEntity getCollectListByUser(int user_id){
+
+        JSONObject data = new JSONObject();
+        List<Collect> collectList = collectService.getCollectList();
+
+
+        for(int i =0; i < collectList.size(); i++){
+
+
+            Collect collect = collectList.get(i);
+            int UserId = collect.getUserId();
+            System.out.println(UserId);
+            if(UserId != user_id){
+                collectList.remove(i);
+                i--;
+            }else{
+
+                int blog_id = collect.getBlogId();
+
+                String  s = String.valueOf(blog_id);
+                Blog blog = blogService.getBlogById(blog_id);
+                User user = userService.getUserById(blog.getUserId());
+                String username = user.getUserName();
+                System.out.println(username);
+
+                List<Tag> tagList = tagService.getTagsByBlogId(blog_id);
+                System.out.println(blog.getBlogContent());
+                data.put(s, blog);
+                data.put(s + "tag", tagList);
+                data.put(s + "username", username);
+
+            }
+        }
+
+        data.put("collectList",collectList);
+
+
+
+
+
+
         return ReturnEntity.successResult(data);
     }
 
