@@ -147,9 +147,6 @@ export default {
       signInURL: (state) => {
         return state.api.signInURL;
       },
-      username: (state) => {
-        return state.user.username;
-      },
       isSignIn: (state) => {
         return state.user.isSignIn;
       },

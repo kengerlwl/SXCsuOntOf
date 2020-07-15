@@ -7,7 +7,7 @@
 
       <b-collapse id="nav-collapse" is-nav>
         <b-navbar-nav>
-          <b-nav-item v-if="isSignIn" :to="{ name: 'user_blog_home' }"
+          <b-nav-item v-if="isSignIn" @click="to('/blog/home')"
             >Your Blog</b-nav-item
           >
         </b-navbar-nav>
@@ -22,14 +22,14 @@
             <template v-slot:button-content>
               <strong>{{ username }}</strong>
             </template>
-            <b-dropdown-item :to="{ name: 'posts' }">Posts</b-dropdown-item>
-            <b-dropdown-item :to="{ name: 'charts' }"
+            <b-dropdown-item @click="to('/admin/posts')">Posts</b-dropdown-item>
+            <b-dropdown-item @click="to('/admin/charts')"
               >Dashboard</b-dropdown-item
             >
-            <b-dropdown-item :to="{ name: 'collect' }"
+            <b-dropdown-item @click="to('/admin/collect')"
               >Collection</b-dropdown-item
             >
-            <b-dropdown-item :to="{ name: 'account' }">Profile</b-dropdown-item>
+            <b-dropdown-item @click="to('/admin/account')">Profile</b-dropdown-item>
             <b-dropdown-divider></b-dropdown-divider>
             <b-dropdown-item @click="openSignOutModal"
               >Sign Out</b-dropdown-item
@@ -50,8 +50,8 @@
       body-text-variant="danger"
     >
       <template v-slot:modal-header="{ close }">
-      <h5>Sign Out</h5>
-    </template>
+        <h5>Sign Out</h5>
+      </template>
       <h4>
         <strong>Are you sure you wnat to sign out?</strong>
       </h4>
@@ -62,6 +62,29 @@
         </b-button>
         <b-button variant="danger" @click="signOut">
           Sign Out
+        </b-button>
+      </template>
+    </b-modal>
+    <!-- token verify fail modal -->
+    <b-modal
+      v-model="tokenVerifyFailModal"
+      no-close-on-backdrop
+      no-close-on-esc
+      centered
+      header-bg-variant="danger"
+      header-text-variant="light"
+      body-text-variant="danger"
+    >
+      <template v-slot:modal-header="{ close }">
+        <h5>Token Expired</h5>
+      </template>
+      <h4>
+        <strong>You must sign in again.</strong>
+      </h4>
+      <template v-slot:modal-footer="{ ok, cancel, hide }">
+        <!-- Emulate built in modal footer ok and cancel button actions -->
+        <b-button variant="success" @click="signOut">
+          OK
         </b-button>
       </template>
     </b-modal>
@@ -79,17 +102,17 @@ import Vue from "vue";
 
 export default {
   data() {
-    return {
-    };
+    return {};
   },
   created() {
     this.verifyIsSignIn();
   },
   methods: {
     ...mapMutations({
-      updateUsername: 'updateUsername',
-      updateIsSignIn: 'updateIsSignIn',
-      updateSignOutModal: 'updateSignOutModal',
+      updateUsername: "updateUsername",
+      updateIsSignIn: "updateIsSignIn",
+      updateSignOutModal: "updateSignOutModal",
+      updateTokenVerifyFailModal: "updateTokenVerifyFailModal",
     }),
     verifyIsSignIn() {
       let jwt_token = Vue.localStorage.get("jwt_token");
@@ -113,7 +136,11 @@ export default {
       this.updateIsSignIn(false);
       this.updateUsername("");
       this.updateSignOutModal(false);
+      this.updateTokenVerifyFailModal(false);
       this.$router.push("/");
+    },
+    to(path) {
+      this.$router.push("/" + Vue.localStorage.get("user_name") + path);
     },
   },
   computed: {
@@ -127,6 +154,9 @@ export default {
       },
       signOutModal: (state) => {
         return state.user.signOutModal;
+      },
+      tokenVerifyFailModal: (state) => {
+        return state.user.tokenVerifyFailModal;
       },
     }),
   },

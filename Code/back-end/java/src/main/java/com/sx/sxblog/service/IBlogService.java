@@ -2,6 +2,8 @@ package com.sx.sxblog.service;
 
 import com.sx.sxblog.entity.Blog;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.sx.sxblog.entity.Tag;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -28,5 +30,6 @@ public interface IBlogService extends IService<Blog> {
 
     //对指定博客进行查询【】
     Blog getBlogById(int blog_id);
+
 
 }
