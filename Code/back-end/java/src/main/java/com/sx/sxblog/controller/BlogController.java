@@ -53,6 +53,7 @@ public class BlogController {
             int tmpId =  blogtmp.getBlogId();
             if (user_id != userID){
                 blogList.remove(i);
+                i--;
             }
             else{
                 List<Tag> tagList = tagService.getTagsByBlogId(tmpId);
