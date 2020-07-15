@@ -1,5 +1,5 @@
 <template>
-  <div active>
+  <div active @click='updateUser'>
     <h1>Account Profile</h1>
     <hr class="my-4" />
     <b-row>
@@ -59,7 +59,7 @@
                 >
                   <b-form-input
                     id="input-username"
-                    v-model="form.username"
+                    v-model="user.username"
                     required
                     placeholder="Enter New Username"
                     :state="newUsernameState"
@@ -112,7 +112,7 @@
                 >
                   <b-form-input
                     id="input-email"
-                    v-model="form.email"
+                    v-model="user.email"
                     type="email"
                     required
                     placeholder="Enter New Email"
@@ -150,7 +150,7 @@
             >
               <b-form-input
                 id="input-1"
-                v-model="form.captcha"
+                v-model="user.captcha"
                 required
                 placeholder="Enter Captcha"
               ></b-form-input>
@@ -200,7 +200,7 @@
                 >
                   <b-form-input
                     id="input-sex"
-                    v-model="form.sex"
+                    v-model="user.sex"
                     required
                     placeholder="Enter New Sex"
                   ></b-form-input>
@@ -242,7 +242,7 @@
                 <label for="birthday-datepicker">Choose a date</label>
                 <b-form-datepicker
                   id="birthday-datepicker"
-                  v-model="form.birthday"
+                  v-model="user.birthday"
                   class="mb-2"
                 ></b-form-datepicker>
                 <!-- submit -->
@@ -288,7 +288,7 @@
                 >
                   <b-form-textarea
                     id="textarea-description"
-                    v-model="form.description"
+                    v-model="user.description"
                     required
                     placeholder="Enter something..."
                     rows="3"
@@ -296,7 +296,7 @@
                   ></b-form-textarea>
                 </b-form-group>
                 <!-- submit -->
-                <b-button variant="success">SUBMIT</b-button>
+                <b-button variant="success" >SUBMIT</b-button>
               </b-collapse>
             </b-card-text>
           </b-card>
@@ -337,7 +337,7 @@
                 >
                   <b-form-input
                     id="input-company"
-                    v-model="form.company"
+                    v-model="user.company"
                     required
                     placeholder="Enter New company"
                   ></b-form-input>
@@ -385,7 +385,7 @@
                 >
                   <b-form-input
                     id="iinput-origin-password"
-                    v-model="form.originPassword"
+                    v-model="user.originPassword"
                     required
                     type="password"
                     placeholder="Enter Origin Password"
@@ -407,7 +407,7 @@
                 >
                   <b-form-input
                     id="input-new-password"
-                    v-model="form.newPassword"
+                    v-model="user.newPassword"
                     required
                     type="password"
                     placeholder="Enter New Password"
@@ -429,7 +429,7 @@
                 >
                   <b-form-input
                     id="iinput-confirm-new-password"
-                    v-model="form.confirmNewPassword"
+                    v-model="user.confirmNewPassword"
                     required
                     type="password"
                     placeholder="Confirm New Password"
@@ -454,7 +454,7 @@
               >
             </b-button-group>
             <b-button-group>
-              <b-button variant="danger">Delete Your Account</b-button>
+              <b-button variant="danger"  v-on:click.stop='deleteAccount' >Delete Your Account</b-button>
             </b-button-group>
           </b-button-toolbar>
           <b-alert class="mt-4" show variant="danger"
@@ -532,7 +532,10 @@ export default {
         birthday: "",
         sex: "",
         company: "",
-        password: "********",
+        password: "123",
+        originPassword: "123",
+        newPassword: "123",
+        confirmNewPassword: "123",
       },
       // update data
       form: {
@@ -570,6 +573,47 @@ export default {
     this.getUserDataRequest();
   },
   methods: {
+    deleteAccount(){
+      console.log('delete account');
+    },
+
+    updateUser(){
+
+      console.log(this.user);
+    axios({  
+        method: "post",
+        url: this.springBaseURL + this.updateUserUrl,
+        headers: {
+          token: Vue.localStorage.get("jwt_token"),
+        },
+        data: {
+            "birthday": this.user.birthday,
+            "sex": this.user.sex,
+            "description": this.user.description,
+            "company": this.user.company,
+            "email": this.user.email,
+            "username": this.user.username,
+            "password":this.user.password
+
+  },
+      })
+        .then((response) => {
+          console.log(response.data);
+          // token verify fail
+          if (response.data.code === "500000") {
+            this.updateTokenVerifyFailModal(true);
+          } else {
+            if (response.data.status === true) {
+              
+            } else {
+            }
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+
     // vueX mutation
     ...mapMutations({
       updateUsername: "updateUsername",
@@ -597,6 +641,7 @@ export default {
             this.updateTokenVerifyFailModal(true);
           } else {
             if (response.data.status === true) {
+              console.log()
               this.user.username = response.data.data.username;
               this.user.email = response.data.data.email;
               this.user.description = response.data.data.description;
@@ -905,6 +950,9 @@ export default {
     ...mapState({
       springBaseURL: (state) => {
         return state.api.springBaseURL;
+      },
+      updateUserUrl:(state) =>{
+        return state.api.updateUserUrl;
       },
       getUserDataURL: (state) => {
         return state.api.getUserDataURL;

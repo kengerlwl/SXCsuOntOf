@@ -12,6 +12,7 @@ const api = {
         forgotPasswordURL: "",
         // account setting
         getUserDataURL: "/user/get_data",
+        updateUserUrl: '/user/change_data',
         updateUsernameURL: "/user/change_data",
         updateEmailURL: "/user/change_data",
         verityNewEmailURL: "",
