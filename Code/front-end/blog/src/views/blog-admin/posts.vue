@@ -76,7 +76,7 @@
                 ? item.blogContent.substring(0, 200) + "..."
                 : item.blogContent
             }}-->
-            {{item.blogContent}}
+            {{item.blogContent.slice(0, 30)}}
           </b-card-text>
           <b-button href="#" variant="outline-info" class="mr-3">
             <b-icon-brush></b-icon-brush> Edit
@@ -363,6 +363,9 @@ export default {
           .catch((error) => {
             console.log(error);
           });
+    },
+    async deletePostRequest() {
+
     }
   },
   computed: {
