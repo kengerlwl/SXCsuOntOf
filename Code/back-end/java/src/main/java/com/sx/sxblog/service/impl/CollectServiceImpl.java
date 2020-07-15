@@ -1,6 +1,8 @@
 package com.sx.sxblog.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.sx.sxblog.entity.Collect;
+import com.sx.sxblog.entity.User;
 import com.sx.sxblog.mapper.CollectMapper;
 import com.sx.sxblog.service.ICollectService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -40,5 +42,13 @@ public class CollectServiceImpl extends ServiceImpl<CollectMapper, Collect> impl
     @Override
     public Collect getCollectById(int collect_id) {
         return collectMapper.selectById(collect_id);
+    }
+
+    @Override
+    public List<Collect> getCollectListByUserid(int userid){
+        QueryWrapper<Collect> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("user_id",userid);
+        List<Collect> collects = collectMapper.selectList(queryWrapper);
+        return collects;
     }
 }

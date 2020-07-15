@@ -201,46 +201,6 @@ public class UserController {
         return returnEntity;
 
     }
-
-//    @PostMapping("/test")
-//    @ResponseBody
-//    public ReturnEntity test() throws Exception {
-//        SendMailUtil.sendEmail("1370865669@qq.com", "SXBLOG verfy", "verify code is");
-//        ReturnEntity returnEntity = new ReturnEntity(true,"ok",new JSONObject());
-//        return returnEntity;
-//    }
-//
-//    @PostMapping("/email_verify")
-//    @ResponseBody
-//    public ReturnEntity emailVerify(@RequestBody Map<String,Object> verify){
-//        String msg = "";
-//        boolean status = true;
-//        JSONObject data = new JSONObject();
-//
-//        User user = null;
-//
-//        String uuid = (String) verify.get("uudi");
-//        if(userAndUUID.isContent(uuid)){
-//            user = userAndUUID.getUser(uuid);
-//            userService.insertUser(user);
-//            int id = userService.getUserByUsername(user.getUserName()).getUserId();
-//            data.put("id",id);
-//            data.put("username",user.getUserName());
-//        }
-//        else {
-//            msg = "woring verfy code";
-//            status = false;
-//        }
-//        ReturnEntity returnEntity = new ReturnEntity(status,msg,data);
-//        return returnEntity;
-//    }
-
-//    @GetMapping("/get_user_all_tag")
-//    @ResponseBody
-//    public ReturnEntity getUserTags(@RequestBody Map<String ,Object> userid){
-//
-//
-//    }
     
 
     @PostMapping("/change_data")
@@ -263,21 +223,13 @@ public class UserController {
         String email = (String) user_info.get("email") ;
         String sex = (String) user_info.get("sex");
 
-//        user.setUserName(username);
-//        user.setPassword(passwd);
-//        user.setBirthday(birthday);
-//        user.setCompany(company);
-//        user.setDescription(description);
-//        user.setEmail(email);
-//        user.setLevel(0);
-//        user.setSex(sex);
 
         try {
             //判断是否userid,不是的话返回worng input
             if(UserUtil.isId(userid)) {
 
                 id = UserUtil.switchToint(userid);
-                data.put("id",userid);
+                data.put("userid",userid);
                 user = userService.getUserById(id);
 
                 //改变user
