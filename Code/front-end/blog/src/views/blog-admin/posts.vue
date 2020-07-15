@@ -103,6 +103,7 @@
               pill
               v-for="(item, i) in tags"
               :key="i"
+              @click="filterByTag(item)"
             >
               {{ item }}
             </b-button>
@@ -448,6 +449,18 @@ export default {
     },
     // deleteTag() {},
     // addNewTag() {},
+    filterByTag(tagName) {
+      this.showPosts = [];
+      for(let i = 0; i < this.posts.length; i++) {
+        for(let j = 0; j < this.posts[i].tags.length; j++) {
+          if(this.posts[i].tags[j] === tagName) {
+            this.showPosts.push(this.posts[i]);
+            break;
+          }
+        }
+      }
+      this.totalRows = this.showPosts.length;
+    },
     async getUserPostsRequest() {
       axios({
         method: "get",
@@ -497,15 +510,14 @@ export default {
     },
     async getAllTagsbyUserIdRequest() {
       console.log(Vue.localStorage.get("user_id"))
-      console.log(typeof(Vue.localStorage.get("user_id")))
+      console.log(typeof(parseInt(Vue.localStorage.get("user_id"))))
       axios({
         method: "get",
-        url: this.springBaseURL + this.getAllTagsByUserIdURL,
+        url: this.springBaseURL + this.getAllTagsByUserIdURL + "?userid=" + Vue.localStorage.get("user_id"),
         headers: {
-          token: Vue.localStorage.get("jwt_token"),
+          // token: Vue.localStorage.get("jwt_token"),
         },
         data: {
-          userid: Vue.localStorage.get("user_id"),
         },
       })
         .then((response) => {
