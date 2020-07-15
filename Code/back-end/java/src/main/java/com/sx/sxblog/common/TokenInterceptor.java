@@ -16,7 +16,10 @@ public class TokenInterceptor implements HandlerInterceptor {
         }
         response.setCharacterEncoding("utf-8");
         String token = request.getHeader("token");
-
+        //默认通过拦截
+        if(true) {
+            return true;
+        }
         //token内有内容
         if(token != null){
             boolean result = TokenUtil.verify(token);
