@@ -8,6 +8,7 @@ import com.sx.sxblog.entity.Blog;
 import com.sx.sxblog.entity.Tag;
 import com.sx.sxblog.service.impl.BlogServiceImpl;
 import com.sx.sxblog.service.impl.TagServiceImpl;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -93,7 +94,7 @@ public class TagController {
 
     @GetMapping("/pub/user_tags")
     @ResponseBody
-    public ReturnEntity getAllTagsByUser(@RequestBody Map<String,Object> user_post_id){
+    public ReturnEntity getAllTagsByUser(@Param("userid") int userid){
 
         String msg = "";
         JSONObject data = new JSONObject();
@@ -102,7 +103,8 @@ public class TagController {
 
 //        String userid = (String) user_post_id.get("userid");
         try{
-            id = (Integer) user_post_id.get("userid");
+//            id = (Integer) user_post_id.get("userid");
+            id = userid;
         }catch (Exception e){
             status = false;
             msg = "worng id";
