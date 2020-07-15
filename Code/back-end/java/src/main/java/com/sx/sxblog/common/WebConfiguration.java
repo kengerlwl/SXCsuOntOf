@@ -37,25 +37,26 @@ public class WebConfiguration implements WebMvcConfigurer {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry){
-        List<String> excludePath = new ArrayList<>();
+//        List<String> excludePath = new ArrayList<>();
         //排除拦截，除了注册登录(此时还没token)，其他都拦截
         //设置拦截请求
         registry.addInterceptor(tokenInterceptor)
                 .addPathPatterns("/**")
-//                .excludePathPatterns("/**");//测试不拦截
-                .excludePathPatterns("/error")
-                //user放行
-                .excludePathPatterns("/user/signIn")
-                .excludePathPatterns("/user/signUp")
-                .excludePathPatterns("/user/username_verify")
-                .excludePathPatterns("/user/email_verify")
-                //blog放行
-                .excludePathPatterns("/getBlogList")
-                .excludePathPatterns("/getBlogById")
-                .excludePathPatterns("/static/**")
-                .excludePathPatterns("/assets/**")
-                //两组tag采用pub前缀
-                .excludePathPatterns("/pub/**");
+                .excludePathPatterns("/**");//测试不拦截
+//                .excludePathPatterns("/error")
+//                //user放行
+//                .excludePathPatterns("/user/signIn")
+//                .excludePathPatterns("/user/signUp")
+//                .excludePathPatterns("/user/username_verify")
+//                .excludePathPatterns("/user/email_verify")
+//                .excludePathPatterns("/user/find_passwd")
+//                //blog放行
+//                .excludePathPatterns("/getBlogList")
+//                .excludePathPatterns("/getBlogById")
+//                .excludePathPatterns("/static/**")
+//                .excludePathPatterns("/assets/**")
+//                //两组tag采用pub前缀
+//                .excludePathPatterns("/pub/**");
         WebMvcConfigurer.super.addInterceptors(registry);
     }
 }
