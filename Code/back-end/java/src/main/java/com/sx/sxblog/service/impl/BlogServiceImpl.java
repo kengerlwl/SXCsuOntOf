@@ -2,6 +2,7 @@ package com.sx.sxblog.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.sx.sxblog.entity.Blog;
+import com.sx.sxblog.entity.Collect;
 import com.sx.sxblog.entity.Tag;
 import com.sx.sxblog.mapper.BlogMapper;
 import com.sx.sxblog.mapper.TagMapper;
@@ -52,6 +53,14 @@ public class BlogServiceImpl extends ServiceImpl<BlogMapper, Blog> implements IB
     @Override
     public Blog getBlogById(int blog_id) {
         return blogMapper.selectById(blog_id);
+    }
+
+    @Override
+    public List<Blog> getBlogListByUserid(int userid){
+        QueryWrapper<Blog> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("user_id",userid);
+        List<Blog> blogs = blogMapper.selectList(queryWrapper);
+        return blogs;
     }
 
 

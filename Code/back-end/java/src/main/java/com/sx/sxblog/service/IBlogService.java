@@ -31,5 +31,7 @@ public interface IBlogService extends IService<Blog> {
     //对指定博客进行查询【】
     Blog getBlogById(int blog_id);
 
+    //查询一个用户的所有blog
+    public List<Blog> getBlogListByUserid(int userid);
 
 }

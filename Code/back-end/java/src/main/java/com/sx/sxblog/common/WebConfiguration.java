@@ -53,7 +53,9 @@ public class WebConfiguration implements WebMvcConfigurer {
                 .excludePathPatterns("/getBlogList")
                 .excludePathPatterns("/getBlogById")
                 .excludePathPatterns("/static/**")
-                .excludePathPatterns("/assets/**");
+                .excludePathPatterns("/assets/**")
+                //两组tag采用pub前缀
+                .excludePathPatterns("/pub/**");
         WebMvcConfigurer.super.addInterceptors(registry);
     }
 }

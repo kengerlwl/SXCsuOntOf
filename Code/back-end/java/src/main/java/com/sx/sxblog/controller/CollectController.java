@@ -8,6 +8,7 @@ import com.sx.sxblog.entity.Collect;
 import com.sx.sxblog.entity.Tag;
 import com.sx.sxblog.entity.User;
 import com.sx.sxblog.service.impl.CollectServiceImpl;
+import com.sx.sxblog.service.impl.TagServiceImpl;
 import com.sx.sxblog.service.impl.UserServiceImpl;
 import org.springframework.web.bind.annotation.*;
 
@@ -31,7 +32,7 @@ public class CollectController {
     private CollectServiceImpl collectService;
 
     @Resource
-    private UserServiceImpl userService;
+    private TagServiceImpl tagService;
 
     @RequestMapping(value = "/getCollectList",method = RequestMethod.GET)
     @ResponseBody
@@ -70,24 +71,32 @@ public class CollectController {
         return ReturnEntity.successResult(data);
     }
 
-//    @GetMapping("/pub/collect_tags")
-//    @ResponseBody
-//    public ReturnEntity getAllTag(@RequestBody Map<String,Object> user_post){
-//        JSONObject data;
-//        String msg;
-//        boolean status;
-//
-//        String userid = (String)user_post.get("userid");
-//        int id = UserUtil.switchToint(userid);
-//        List<Collect> collectList = collectService.getCollectListByUserid(id);
-//        Set<Tag> tagSet = new HashSet<Tag>();
-//
-//        //过程中使用list逐个添加
-//
-//        for (Collect collect: collectList) {
-//
-//        }
-//
-//    }
+    @GetMapping("/pub/collect_tags")
+    @ResponseBody
+    public ReturnEntity getAllTagOfCollect(@RequestBody Map<String,Object> user_post){
+        JSONObject data = new JSONObject();
+        String msg = "";
+        boolean status = true;
+
+        String userid = (String)user_post.get("userid");
+        int id = UserUtil.switchToint(userid);
+        List<Collect> collects= collectService.getCollectListByUserid(id);
+        Set<String> tagSet = new HashSet<String>();
+
+        //过程中使用list逐个添加
+        List<Tag> tagList;
+        int blogid;
+
+        for (Collect collect: collects) {
+            blogid = collect.getBlogId();
+            tagList =  tagService.getTagsByBlogId(blogid);
+            for (Tag tag : tagList){
+                tagSet.add(tag.getTagName());
+            }
+        }
+        data.put("tags",tagSet);
+        ReturnEntity returnEntity = new ReturnEntity(status,msg,data);
+        return returnEntity;
+    }
 
 }
