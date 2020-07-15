@@ -10,7 +10,9 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -52,4 +54,11 @@ public class TagServiceImpl extends ServiceImpl<TagMapper, Tag> implements ITagS
     public Tag getTagById(int tag_id) {
         return tagMapper.selectById(tag_id);
     }
+
+    @Override
+    public List<Tag> getTagsByBlogId(int blog_id) {
+        return tagMapper.getTagsByBlogId(blog_id);
+    }
+
+
 }

@@ -8,10 +8,10 @@
         <b-button-group class="mr-4"> </b-button-group>
         <b-button-group>
           <b-input-group>
-            <b-form-input class="mr-sm-2" placeholder="Search"></b-form-input>
+            <b-form-input v-model="search" class="mr-sm-2" placeholder="Search"></b-form-input>
           </b-input-group>
           <b-button-group class="mx-1">
-            <b-button variant="outline-success" type="submit">
+            <b-button variant="outline-success" @click="searchBlogList">
               Search
             </b-button>
           </b-button-group>
@@ -114,6 +114,11 @@
   </div>
 </template>
 <script>
+// import VueX
+import { mapState, mapMutations } from "vuex";
+import Vue from "vue";
+import axios from "axios";
+
 // test data
 const items = [
   {
@@ -281,6 +286,7 @@ export default {
       currentPageIndex: 0,
       nbPages: 0,
       collectBlog: items,
+      showCollectBlog: [],
       // tags
       tags: [
         "Hello",
@@ -295,10 +301,22 @@ export default {
       ],
       // delete post modal
       deletePostModal: false,
-      deleteItem: {}
+      deleteItem: {},
+      // search
+      search: "",
     };
   },
+  created() {
+    this.showCollectBlog = this.collectBlog;
+  },
   methods: {
+    // vueX mutation
+    ...mapMutations({
+      updateUsername: "updateUsername",
+      updateIsSignIn: "updateIsSignIn",
+      updateSignOutModal: "updateSignOutModal",
+      updateTokenVerifyFailModal: "updateTokenVerifyFailModal",
+    }),
     openDeleteModal(index, id) {
       this.deletePostModal = true;
       this.deleteItem.index = index;
@@ -312,22 +330,68 @@ export default {
           this.collectBlog.splice(i, 1);
         }
       }
+
+      for(let i = 0; i < this.showCollectBlog.length; i++) {
+        if(this.showCollectBlog[i].id === this.deleteItem.id) {
+          this.showCollectBlog.splice(i, 1);
+        }
+      }
+
       this.deletePostModal = false;
       // change totalRows
-      this.totalRows = this.collectBlog.length;
-    }
+      this.totalRows = this.showCollectBlog.length;
+    },
+    searchBlogList() {
+      let v = this.search;
+      this.showCollectBlog = this.collectBlog.filter(function(item, index, array) {
+        return (
+          item.title.toLowerCase().indexOf(v.toLowerCase()) > -1 ||
+          item.descript.toLowerCase().indexOf(v.toLowerCase()) > -1 ||
+          item.collectTime.toLowerCase().indexOf(v.toLowerCase()) > -1 ||
+          item.username.toLowerCase().indexOf(v.toLowerCase()) > -1
+        );
+      });
+      this.totalRows = this.showCollectBlog.length;
+    },
+    async deleteCollectRequest() {
+
+    },
+    async getCollectRequest() {
+
+    },
+    
   },
   computed: {
+    ...mapState({
+      springBaseURL: (state) => {
+        return state.api.springBaseURL;
+      },
+      getUserDataURL: (state) => {
+        return state.api.getUserDataURL;
+      },
+      tokenVerifyFailModal: (state) => {
+        return state.user.tokenVerifyFailModal;
+      },
+      getCollectURL: (state) => {
+        return state.user.getCollectURL;
+      },
+      tokenVerifyFailModal: (state) => {
+        return state.user.tokenVerifyFailModal;
+      },
+    }),
     pageCount() {
       let l = this.totalRows,
         s = this.perPage;
       return Math.floor(l / s);
     },
     currentPageItems() {
-      let lengthAll = this.collectBlog.length;
+      if (this.showCollectBlog.length === 0) {
+        this.showCollectBlog = this.collectBlog
+      }
+      let lengthAll = this.showCollectBlog.length;
       this.nbPages = 0;
       for (let i = 0; i < lengthAll; i = i + this.perPage) {
-        this.paginated_items[this.nbPages] = this.collectBlog.slice(
+        this.paginated_items[this.nbPages] = this.showCollectBlog.slice(
           i,
           i + this.perPage
         );

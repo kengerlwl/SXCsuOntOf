@@ -71,4 +71,17 @@ public class TagController {
         return ReturnEntity.successResult(data);
     }
 
+
+
+
+    @RequestMapping(value = "/getTagsByBlogId",method = RequestMethod.GET)
+    @ResponseBody
+    public ReturnEntity getTagsByBlogId(int blog_id){
+        JSONObject data = new JSONObject();
+        List<Tag> tagList = tagService.getTagsByBlogId(blog_id);
+        data.put("tagList",tagList);
+        return ReturnEntity.successResult(data);
+    }
+
+
 }

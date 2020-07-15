@@ -18,7 +18,7 @@ public class UserUtil {
         data.put("company",user.getCompany());
         data.put("description",user.getDescription());
         data.put("email",user.getEmail());
-        data.put("sex",user.getEmail());
+        data.put("sex",user.getSex());
 
         return data;
     }

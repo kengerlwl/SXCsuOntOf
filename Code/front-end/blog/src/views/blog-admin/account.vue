@@ -1,5 +1,5 @@
 <template>
-  <div active>
+  <div active @click="updateUser">
     <h1>Account Profile</h1>
     <hr class="my-4" />
     <b-row>
@@ -59,7 +59,7 @@
                 >
                   <b-form-input
                     id="input-username"
-                    v-model="form.username"
+                    v-model="user.username"
                     required
                     placeholder="Enter New Username"
                     :state="newUsernameState"
@@ -71,7 +71,9 @@
                     Enter at least 3 letters
                   </b-form-invalid-feedback>
                 </b-form-group>
-                <b-button variant="success">SUBMIT</b-button>
+                <b-button variant="success" @click="usernameVerifyRequest"
+                  >SUBMIT</b-button
+                >
               </b-collapse>
             </b-card-text>
           </b-card>
@@ -110,7 +112,7 @@
                 >
                   <b-form-input
                     id="input-email"
-                    v-model="form.email"
+                    v-model="user.email"
                     type="email"
                     required
                     placeholder="Enter New Email"
@@ -148,7 +150,7 @@
             >
               <b-form-input
                 id="input-1"
-                v-model="form.captcha"
+                v-model="user.captcha"
                 required
                 placeholder="Enter Captcha"
               ></b-form-input>
@@ -198,7 +200,7 @@
                 >
                   <b-form-input
                     id="input-sex"
-                    v-model="form.sex"
+                    v-model="user.sex"
                     required
                     placeholder="Enter New Sex"
                   ></b-form-input>
@@ -240,7 +242,7 @@
                 <label for="birthday-datepicker">Choose a date</label>
                 <b-form-datepicker
                   id="birthday-datepicker"
-                  v-model="form.birthday"
+                  v-model="user.birthday"
                   class="mb-2"
                 ></b-form-datepicker>
                 <!-- submit -->
@@ -286,7 +288,7 @@
                 >
                   <b-form-textarea
                     id="textarea-description"
-                    v-model="form.description"
+                    v-model="user.description"
                     required
                     placeholder="Enter something..."
                     rows="3"
@@ -335,7 +337,7 @@
                 >
                   <b-form-input
                     id="input-company"
-                    v-model="form.company"
+                    v-model="user.company"
                     required
                     placeholder="Enter New company"
                   ></b-form-input>
@@ -383,7 +385,7 @@
                 >
                   <b-form-input
                     id="iinput-origin-password"
-                    v-model="form.originPassword"
+                    v-model="user.originPassword"
                     required
                     type="password"
                     placeholder="Enter Origin Password"
@@ -405,7 +407,7 @@
                 >
                   <b-form-input
                     id="input-new-password"
-                    v-model="form.newPassword"
+                    v-model="user.newPassword"
                     required
                     type="password"
                     placeholder="Enter New Password"
@@ -427,7 +429,7 @@
                 >
                   <b-form-input
                     id="iinput-confirm-new-password"
-                    v-model="form.confirmNewPassword"
+                    v-model="user.confirmNewPassword"
                     required
                     type="password"
                     placeholder="Confirm New Password"
@@ -452,7 +454,9 @@
               >
             </b-button-group>
             <b-button-group>
-              <b-button variant="danger">Delete Your Account</b-button>
+              <b-button variant="danger" v-on:click.stop="deleteAccount"
+                >Delete Your Account</b-button
+              >
             </b-button-group>
           </b-button-toolbar>
           <b-alert class="mt-4" show variant="danger"
@@ -461,6 +465,72 @@
         </b-container>
       </b-col>
     </b-row>
+    <!-- update fail modal -->
+    <b-modal
+      v-model="updateFailModal"
+      no-close-on-backdrop
+      no-close-on-esc
+      centered
+      title="Update Fail"
+      header-bg-variant="danger"
+      header-text-variant="light"
+      body-text-variant="danger"
+    >
+      <h4>
+        <strong>{{ updateFailMsg }}</strong>
+      </h4>
+      <template v-slot:modal-footer="{ ok, cancel, hide }">
+        <!-- Emulate built in modal footer ok and cancel button actions -->
+        <b-button variant="success" @click="ok()">
+          OK
+        </b-button>
+      </template>
+    </b-modal>
+    <!-- update success modal -->
+    <b-modal
+      v-model="updateSuccessModal"
+      no-close-on-backdrop
+      no-close-on-esc
+      centered
+      title="Update Success"
+      header-bg-variant="success"
+      header-text-variant="light"
+      body-text-variant="success"
+    >
+      <h4>
+        <strong>{{ updateSuccessMsg }}</strong>
+      </h4>
+      <template v-slot:modal-footer="{ ok, cancel, hide }">
+        <!-- Emulate built in modal footer ok and cancel button actions -->
+        <b-button variant="success" @click="ok()">
+          OK
+        </b-button>
+      </template>
+    </b-modal>
+    <!-- delete account modal -->
+    <b-modal
+      v-model="deleteAccountModal"
+      no-close-on-backdrop
+      no-close-on-esc
+      centered
+      title="Delete Account"
+      header-bg-variant="danger"
+      header-text-variant="light"
+      body-text-variant="danger"
+    >
+      <h4>
+        <strong>Are you sure you want to delete this account?</strong>
+      </h4>
+      <template v-slot:modal-footer="{ ok, cancel, hide }">
+        <!-- Emulate built in modal footer ok and cancel button actions -->
+        <b-button variant="success" @click="cancel()">
+          Cancel
+        </b-button>
+        <b-button variant="danger" @click="deleteAccount">
+          Delete Account
+        </b-button>
+      </template>
+    </b-modal>
   </div>
 </template>
 <script>
@@ -488,7 +558,10 @@ export default {
         birthday: "",
         sex: "",
         company: "",
-        password: "********",
+        password: "123",
+        originPassword: "123",
+        newPassword: "123",
+        confirmNewPassword: "123",
       },
       // update data
       form: {
@@ -503,15 +576,73 @@ export default {
         confirmNewPassword: "",
         captcha: "",
       },
+      // new data input error
+      newDataError: {
+        username: true,
+        email: true,
+        originPassword: true,
+        newPassword: true,
+        confirmNewPassword: true,
+        captcha: true,
+      },
       // verify email dialog
       verifyEmailModal: false,
+      // update modal and msg
+      updateFailModal: false,
+      updateFailMsg: "",
+      updateSuccessModal: false,
+      updateSuccessMsg: "",
+      // delete account modal
+      deleteAccountModal: false,
     };
   },
   created() {
-    console.log('created');
+    console.log("created");
     this.getUserDataRequest();
   },
   methods: {
+    openDeleteAccountModal() {
+      this.deleteAccountModal = true;
+    },
+    async deleteAccount() {
+      console.log("delete account");
+      
+    },
+
+    async updateUser() {
+      console.log(this.user);
+      axios({
+        method: "post",
+        url: this.springBaseURL + this.updateUserUrl,
+        headers: {
+          token: Vue.localStorage.get("jwt_token"),
+        },
+        data: {
+          birthday: this.user.birthday,
+          sex: this.user.sex,
+          description: this.user.description,
+          company: this.user.company,
+          email: this.user.email,
+          username: this.user.username,
+          password: this.user.password,
+        },
+      })
+        .then((response) => {
+          console.log(response.data);
+          // token verify fail
+          if (response.data.code === "500000") {
+            this.updateTokenVerifyFailModal(true);
+          } else {
+            if (response.data.status === true) {
+            } else {
+            }
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+
     // vueX mutation
     ...mapMutations({
       updateUsername: "updateUsername",
@@ -521,7 +652,7 @@ export default {
     }),
     // get user's data
     async getUserDataRequest() {
-      console.log('getUserDataRequest');
+      console.log("getUserDataRequest");
       axios({
         method: "post",
         url: this.springBaseURL + this.getUserDataURL,
@@ -535,21 +666,260 @@ export default {
         .then((response) => {
           console.log(response.data);
           // token verify fail
-          if (response.data.status === true) {
-            this.user.username = response.data.data.username;
-            this.user.email = response.data.data.email;
-            this.user.description = response.data.data.description;
-            this.user.sex = response.data.data.sex;
-            this.user.company = response.data.data.company;
-            this.user.birthday = response.data.data.birthday;
-          } else {
+          if (response.data.code === "500000") {
             this.updateTokenVerifyFailModal(true);
+          } else {
+            if (response.data.status === true) {
+              console.log();
+              this.user.username = response.data.data.username;
+              this.user.email = response.data.data.email;
+              this.user.description = response.data.data.description;
+              this.user.sex = response.data.data.sex;
+              this.user.company = response.data.data.company;
+              this.user.birthday = response.data.data.birthday;
+            } else {
+            }
           }
         })
         .catch((error) => {
           console.log(error);
         });
     },
+    usernameVerifyRequest() {
+      if (!this.newDataError.username) {
+        axios({
+          method: "post",
+          url: this.springBaseURL + this.usernameVerifyURL,
+          headers: {},
+          data: {
+            username: this.form.username,
+          },
+        })
+          .then((response) => {
+            console.log(response.data);
+            if (response.data.code === "500000") {
+              this.updateTokenVerifyFailModal(true);
+            } else {
+              if (response.data.status === false) {
+                this.updateFailModal = true;
+                this.updateFailMsg =
+                  "This username has existed, please change one.";
+              } else {
+              }
+            }
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      }
+    },
+    async updateUsernameRequest() {
+      if (!this.newDataError.username) {
+        axios({
+          method: "post",
+          url: this.springBaseURL + this.updateUsernameURL,
+          headers: {
+            token: Vue.localStorage.get("jwt_token"),
+          },
+          data: {
+            username: this.form.username,
+          },
+        })
+          .then((response) => {
+            console.log(response.data);
+            if (response.data.code === "500000") {
+              this.updateTokenVerifyFailModal(true);
+            } else {
+              if (response.data.status === false) {
+                this.updateFailModal = true;
+                this.updateFailMsg =
+                  "This username has existed, please change one.";
+              } else {
+              }
+            }
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      }
+    },
+    async updateEmailRequest() {
+      if (!this.newDataError.email) {
+        axios({
+          method: "post",
+          url: this.springBaseURL + this.updateEmailURL,
+          headers: {
+            token: Vue.localStorage.get("jwt_token"),
+          },
+          data: {
+            username: this.form.username,
+          },
+        })
+          .then((response) => {
+            console.log(response.data);
+            if (response.data.code === "500000") {
+              this.updateTokenVerifyFailModal(true);
+            } else {
+              if (response.data.status === false) {
+                this.updateFailModal = true;
+                this.updateFailMsg =
+                  "This username has existed, please change one.";
+              } else {
+              }
+            }
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      }
+    },
+    async updateDescriptionRequest() {
+      axios({
+        method: "post",
+        url: this.springBaseURL + this.updateDescriptionURL,
+        headers: {
+          token: Vue.localStorage.get("jwt_token"),
+        },
+        data: {
+          username: this.form.username,
+        },
+      })
+        .then((response) => {
+          console.log(response.data);
+          if (response.data.code === "500000") {
+            this.updateTokenVerifyFailModal(true);
+          } else {
+            if (response.data.status === false) {
+              this.updateFailModal = true;
+              this.updateFailMsg =
+                "This username has existed, please change one.";
+            } else {
+            }
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+    async updateSexRequest() {
+      axios({
+        method: "post",
+        url: this.springBaseURL + this.updateSexURL,
+        headers: {
+          token: Vue.localStorage.get("jwt_token"),
+        },
+        data: {
+          username: this.form.username,
+        },
+      })
+        .then((response) => {
+          console.log(response.data);
+          if (response.data.code === "500000") {
+            this.updateTokenVerifyFailModal(true);
+          } else {
+            if (response.data.status === false) {
+              this.updateFailModal = true;
+              this.updateFailMsg =
+                "This username has existed, please change one.";
+            } else {
+            }
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+    async updateBirthdayRequest() {
+      axios({
+        method: "post",
+        url: this.springBaseURL + this.updateBirthdayURL,
+        headers: {
+          token: Vue.localStorage.get("jwt_token"),
+        },
+        data: {
+          username: this.form.username,
+        },
+      })
+        .then((response) => {
+          console.log(response.data);
+          if (response.data.code === "500000") {
+            this.updateTokenVerifyFailModal(true);
+          } else {
+            if (response.data.status === false) {
+              this.updateFailModal = true;
+              this.updateFailMsg =
+                "This username has existed, please change one.";
+            } else {
+            }
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+    async updateCompanyRequest() {
+      axios({
+        method: "post",
+        url: this.springBaseURL + this.updateCompanyURL,
+        headers: {
+          token: Vue.localStorage.get("jwt_token"),
+        },
+        data: {
+          username: this.form.username,
+        },
+      })
+        .then((response) => {
+          console.log(response.data);
+          if (response.data.code === "500000") {
+            this.updateTokenVerifyFailModal(true);
+          } else {
+            if (response.data.status === false) {
+              this.updateFailModal = true;
+              this.updateFailMsg =
+                "This username has existed, please change one.";
+            } else {
+            }
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+    async updatePasswordRequest() {
+      if (
+        !this.newDataError.originPassword &&
+        !this.this.newDataError.newPassword &&
+        !this.newDataError.confirmNewPassword
+      ) {
+        axios({
+          method: "post",
+          url: this.springBaseURL + this.updatePasswordURL,
+          headers: {
+            token: Vue.localStorage.get("jwt_token"),
+          },
+          data: {
+            username: this.form.username,
+          },
+        })
+          .then((response) => {
+            console.log(response.data);
+            if (response.data.code === "500000") {
+              this.updateTokenVerifyFailModal(true);
+            } else {
+              if (response.data.status === false) {
+                this.updateFailModal = true;
+                this.updateFailMsg =
+                  "This username has existed, please change one.";
+              } else {
+              }
+            }
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      }
+    },
+
     // edit control func
     editUsername() {
       this.editUsernameVisible = !this.editUsernameVisible;
@@ -610,31 +980,62 @@ export default {
       springBaseURL: (state) => {
         return state.api.springBaseURL;
       },
+      updateUserUrl: (state) => {
+        return state.api.updateUserUrl;
+      },
       getUserDataURL: (state) => {
         return state.api.getUserDataURL;
       },
       tokenVerifyFailModal: (state) => {
         return state.user.tokenVerifyFailModal;
       },
+      updateUsernameURL: (state) => {
+        return state.api.updateUsernameURL;
+      },
+      updateEmailURL: (state) => {
+        return state.api.updateEmailURL;
+      },
+      updateSexURL: (state) => {
+        return state.api.updateSexURL;
+      },
+      updateCompanyURL: (state) => {
+        return state.api.updateCompanyURL;
+      },
+      updateBirthdayURL: (state) => {
+        return state.api.updateBirthdayURL;
+      },
+      updateDescriptionURL: (state) => {
+        return state.api.updateDescriptionURL;
+      },
+      updatePasswordURL: (state) => {
+        return state.api.updatePasswordURL;
+      },
     }),
     // feedback validate
     newUsernameState() {
-      return this.form.username.length > 2 ? true : false;
+      this.newDataError.username = this.form.username.length > 2 ? false : true;
+      return !this.newDataError.username;
     },
     newEmailState() {
-      return this.validateEmail(this.form.email);
+      this.newDataError.email = !this.validateEmail(this.form.email);
+      return !this.newDataError.email;
     },
     originPasswordState() {
-      return this.form.originPassword.length > 7 ? true : false;
+      this.newDataError.originPassword =
+        this.form.originPassword.length > 7 ? false : true;
+      return !this.newDataError.originPassword;
     },
     newPasswordState() {
-      return this.form.newPassword.length > 7 ? true : false;
+      this.newDataError.newPassword =
+        this.form.newPassword.length > 7 ? false : true;
+      return !this.newDataError.newPassword;
     },
     confirmNewPasswordState() {
-      return (
+      this.newDataError.confirmNewPassword = !(
         this.form.confirmNewPassword.length > 7 &&
         this.form.confirmNewPassword === this.form.newPassword
       );
+      return !this.newDataError.confirmNewPassword;
     },
   },
 };

@@ -3,6 +3,7 @@ package com.sx.sxblog.service;
 import com.sx.sxblog.entity.Tag;
 import com.baomidou.mybatisplus.extension.service.IService;
 
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -28,4 +29,12 @@ public interface ITagService extends IService<Tag> {
 
     //对指定标签进行查询【】
     Tag getTagById(int tag_id);
+
+
+    List<Tag> getTagsByBlogId(int blog_id);
+
+
+
+
+
 }

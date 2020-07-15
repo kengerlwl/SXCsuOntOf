@@ -57,4 +57,15 @@ public class TagServiceTest {
         int result = tagService.deleteTag(10002);
         System.out.println(result);
     }
+
+    @Test
+    public void getTagsByBlogId()
+    {
+        List<Tag> tag = tagService.getTagsByBlogId(1000001);
+        System.out.println(tag);
+    }
+
+
+
+
 }

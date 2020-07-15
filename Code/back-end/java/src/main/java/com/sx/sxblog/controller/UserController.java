@@ -49,6 +49,12 @@ public class UserController {
         String username = (String) user_info.get("username");
         String password = (String) user_info.get("password");
         User user;
+        user = userService.getUserByUsername(username);
+
+        //添加userid到前端
+        System.out.println("the user id is :");
+        System.out.println(user.getUserId());
+        data.put("userId", user.getUserId());
 
         boolean isNum;
         boolean isId = false;
@@ -64,7 +70,9 @@ public class UserController {
         try{
             if(isNum){
                 int userId = Integer.valueOf(username);
+
                 user = userService.getUserById(userId);
+
                 if(user!=null && user.getPassword().equals(password)){
                     isId = true;
                     ac = true;

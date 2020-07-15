@@ -4,6 +4,8 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import java.time.LocalDate;
 import com.baomidou.mybatisplus.annotation.TableId;
 import java.io.Serializable;
+import java.util.List;
+
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -35,7 +37,6 @@ public class Blog implements Serializable {
     private Integer blogViews;
 
     private String blogName;
-
     public Integer getBlogId() {
         return blogId;
     }

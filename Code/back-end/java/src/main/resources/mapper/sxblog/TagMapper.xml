@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.sx.sxblog.mapper.TagMapper">
+    <!-- 通过blog_id 返回所有的标签名 -->
+    <select id="getTagsByBlogId" resultType="tag" parameterType="int">
+        SELECT tag_name FROM tag WHERE blog_id = #{blog_id}
+    </select>
 
 </mapper>
