@@ -85,9 +85,11 @@ export default {
         .then((response) => {
           console.log(response.data);
           if (response.data.status === true) {
-            // localstorage jwt_token
+            console.log("success");
            
           } else {
+          console.log("fail");
+
            
           }
         })
