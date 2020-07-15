@@ -104,6 +104,8 @@ public class TagController {
         try{
             id = UserUtil.switchToint(userid);
         }catch (Exception e){
+            status = false;
+            msg = "worng id";
         }
 
         List<Blog> blogs = blogService.getBlogListByUserid(id);
@@ -120,7 +122,10 @@ public class TagController {
                 }
             }
         }else {
-            msg="user have not bolg";
+            if(status){
+                msg="user have not bolg";
+            }
+            status = false;
         }
         data.put("tag",tagSet);
         ReturnEntity returnEntity = new ReturnEntity(status,msg,data);

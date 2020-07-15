@@ -124,8 +124,16 @@ public class CollectController {
         String msg = "";
         boolean status = true;
 
+        int id = 10;
+
         String userid = (String)user_post.get("userid");
-        int id = UserUtil.switchToint(userid);
+        try {
+            id = UserUtil.switchToint(userid);
+        }catch (Exception e){
+            msg = "worng id";
+            status = false;
+        }
+
         List<Collect> collects= collectService.getCollectListByUserid(id);
         Set<String> tagSet = new HashSet<String>();
 
@@ -140,7 +148,15 @@ public class CollectController {
                 tagSet.add(tag.getTagName());
             }
         }
-        data.put("tags",tagSet);
+        if (tagSet!=null && !tagSet.isEmpty()){
+            data.put("tags",tagSet);
+        }else {
+            if (status){
+                msg = "no collect blog";
+                status = false;
+            }
+        }
+
         ReturnEntity returnEntity = new ReturnEntity(status,msg,data);
         return returnEntity;
     }
