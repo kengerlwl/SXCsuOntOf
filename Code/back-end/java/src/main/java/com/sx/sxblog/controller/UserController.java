@@ -159,7 +159,7 @@ public class UserController {
 
         //发送邮件
         try{
-            SendMailUtil.sendEmail(user.getEmail(),"SXBLOG verfy","verify code is"+uuid);
+            SendMailUtil.sendEmail(user.getEmail(),"SXBLOG verfy","verify code is\n"+uuid);
         }catch (Exception exception) {
             status = false;
             msg = "email send failed";
