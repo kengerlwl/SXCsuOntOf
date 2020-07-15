@@ -133,4 +133,23 @@ public class TagController {
 
     }
 
+    @PostMapping("/delet_tag_by_blogid_tagname")
+    @ResponseBody
+    public ReturnEntity deletTagByUserTagname(@RequestBody Map<String,Object> map){
+        JSONObject data = new JSONObject();
+        String msg = "";
+        boolean status = true;
+
+        String blogId = (String) map.get("blog_id");
+        int id = UserUtil.switchToint(blogId);
+        String tagName = (String) map.get("tag_name");
+        int result = tagService.deletTagByUserAndContent(id,tagName);
+
+        data.put("result",result);
+
+        ReturnEntity returnEntity = new ReturnEntity(status,msg,data);
+        return returnEntity;
+
+    }
+
 }

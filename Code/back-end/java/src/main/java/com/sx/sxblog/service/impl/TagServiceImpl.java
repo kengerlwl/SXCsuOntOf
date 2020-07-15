@@ -69,5 +69,13 @@ public class TagServiceImpl extends ServiceImpl<TagMapper, Tag> implements ITagS
         return result;
     }
 
+    @Override
+    public int deletTagByUserAndContent(int blogid,String tagName){
+        QueryWrapper<Tag> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("blog_id",blogid).or().eq("tag_name",tagName);
+        int result = tagMapper.delete(queryWrapper);
+        return result;
+    }
+
 
 }
