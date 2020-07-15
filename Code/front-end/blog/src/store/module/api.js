@@ -26,6 +26,7 @@ const api = {
         updatePostURL: "",
         deletePostURL: "",
         searchPostURL: "",
+        getPostsURL: "/getBlogListByUser",
         // collect
         addCollectURL: "",
         searchCollectURL: "",

@@ -26,4 +26,8 @@ public interface ICollectService extends IService<Collect> {
 
     //对指定博客进行查询【】
     Collect getCollectById(int collect_id);
+
+    //获取制定用户的collect列表
+    List<Collect> getCollectListByUserid(int userid);
+
 }

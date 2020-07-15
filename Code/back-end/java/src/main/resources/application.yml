@@ -4,15 +4,19 @@ spring:
     driver-class-name: com.mysql.jdbc.Driver
 
     url: jdbc:mysql://127.0.0.1:3306/sxblog?useUnicode=true&amp;characterEncoding=UTF-8&amp;useSSL=false&serverTimezone=GMT%2B8
+<<<<<<< HEAD
     username: root
     password: 156354
+=======
+    username: Rem
+    password:
+>>>>>>> 1c6685b531341a57e0fa3353ad60172cd64ee39a
   #邮件配置
   mail:
     host: smtp.163.com
     user: SXBlog_holiday@163.com
     ## 授权码
     password: AJFYYATCBRUUUZIJ
-
 
 server:
   port: 8090

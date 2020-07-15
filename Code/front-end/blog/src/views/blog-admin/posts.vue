@@ -59,7 +59,7 @@
           header-text-variant="white"
         >
           <template v-slot:header>
-            <h4 class="mb-0">{{ item.id + item.title }}</h4>
+            <h4 class="mb-0">{{ item.blogName }}</h4>
           </template>
           <b-card-sub-title>POST ON {{ item.postTime }}</b-card-sub-title>
           <b-badge
@@ -70,16 +70,18 @@
             >{{ tag }}</b-badge
           >
           <b-card-text>
+          <!--
             {{
-              item.descript.length > 200
-                ? item.descript.substring(0, 200) + "..."
-                : item.descript
-            }}
+              item.blogContent.length > 200
+                ? item.blogContent.substring(0, 200) + "..."
+                : item.blogContent
+            }}-->
+            {{item.blogContent}}
           </b-card-text>
           <b-button href="#" variant="outline-info" class="mr-3">
             <b-icon-brush></b-icon-brush> Edit
           </b-button>
-          <b-button variant="danger" @click="openDeleteModal(i, item.id)">
+          <b-button variant="danger" @click="openDeleteModal(i, item.blogId)">
             <b-icon-trash-fill></b-icon-trash-fill> Delete
           </b-button>
           <template v-slot:footer>
@@ -121,6 +123,11 @@
   </div>
 </template>
 <script>
+// import VueX
+import { mapState, mapMutations } from "vuex";
+import Vue from "vue";
+import axios from "axios";
+
 const items = [
   {
     id: 1,
@@ -289,7 +296,7 @@ export default {
     };
   },
   created() {
-    this.showPosts = this.posts;
+    this.getUserPostsRequest();
   },
   methods: {
     openDeleteModal(index, id) {
@@ -326,8 +333,48 @@ export default {
       });
       this.totalRows = this.showPosts.length;
     },
+    async getUserPostsRequest() {
+      axios({
+          method: "get",
+          url: this.springBaseURL + this.getPostsURL + "?user_id=" + Vue.localStorage.get("user_id"),
+          headers: {
+            token: Vue.localStorage.get("jwt_token"),
+          },
+          data: {
+          },
+        })
+          .then((response) => {
+            console.log(response.data);
+            if (response.data.code === "500000") {
+              this.updateTokenVerifyFailModal(true);
+            } else {
+              this.posts = response.data.data.bloglist;
+              for(let i = 0 ; i < this.posts.length; i++) {
+                this.posts[i].tags = [];
+                for(let j = 0; j < response.data.data[String(this.posts[i].blogId)].length; j++) {
+                  this.posts[i].tags.push(response.data.data[String(this.posts[i].blogId)][j].tagName);
+                }
+              }
+              this.showPosts = this.posts;
+              this.totalRows = this.showPosts.length;
+            }
+            console.log(this.showPosts)
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+    }
   },
   computed: {
+    // get data from vuex
+    ...mapState({
+      springBaseURL: (state) => {
+        return state.api.springBaseURL;
+      },
+      getPostsURL: (state) => {
+        return state.api.getPostsURL;
+      },
+    }),
     pageCount() {
       let l = this.totalRows,
         s = this.perPage;
