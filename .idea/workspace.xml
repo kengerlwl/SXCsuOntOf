@@ -19,20 +19,8 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="323a1024-94c9-45a1-bad7-430a7e716367" name="Default Changelist" comment="完成登录注册">
+    <list default="true" id="323a1024-94c9-45a1-bad7-430a7e716367" name="Default Changelist" comment="增加了tag接口🥳">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/back-end/java/src/main/java/com/sx/sxblog/controller/TagController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Code/back-end/java/src/main/java/com/sx/sxblog/controller/TagController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/back-end/java/src/main/java/com/sx/sxblog/mapper/TagMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/Code/back-end/java/src/main/java/com/sx/sxblog/mapper/TagMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/back-end/java/src/main/java/com/sx/sxblog/service/IBlogService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Code/back-end/java/src/main/java/com/sx/sxblog/service/IBlogService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/back-end/java/src/main/java/com/sx/sxblog/service/ITagService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Code/back-end/java/src/main/java/com/sx/sxblog/service/ITagService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/back-end/java/src/main/java/com/sx/sxblog/service/impl/BlogServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/Code/back-end/java/src/main/java/com/sx/sxblog/service/impl/BlogServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/back-end/java/src/main/java/com/sx/sxblog/service/impl/TagServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/Code/back-end/java/src/main/java/com/sx/sxblog/service/impl/TagServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/back-end/java/src/main/resources/mapper/sxblog/TagMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Code/back-end/java/src/main/resources/mapper/sxblog/TagMapper.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/back-end/java/src/test/java/com/sx/sxblog/Service/TagServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Code/back-end/java/src/test/java/com/sx/sxblog/Service/TagServiceTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Code/back-end/java/src/test/java/com/sx/sxblog/controller/TagControllerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Code/back-end/java/src/test/java/com/sx/sxblog/controller/TagControllerTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/工作进度-2020.7.12.md" beforeDir="false" afterPath="$PROJECT_DIR$/工作进度-2020.7.12.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/工作进度-2020.7.13.md" beforeDir="false" afterPath="$PROJECT_DIR$/工作进度-2020.7.13.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/工作进度-2020.7.14.md" beforeDir="false" afterPath="$PROJECT_DIR$/工作进度-2020.7.14.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -363,7 +351,14 @@
       <option name="project" value="LOCAL" />
       <updated>1594300642789</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="增加了tag接口🥳">
+      <created>1594724650799</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1594724650799</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -391,7 +386,8 @@
     <MESSAGE value="测试增删查Blog" />
     <MESSAGE value="更新 README.md &amp; 工作進度" />
     <MESSAGE value="完成功能模块的CRUD并测试了接口" />
-    <option name="LAST_COMMIT_MESSAGE" value="完成功能模块的CRUD并测试了接口" />
+    <MESSAGE value="增加了tag接口" />
+    <option name="LAST_COMMIT_MESSAGE" value="增加了tag接口" />
   </component>
   <component name="WindowStateProjectService">
     <state x="496" y="237" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1594217745017">
@@ -418,32 +414,32 @@
       <screen x="0" y="23" width="1792" height="1097" />
     </state>
     <state x="666" y="460" key="#com.intellij.refactoring.move.moveClassesOrPackages.MoveClassesOrPackagesDialog.packages/0.23.1792.1097@0.23.1792.1097" timestamp="1594135142638" />
-    <state width="1750" height="133" key="GridCell.Tab.0.bottom" timestamp="1594722475680">
+    <state width="1750" height="424" key="GridCell.Tab.0.bottom" timestamp="1594724699676">
       <screen x="0" y="23" width="1792" height="1097" />
     </state>
     <state width="1750" height="521" key="GridCell.Tab.0.bottom/0.0.1792.1120@0.0.1792.1120" timestamp="1594213241058" />
-    <state width="1750" height="133" key="GridCell.Tab.0.bottom/0.23.1792.1097@0.23.1792.1097" timestamp="1594722475680" />
+    <state width="1750" height="424" key="GridCell.Tab.0.bottom/0.23.1792.1097@0.23.1792.1097" timestamp="1594724699676" />
     <state width="1750" height="237" key="GridCell.Tab.0.bottom/1792.0.2560.1440/0.23.1792.1097@0.23.1792.1097" timestamp="1594028130030" />
     <state width="2518" height="416" key="GridCell.Tab.0.bottom/1792.0.2560.1440/0.23.1792.1097@1792.0.2560.1440" timestamp="1594028067245" />
-    <state width="1750" height="133" key="GridCell.Tab.0.center" timestamp="1594722475679">
+    <state width="1750" height="424" key="GridCell.Tab.0.center" timestamp="1594724699675">
       <screen x="0" y="23" width="1792" height="1097" />
     </state>
     <state width="1750" height="521" key="GridCell.Tab.0.center/0.0.1792.1120@0.0.1792.1120" timestamp="1594213241057" />
-    <state width="1750" height="133" key="GridCell.Tab.0.center/0.23.1792.1097@0.23.1792.1097" timestamp="1594722475679" />
+    <state width="1750" height="424" key="GridCell.Tab.0.center/0.23.1792.1097@0.23.1792.1097" timestamp="1594724699675" />
     <state width="1750" height="237" key="GridCell.Tab.0.center/1792.0.2560.1440/0.23.1792.1097@0.23.1792.1097" timestamp="1594028130029" />
     <state width="2518" height="416" key="GridCell.Tab.0.center/1792.0.2560.1440/0.23.1792.1097@1792.0.2560.1440" timestamp="1594028067243" />
-    <state width="1750" height="133" key="GridCell.Tab.0.left" timestamp="1594722475679">
+    <state width="1750" height="424" key="GridCell.Tab.0.left" timestamp="1594724699674">
       <screen x="0" y="23" width="1792" height="1097" />
     </state>
     <state width="1750" height="521" key="GridCell.Tab.0.left/0.0.1792.1120@0.0.1792.1120" timestamp="1594213241057" />
-    <state width="1750" height="133" key="GridCell.Tab.0.left/0.23.1792.1097@0.23.1792.1097" timestamp="1594722475679" />
+    <state width="1750" height="424" key="GridCell.Tab.0.left/0.23.1792.1097@0.23.1792.1097" timestamp="1594724699674" />
     <state width="1750" height="237" key="GridCell.Tab.0.left/1792.0.2560.1440/0.23.1792.1097@0.23.1792.1097" timestamp="1594028130028" />
     <state width="2518" height="416" key="GridCell.Tab.0.left/1792.0.2560.1440/0.23.1792.1097@1792.0.2560.1440" timestamp="1594028067242" />
-    <state width="1750" height="133" key="GridCell.Tab.0.right" timestamp="1594722475680">
+    <state width="1750" height="424" key="GridCell.Tab.0.right" timestamp="1594724699675">
       <screen x="0" y="23" width="1792" height="1097" />
     </state>
     <state width="1750" height="521" key="GridCell.Tab.0.right/0.0.1792.1120@0.0.1792.1120" timestamp="1594213241058" />
-    <state width="1750" height="133" key="GridCell.Tab.0.right/0.23.1792.1097@0.23.1792.1097" timestamp="1594722475680" />
+    <state width="1750" height="424" key="GridCell.Tab.0.right/0.23.1792.1097@0.23.1792.1097" timestamp="1594724699675" />
     <state width="1750" height="237" key="GridCell.Tab.0.right/1792.0.2560.1440/0.23.1792.1097@0.23.1792.1097" timestamp="1594028130029" />
     <state width="2518" height="416" key="GridCell.Tab.0.right/1792.0.2560.1440/0.23.1792.1097@1792.0.2560.1440" timestamp="1594028067244" />
     <state width="1750" height="515" key="GridCell.Tab.1.bottom" timestamp="1594719353628">
@@ -482,10 +478,10 @@
       <screen x="0" y="23" width="1792" height="1097" />
     </state>
     <state x="397" y="210" key="SettingsEditor/0.23.1792.1097@0.23.1792.1097" timestamp="1594176636926" />
-    <state x="496" y="311" key="Vcs.Push.Dialog.v2" timestamp="1594300665941">
+    <state x="496" y="311" key="Vcs.Push.Dialog.v2" timestamp="1594724658181">
       <screen x="0" y="23" width="1792" height="1097" />
     </state>
-    <state x="496" y="311" key="Vcs.Push.Dialog.v2/0.23.1792.1097@0.23.1792.1097" timestamp="1594300665941" />
+    <state x="496" y="311" key="Vcs.Push.Dialog.v2/0.23.1792.1097@0.23.1792.1097" timestamp="1594724658181" />
     <state x="496" y="311" key="Vcs.Push.Dialog.v2/1792.0.2560.1440/0.23.1792.1097@0.23.1792.1097" timestamp="1594028833478" />
     <state x="684" y="492" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1594719704181">
       <screen x="0" y="23" width="1792" height="1097" />
