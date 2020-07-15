@@ -375,6 +375,46 @@ public class UserController {
         return returnEntity;
     }
 
+    @PostMapping("/find_passwd")
+    @ResponseBody
+    public ReturnEntity findUserPasswd(@RequestBody Map<String,Object> find_info) throws Exception {
+        String msg = "";
+        JSONObject data = new JSONObject();
+        boolean status = true;
+
+        String email = (String) find_info.get("email");
+        String userName = (String) find_info.get("username");
+        User user;
+
+        try {
+            if (UserUtil.isId(userName)) {
+                int id = UserUtil.switchToint(userName);
+                user = userService.getUserById(id);
+            }else {
+                user = userService.getUserByUsername(userName);
+            }
+
+            if (!user.getEmail().equals(email)){
+                msg = "worng eamil or worng email";
+                status = false;
+            }else {
+                String newPasswd = UUIDUtil.getUUID();
+                user.setPassword(newPasswd);
+                userService.updateUser(user);
+                SendMailUtil.sendEmail(user.getEmail(),"SXBLOG new password","your new password is \n"+newPasswd);
+            }
+        }catch (Exception ex){
+            msg = "reset password and sent password to you was failed,please try again";
+            status = false;
+        }
+
+        if(status){
+            msg = "send successfully, please check your email";
+        }
+        ReturnEntity returnEntity = new ReturnEntity(status,msg,data);
+        return  returnEntity;
+    }
+
 
 }
 
