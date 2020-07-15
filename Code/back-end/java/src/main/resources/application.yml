@@ -6,9 +6,17 @@ spring:
     url: jdbc:mysql://127.0.0.1:3306/sxblog?useUnicode=true&amp;characterEncoding=UTF-8&amp;useSSL=false&serverTimezone=GMT%2B8
     username: Rem
     password:
+  #邮件配置
+  mail:
+    host: smtp.163.com
+    user: SXBlog_holiday@163.com
+    ## 授权码
+    password: AJFYYATCBRUUUZIJ
 
 server:
   port: 8090
 mybatis-plus:
   mapper-locations: classpath:/mapper/sxblog/**.xml
   config-location: classpath:mybatis-config.xml
+
+

@@ -4,9 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.sx.sxblog.common.ReturnEntity;
-import com.sx.sxblog.common.TokenUtil;
-import com.sx.sxblog.common.UserUtil;
+import com.sx.sxblog.common.*;
 import com.sx.sxblog.entity.User;
 import com.sx.sxblog.service.impl.BlogServiceImpl;
 import com.sx.sxblog.service.impl.UserServiceImpl;
@@ -33,6 +31,11 @@ import java.util.regex.Pattern;
 public class UserController {
     @Resource
     private UserServiceImpl userService;
+
+    @Resource
+    private BlogServiceImpl blogService;
+
+    private UserAndUUID userAndUUID = new UserAndUUID();
 
 
     @RequestMapping(value = "/signIn",method = RequestMethod.POST)
@@ -140,21 +143,100 @@ public class UserController {
         user.setEmail(email);
         user.setLevel(0);
         user.setSex(sex);
-        try {
-            userService.insertUser(user);
-        }catch (Exception ex){
-            //日志记录错误
-            msg = "service worong";
+
+        //不插入数据库先保存
+//        try {
+//            userService.insertUser(user);
+//        }catch (Exception ex){
+//            //日志记录错误
+//            msg = "service worong";
+//            status = false;
+//            code = 500;
+//        }
+        //内存存user
+        String uuid = UUIDUtil.getUUID();
+        userAndUUID.addUser(uuid,user);
+
+        //发送邮件
+        try{
+            SendMailUtil.sendEmail(user.getEmail(),"SXBLOG verfy","verify code is\n"+uuid);
+        }catch (Exception exception) {
             status = false;
-            code = 500;
+            msg = "email send failed";
         }
 
-        int id = userService.getUserByUsername(username).getUserId();
+//        int id = userService.getUserByUsername(username).getUserId();
         JSONObject data = new JSONObject();
-        data.put("id",id);
+//        data.put("uuid",uuid);
         ReturnEntity returnEntity = new ReturnEntity(status,msg,data);
         return returnEntity;
     }
+
+    @PostMapping("/email_verify")
+    @ResponseBody
+    public  ReturnEntity emailVerify(@RequestBody Map<String,Object> code_body){
+        String msg ="";
+        JSONObject data = new JSONObject();
+        boolean status = true;
+
+        String code = (String) code_body.get("code");
+        User user = null;
+        try {
+            if (userAndUUID.isContent(code)){
+                user = userAndUUID.getUser(code);
+                userService.insertUser(user);
+            }
+        }catch (Exception exception){
+            msg = "user have not signUp succeed";
+        }
+
+        if (user!=null){
+            data.put("user_id",user.getUserId());
+            data.put("user_name",user.getUserName());
+        }else{
+            msg = "user have not signUp succeed";
+        }
+
+        ReturnEntity returnEntity = new ReturnEntity(status,msg,data);
+        return returnEntity;
+
+    }
+
+//    @PostMapping("/test")
+//    @ResponseBody
+//    public ReturnEntity test() throws Exception {
+//        SendMailUtil.sendEmail("1370865669@qq.com", "SXBLOG verfy", "verify code is");
+//        ReturnEntity returnEntity = new ReturnEntity(true,"ok",new JSONObject());
+//        return returnEntity;
+//    }
+//
+//    @PostMapping("/email_verify")
+//    @ResponseBody
+//    public ReturnEntity emailVerify(@RequestBody Map<String,Object> verify){
+//        String msg = "";
+//        boolean status = true;
+//        JSONObject data = new JSONObject();
+//
+//        User user = null;
+//
+//        String uuid = (String) verify.get("uudi");
+//        if(userAndUUID.isContent(uuid)){
+//            user = userAndUUID.getUser(uuid);
+//            userService.insertUser(user);
+//            int id = userService.getUserByUsername(user.getUserName()).getUserId();
+//            data.put("id",id);
+//            data.put("username",user.getUserName());
+//        }
+//        else {
+//            msg = "woring verfy code";
+//            status = false;
+//        }
+//        ReturnEntity returnEntity = new ReturnEntity(status,msg,data);
+//        return returnEntity;
+//    }
+
+//    @GetMapping("/get_user_all_tag"
+    
 
     @PostMapping("/change_data")
     @ResponseBody
