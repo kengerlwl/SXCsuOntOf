@@ -26,10 +26,10 @@ import java.util.SimpleTimeZone;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class UserControllerTest {
-    @Autowired
-    private WebApplicationContext wac;
-    private MockMvc mvc;
-    private MockHttpSession session;
+//    @Autowired
+//    private WebApplicationContext wac;
+//    private MockMvc mvc;
+//    private MockHttpSession session;
 
 //    @Before
 //    public void setupMock()
