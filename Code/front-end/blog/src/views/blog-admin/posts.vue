@@ -9,7 +9,7 @@
     <div class="mb-4">
       <b-button-toolbar justify aria-label="post create and search">
         <b-button-group class="mr-4">
-          <b-button variant="success" :to="{ name: 'post_edit' }"
+          <b-button variant="success" @click="toEditBlog(-1)"
             >Create New Post</b-button
           >
         </b-button-group>
@@ -78,7 +78,7 @@
             }}-->
             {{ item.previewContent }}
           </b-card-text>
-          <b-button href="#" variant="outline-info" class="mr-3">
+          <b-button @click="toEditBlog(item.blogId)" variant="outline-info" class="mr-3">
             <b-icon-brush></b-icon-brush> Edit
           </b-button>
           <b-button variant="danger" @click="openDeleteModal(i, item.blogId)">
@@ -117,6 +117,24 @@
         </b-button>
         <b-button variant="danger" @click="deletePost()">
           Delete
+        </b-button>
+      </template>
+    </b-modal>
+    <!-- delete success modal -->
+    <b-modal
+      v-model="deletePostSuccessModal"
+      no-close-on-backdrop
+      no-close-on-esc
+      centered
+      title="Delete Post"
+      header-bg-variant="success"
+      header-text-variant="light"
+    >
+      <h4><strong>Delete Success</strong></h4>
+      <template v-slot:modal-footer="{ ok, cancel, hide }">
+        <!-- Emulate built in modal footer ok and cancel button actions -->
+        <b-button variant="success" @click="ok()">
+          OK
         </b-button>
       </template>
     </b-modal>
@@ -291,6 +309,7 @@ export default {
       // delete post modal
       deletePostModal: false,
       deleteItem: {},
+      deletePostSuccessModal: false,
       // search
       search: "",
     };
@@ -317,6 +336,8 @@ export default {
           this.posts.splice(i, 1);
         }
       }
+      // axios request
+      //this.deletePostRequest(this.deleteItem.id);
 
       this.deletePostModal = false;
       // change totalRows
@@ -326,12 +347,20 @@ export default {
       let v = this.search;
       this.showPosts = this.posts.filter(function(item, index, array) {
         return (
-          item.title.toLowerCase().indexOf(v.toLowerCase()) > -1 ||
-          item.descript.toLowerCase().indexOf(v.toLowerCase()) > -1 ||
+          item.blogName.toLowerCase().indexOf(v.toLowerCase()) > -1 ||
+          item.blogContent.toLowerCase().indexOf(v.toLowerCase()) > -1 ||
           item.postTime.toLowerCase().indexOf(v.toLowerCase()) > -1
         );
       });
       this.totalRows = this.showPosts.length;
+    },
+    toEditBlog(blogId) {
+      // 跳轉到 viewProduct 子組件檢視產品詳細，并添加 query string 作為参数
+      this.$router.push({
+        path:
+          "/" + Vue.localStorage.get("user_name") + "/admin/posts/post_edit",
+        query: { blogId: blogId },
+      });
     },
     async getUserPostsRequest() {
       axios({
@@ -380,7 +409,29 @@ export default {
           console.log(error);
         });
     },
-    async deletePostRequest() {},
+    async deletePostRequest(postId) {
+      axios({
+        method: "post",
+        url: this.springBaseURL + this.deletePostURL,
+        headers: {
+          token: Vue.localStorage.get("jwt_token"),
+        },
+        data: {
+          blogId: postId,
+        },
+      })
+        .then((response) => {
+          console.log(response.data);
+          if (response.data.code === "500000") {
+            this.updateTokenVerifyFailModal(true);
+          } else {
+            this.deletePostSuccessModal = true;
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
   },
   computed: {
     // get data from vuex
@@ -390,6 +441,9 @@ export default {
       },
       getPostsURL: (state) => {
         return state.api.getPostsURL;
+      },
+      deletePostURL: (state) => {
+        return state.api.deletePostURL;
       },
     }),
     pageCount() {
