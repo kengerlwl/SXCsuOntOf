@@ -2,8 +2,8 @@
   <div active>
     <!--
     {{ posts }}<br /><br /><br />
-    {{ showPosts }}<br />
-    <h1>Your Posts</h1>-->
+    {{ showPosts }}<br />-->
+    <h1>Your Posts</h1>
     <hr class="my-4" />
     <b-alert show>Note: 這裡管理你的 Blog 文章</b-alert>
     <div class="mb-4">
@@ -30,25 +30,6 @@
       </b-button-toolbar>
     </div>
     <b-row>
-      <b-col cols="3">
-        <b-card header-bg-variant="dark" header-text-variant="white">
-          <template v-slot:header>
-            <h4 class="mb-0">Tags</h4>
-          </template>
-          <b-card-text>
-            <b-button
-              size="sm"
-              class="m-1"
-              variant="outline-secondary"
-              pill
-              v-for="(item, i) in tags"
-              :key="i"
-            >
-              {{ item }}
-            </b-button>
-          </b-card-text>
-        </b-card>
-      </b-col>
       <b-col cols="9">
         <b-card
           tag="article"
@@ -78,8 +59,19 @@
             }}-->
             {{ item.previewContent }}
           </b-card-text>
-          <b-button @click="toEditBlog(item.blogId)" variant="outline-info" class="mr-3">
+          <b-button
+            @click="toEditBlog(item.blogId)"
+            variant="outline-info"
+            class="mr-3"
+          >
             <b-icon-brush></b-icon-brush> Edit
+          </b-button>
+          <b-button
+            @click="openEditTagsModal(item.blogId, item.blogName, item.tags)"
+            variant="outline-primary"
+            class="mr-3"
+          >
+            <b-icon-brush></b-icon-brush> Tags
           </b-button>
           <b-button variant="danger" @click="openDeleteModal(i, item.blogId)">
             <b-icon-trash-fill></b-icon-trash-fill> Delete
@@ -97,6 +89,25 @@
           class="my-0"
           limit="10"
         />
+      </b-col>
+      <b-col cols="3">
+        <b-card header-bg-variant="dark" header-text-variant="white">
+          <template v-slot:header>
+            <h4 class="mb-0">Tags</h4>
+          </template>
+          <b-card-text>
+            <b-button
+              size="sm"
+              class="m-1"
+              variant="outline-secondary"
+              pill
+              v-for="(item, i) in tags"
+              :key="i"
+            >
+              {{ item }}
+            </b-button>
+          </b-card-text>
+        </b-card>
       </b-col>
     </b-row>
     <!-- delete modal -->
@@ -131,6 +142,64 @@
       header-text-variant="light"
     >
       <h4><strong>Delete Success</strong></h4>
+      <template v-slot:modal-footer="{ ok, cancel, hide }">
+        <!-- Emulate built in modal footer ok and cancel button actions -->
+        <b-button variant="success" @click="ok()">
+          OK
+        </b-button>
+      </template>
+    </b-modal>
+    <!-- edit tags modal -->
+    <b-modal
+      v-model="editTagsModal"
+      no-close-on-backdrop
+      no-close-on-esc
+      centered
+      title="Edit Tags"
+      header-bg-variant="success"
+      header-text-variant="light"
+      size="lg"
+    >
+      <h4>{{ currentEditBlogName }}</h4>
+      <div class="mb-4">
+        <ul
+          id="my-custom-tags-list"
+          class="list-unstyled d-inline-flex flex-wrap mb-0"
+          aria-live="polite"
+          aria-atomic="false"
+          aria-relevant="additions removals"
+        >
+          <b-card
+            v-for="(tag, i) in currentEditTags"
+            :key="i"
+            tag="li"
+            class="mt-1 mr-1"
+            body-class="py-1 pr-2 text-nowrap"
+            bg-variant="info"
+            text-variant="light"
+            border-variant="light"
+          >
+            <strong>{{ tag }}</strong>
+            <b-button @click="removeTag(tag)" variant="info" size="sm"
+              ><b-icon-x></b-icon-x
+            ></b-button>
+          </b-card>
+        </ul>
+      </div>
+      <div>
+        <!-- new Tag -->
+        <b-form-group id="input-group-1" label="New Tag" label-for="input-1">
+          <b-form-input
+            id="input-1"
+            v-model="newTag.tagName"
+            required
+            placeholder="Enter a new tag"
+          ></b-form-input>
+        </b-form-group>
+      </div>
+      <div class="tag-add-btn">
+        <b-button variant="outline-dark">Add</b-button>
+      </div>
       <template v-slot:modal-footer="{ ok, cancel, hide }">
         <!-- Emulate built in modal footer ok and cancel button actions -->
         <b-button variant="success" @click="ok()">
@@ -312,27 +381,37 @@ export default {
       deletePostSuccessModal: false,
       // search
       search: "",
+      // edit tags modal
+      editTagsModal: false,
+      currentEditTags: [],
+      currentEditBlogName: "",
+      currentEditBlogId: "",
+      newTag: {
+        blogId: 0,
+        tagName: "",
+      },
+      deleteTag: {},
     };
   },
   created() {
     this.getUserPostsRequest();
   },
   methods: {
-    openDeleteModal(index, id) {
+    openDeleteModal(index, blogId) {
       this.deletePostModal = true;
       this.deleteItem.index = index;
-      this.deleteItem.id = id;
+      this.deleteItem.blogId = blogId;
     },
     deletePost() {
       // this.paginated_items[this.currentPage - 1].splice(this.deleteItem.index, 1);
-      console.log("delete post id: " + this.deleteItem.id);
+      console.log("delete post id: " + this.deleteItem.blogId);
       for (let i = 0; i < this.showPosts.length; i++) {
-        if (this.showPosts[i].id === this.deleteItem.id) {
+        if (this.showPosts[i].blogId === this.deleteItem.blogId) {
           this.showPosts.splice(i, 1);
         }
       }
       for (let i = 0; i < this.posts.length; i++) {
-        if (this.posts[i].id === this.deleteItem.id) {
+        if (this.posts[i].blogId === this.deleteItem.blogId) {
           this.posts.splice(i, 1);
         }
       }
@@ -361,6 +440,19 @@ export default {
           "/" + Vue.localStorage.get("user_name") + "/admin/posts/post_edit",
         query: { blogId: blogId },
       });
+    },
+    openEditTagsModal(blogId, blogName, tags) {
+      this.currentEditBlogId = blogId;
+      this.currentEditBlogName = blogName;
+      this.currentEditTags = tags;
+      this.newTag.blogId = blogId;
+      this.editTagsModal = true;
+    },
+    deleteTag() {
+
+    },
+    addNewTag() {
+
     },
     async getUserPostsRequest() {
       axios({
@@ -477,5 +569,9 @@ export default {
 .page-item.active .page-link {
   background-color: rgb(100, 100, 100) !important;
   border-color: rgb(100, 100, 100) !important;
+}
+.tag-add-btn {
+  display: flex;
+  justify-content: flex-end;
 }
 </style>

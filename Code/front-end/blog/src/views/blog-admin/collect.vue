@@ -19,26 +19,6 @@
       </b-button-toolbar>
     </div>
     <b-row>
-      <b-col cols="3">
-        <!-- left tags -->
-        <b-card header-bg-variant="dark" header-text-variant="white">
-          <template v-slot:header>
-            <h4 class="mb-0">Tags</h4>
-          </template>
-          <b-card-text>
-            <b-button
-              size="sm"
-              class="m-1"
-              variant="outline-secondary"
-              pill
-              v-for="(item, i) in tags"
-              :key="i"
-            >
-              {{ item }}
-            </b-button>
-          </b-card-text>
-        </b-card>
-      </b-col>
       <b-col cols="9">
         <!-- collect article -->
         <b-card
@@ -88,6 +68,26 @@
           class="my-0"
           limit="10"
         />
+      </b-col>
+      <b-col cols="3">
+        <!-- left tags -->
+        <b-card header-bg-variant="dark" header-text-variant="white">
+          <template v-slot:header>
+            <h4 class="mb-0">Tags</h4>
+          </template>
+          <b-card-text>
+            <b-button
+              size="sm"
+              class="m-1"
+              variant="outline-secondary"
+              pill
+              v-for="(item, i) in tags"
+              :key="i"
+            >
+              {{ item }}
+            </b-button>
+          </b-card-text>
+        </b-card>
       </b-col>
     </b-row>
     <!-- delete modal -->
