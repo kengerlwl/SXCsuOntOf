@@ -21,6 +21,7 @@
       </b-navbar>
     </div>
     <!-- tags -->
+    <!--
     <div id="tag-input-box">
       <b-form-tags
         input-id="tags-pills"
@@ -32,7 +33,7 @@
         placeholder="Enter new tags separated by space"
         class="mb-2"
       ></b-form-tags>
-    </div>
+    </div>-->
     <!-- blog content -->
     <mavon-editor
       id="posts-edit"
