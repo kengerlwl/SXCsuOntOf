@@ -51,4 +51,12 @@ public class CollectServiceImpl extends ServiceImpl<CollectMapper, Collect> impl
         List<Collect> collects = collectMapper.selectList(queryWrapper);
         return collects;
     }
+
+    @Override
+    public int deletCollectByBlogId(int blogid){
+        QueryWrapper<Collect> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("blog_id",blogid);
+        int result = collectMapper.delete(queryWrapper);
+        return result;
+    }
 }

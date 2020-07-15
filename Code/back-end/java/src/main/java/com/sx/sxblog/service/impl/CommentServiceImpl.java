@@ -40,4 +40,12 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment> impl
     public List<Comment> getCommentList() {
         return commentMapper.selectList(null);
     }
+
+    @Override
+    public int deletCommentByBlogid(int blogid){
+        QueryWrapper<Comment> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("blog_id",blogid);
+        int result = commentMapper.delete(queryWrapper);
+        return result;
+    }
 }

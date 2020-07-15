@@ -61,8 +61,8 @@ public class CollectControllerTest {
     public void insertCollect() throws Exception
     {
         Collect collect = new Collect();
-        collect.setUserId(10000);
-        collect.setBlogId(1000005);
+        collect.setUserId(10001);
+        collect.setBlogId(1000002);
 
         ObjectMapper mapper = new ObjectMapper();
         String json = mapper.writeValueAsString(collect);

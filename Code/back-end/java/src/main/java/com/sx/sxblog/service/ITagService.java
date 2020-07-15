@@ -30,6 +30,9 @@ public interface ITagService extends IService<Tag> {
     //对指定标签进行查询【】
     Tag getTagById(int tag_id);
 
+    //使用blogid删除tag
+    int deletTagByBlogId(int blogid);
+
 
     List<Tag> getTagsByBlogId(int blog_id);
 
