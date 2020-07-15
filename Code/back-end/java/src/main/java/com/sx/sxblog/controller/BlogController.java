@@ -3,15 +3,19 @@ package com.sx.sxblog.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.sx.sxblog.common.ReturnEntity;
+import com.sx.sxblog.common.UserUtil;
 import com.sx.sxblog.entity.Blog;
 import com.sx.sxblog.entity.Tag;
 import com.sx.sxblog.service.impl.BlogServiceImpl;
+import com.sx.sxblog.service.impl.CollectServiceImpl;
+import com.sx.sxblog.service.impl.CommentServiceImpl;
 import com.sx.sxblog.service.impl.TagServiceImpl;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -25,7 +29,13 @@ import java.util.List;
 public class BlogController {
     @Resource
     private BlogServiceImpl blogService;
-    @Resource TagServiceImpl tagService;
+    @Resource
+    private TagServiceImpl tagService;
+    @Resource
+    private CommentServiceImpl commentService;
+    @Resource
+    private CollectServiceImpl collectService;
+
 
     @RequestMapping(value = "/getBlogList",method = RequestMethod.GET)
     @ResponseBody
@@ -96,8 +106,20 @@ public class BlogController {
 
     @RequestMapping(value = "/deleteBlog",method = RequestMethod.POST)
     @ResponseBody
-    public ReturnEntity deleteBlog(@RequestBody Blog blog){
+    public ReturnEntity deleteBlog(@RequestBody Map<String,Object> blog_info){
+        Blog blog = new Blog();
+        String id = (String) blog_info.get("blogId");
+        int blogId = UserUtil.switchToint(id);
+        blog.setBlogId(blogId);
         JSONObject data = new JSONObject();
+
+        int tagResult = tagService.deletTagByBlogId(blog.getBlogId());
+        data.put("tagdelet",tagResult);
+        int commentResult = commentService.deletCommentByBlogid(blog.getBlogId());
+        data.put("commentdelet",commentResult);
+        int collectResult = collectService.deletCollectByBlogId(blog.getBlogId());
+        data.put("collectdelet",collectResult);
+
         int result = blogService.deleteBlog(blog.getBlogId());
         data.put("result",result);
         return ReturnEntity.successResult(data);

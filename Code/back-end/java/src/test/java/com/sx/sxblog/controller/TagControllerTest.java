@@ -58,7 +58,7 @@ public class TagControllerTest {
     public void insertTag() throws Exception
     {
         Tag tag = new Tag();
-        tag.setBlogId(1000005);
+        tag.setBlogId(1000002);
         tag.setTagName("c#");
 
         ObjectMapper mapper = new ObjectMapper();

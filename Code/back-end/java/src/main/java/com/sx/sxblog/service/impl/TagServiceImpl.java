@@ -3,6 +3,7 @@ package com.sx.sxblog.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.sx.sxblog.entity.Blog;
 import com.sx.sxblog.entity.Tag;
+import com.sx.sxblog.entity.User;
 import com.sx.sxblog.mapper.BlogMapper;
 import com.sx.sxblog.mapper.TagMapper;
 import com.sx.sxblog.service.ITagService;
@@ -58,6 +59,22 @@ public class TagServiceImpl extends ServiceImpl<TagMapper, Tag> implements ITagS
     @Override
     public List<Tag> getTagsByBlogId(int blog_id) {
         return tagMapper.getTagsByBlogId(blog_id);
+    }
+
+    @Override
+    public int deletTagByBlogId(int blogid){
+        QueryWrapper<Tag> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("blog_id",blogid);
+        int result = tagMapper.delete(queryWrapper);
+        return result;
+    }
+
+    @Override
+    public int deletTagByUserAndContent(int blogid,String tagName){
+        QueryWrapper<Tag> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("blog_id",blogid).or().eq("tag_name",tagName);
+        int result = tagMapper.delete(queryWrapper);
+        return result;
     }
 
 

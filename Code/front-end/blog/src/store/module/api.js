@@ -9,7 +9,7 @@ const api = {
         // check the username if it is exist
         usernameVerifyURL: "/user/username_verify",
         verifyEmailURL: "",
-        forgotPasswordURL: "",
+        forgotPasswordURL: "/user/find_passwd",
         // account setting
         getUserDataURL: "/user/get_data",
         updateUserUrl: '/user/change_data',
