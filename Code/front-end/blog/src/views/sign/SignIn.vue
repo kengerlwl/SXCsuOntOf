@@ -124,6 +124,7 @@ export default {
             // localstorage jwt_token
             Vue.localStorage.set("jwt_token", response.data.data.token);
             Vue.localStorage.set("user_name", response.data.data.username);
+            Vue.localStorage.set("user_id", response.data.data.userId);
             this.updateIsSignIn(true);
             this.updateUsername(response.data.data.username);
             // route push
