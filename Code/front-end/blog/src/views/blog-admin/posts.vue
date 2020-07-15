@@ -364,17 +364,7 @@ export default {
       nbPages: 0,
       posts: items,
       showPosts: [],
-      tags: [
-        "Hello",
-        "linux",
-        "blog",
-        "archLinux",
-        "macOS",
-        "npm",
-        "bootstrap",
-        "json",
-        "Golang",
-      ],
+      tags: [],
       // delete post modal
       deletePostModal: false,
       deleteItem: {},
@@ -395,8 +385,16 @@ export default {
   },
   created() {
     this.getUserPostsRequest();
+    this.getAllTagsbyUserIdRequest();
   },
   methods: {
+    // vueX mutation
+    ...mapMutations({
+      updateUsername: "updateUsername",
+      updateIsSignIn: "updateIsSignIn",
+      updateSignOutModal: "updateSignOutModal",
+      updateTokenVerifyFailModal: "updateTokenVerifyFailModal",
+    }),
     openDeleteModal(index, blogId) {
       this.deletePostModal = true;
       this.deleteItem.index = index;
@@ -448,12 +446,8 @@ export default {
       this.newTag.blogId = blogId;
       this.editTagsModal = true;
     },
-    deleteTag() {
-
-    },
-    addNewTag() {
-
-    },
+    // deleteTag() {},
+    // addNewTag() {},
     async getUserPostsRequest() {
       axios({
         method: "get",
@@ -501,6 +495,34 @@ export default {
           console.log(error);
         });
     },
+    async getAllTagsbyUserIdRequest() {
+      console.log(Vue.localStorage.get("user_id"))
+      console.log(typeof(Vue.localStorage.get("user_id")))
+      axios({
+        method: "get",
+        url: this.springBaseURL + this.getAllTagsByUserIdURL,
+        headers: {
+          token: Vue.localStorage.get("jwt_token"),
+        },
+        data: {
+          userid: Vue.localStorage.get("user_id"),
+        },
+      })
+        .then((response) => {
+          console.log(response.data);
+          if (response.data.code === "500000") {
+            this.updateTokenVerifyFailModal(true);
+          } else {
+            if(response.data.status === true) {
+              this.tags = response.data.data.tag;
+            }
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+
     async deletePostRequest(postId) {
       axios({
         method: "post",
@@ -536,6 +558,9 @@ export default {
       },
       deletePostURL: (state) => {
         return state.api.deletePostURL;
+      },
+      getAllTagsByUserIdURL: (state) => {
+        return state.api.getAllTagsByUserIdURL;
       },
     }),
     pageCount() {
