@@ -235,7 +235,12 @@ public class UserController {
 //        return returnEntity;
 //    }
 
-//    @GetMapping("/get_user_all_tag"
+//    @GetMapping("/get_user_all_tag")
+//    @ResponseBody
+//    public ReturnEntity getUserTags(@RequestBody Map<String ,Object> userid){
+//
+//
+//    }
     
 
     @PostMapping("/change_data")
@@ -244,8 +249,12 @@ public class UserController {
         String msg = "Sign Up Success";
         int code = 200;
         boolean status = true;
+        JSONObject data = new JSONObject();
 
-        User user = new User();
+        int id = 10;//不存在的用户如果后面没有赋值将会使用判空语句表明输入不正确
+
+        User user ;
+        String userid = (String) user_info.get("userid");
         String username = (String) user_info.get("username");
         String passwd = (String) user_info.get("password");
         String birthday = (String) user_info.get("birthday");
@@ -264,52 +273,64 @@ public class UserController {
 //        user.setSex(sex);
 
         try {
-            //先选出user
-            if(UserUtil.isId(username)){
-                int id = UserUtil.switchToint(username);
+            //判断是否userid,不是的话返回worng input
+            if(UserUtil.isId(userid)) {
+
+                id = UserUtil.switchToint(userid);
+                data.put("id",userid);
                 user = userService.getUserById(id);
-            }
-            else{
-                user = userService.getUserByUsername(username);
-            }
-            //改变user
-            if(username!=null && username!="" ){user.setUserName(username);}
-            if(passwd!=null && passwd!=""){user.setPassword(passwd);}
 
-            if(birthday!=null && birthday!="") {
-                user.setBirthday(birthday);
-            }
-            if(company!=null && company!="") {
-                user.setCompany(company);
-            }
-            if(description!=null && description!="") {
-                user.setDescription(description);
-            }
-            if(email!=null && email!="") {
-                user.setEmail(email);
-            }
-            if(sex!=null && sex!="") {
-                user.setSex(sex);
+                //改变user
+                if(username!=null && username!="" ){user.setUserName(username);}
+                if(passwd!=null && passwd!=""){user.setPassword(passwd);}
+
+                if(birthday!=null && birthday!="") {
+                    user.setBirthday(birthday);
+                }
+                if(company!=null && company!="") {
+                    user.setCompany(company);
+                }
+                if(description!=null && description!="") {
+                    user.setDescription(description);
+                }
+                if(email!=null && email!="") {
+                    user.setEmail(email);
+                }
+                if(sex!=null && sex!="") {
+                    user.setSex(sex);
+                }
+                userService.updateUser(user);
+
+            }else {
+                status = false;
+                msg = "worng input";
             }
 
-            userService.updateUser(user);
         }catch (Exception ex){
             //日志记录错误
             msg = "service worong";
             status = false;
             code = 500;
+            ex.printStackTrace();
         }
 
-        int id = userService.getUserByUsername(username).getUserId();
-        JSONObject data = new JSONObject();
-        data.put("username",user.getUserName());
-        data.put("birthday",user.getBirthday());
-        data.put("company",user.getCompany());
-        data.put("description",user.getDescription());
-        data.put("email",user.getEmail());
-        data.put("sex",user.getSex());
-        data.put("password",user.getPassword());
-
+        User userOutPut = userService.getUserById(id);
+        if(userOutPut!=null) {
+//            data.put("userid", userOutPut.getUserId());
+            data.put("username", userOutPut.getUserName());
+            data.put("birthday", userOutPut.getBirthday());
+            data.put("company", userOutPut.getCompany());
+            data.put("description", userOutPut.getDescription());
+            data.put("email", userOutPut.getEmail());
+            data.put("sex", userOutPut.getSex());
+            data.put("password", userOutPut.getPassword());
+        }
+        else {
+            if(status){
+                msg = "no such user";
+            }
+            status = false;
+        }
         ReturnEntity returnEntity = new ReturnEntity(status,msg,data);
         return returnEntity;
 
