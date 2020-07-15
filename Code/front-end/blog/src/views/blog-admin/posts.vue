@@ -70,13 +70,13 @@
             >{{ tag }}</b-badge
           >
           <b-card-text>
-          <!--
+            <!--
             {{
               item.blogContent.length > 200
                 ? item.blogContent.substring(0, 200) + "..."
                 : item.blogContent
             }}-->
-            {{item.blogContent}}
+            {{ item.previewContent }}
           </b-card-text>
           <b-button href="#" variant="outline-info" class="mr-3">
             <b-icon-brush></b-icon-brush> Edit
@@ -335,35 +335,52 @@ export default {
     },
     async getUserPostsRequest() {
       axios({
-          method: "get",
-          url: this.springBaseURL + this.getPostsURL + "?user_id=" + Vue.localStorage.get("user_id"),
-          headers: {
-            token: Vue.localStorage.get("jwt_token"),
-          },
-          data: {
-          },
-        })
-          .then((response) => {
-            console.log(response.data);
-            if (response.data.code === "500000") {
-              this.updateTokenVerifyFailModal(true);
-            } else {
-              this.posts = response.data.data.bloglist;
-              for(let i = 0 ; i < this.posts.length; i++) {
-                this.posts[i].tags = [];
-                for(let j = 0; j < response.data.data[String(this.posts[i].blogId)].length; j++) {
-                  this.posts[i].tags.push(response.data.data[String(this.posts[i].blogId)][j].tagName);
-                }
+        method: "get",
+        url:
+          this.springBaseURL +
+          this.getPostsURL +
+          "?user_id=" +
+          Vue.localStorage.get("user_id"),
+        headers: {
+          token: Vue.localStorage.get("jwt_token"),
+        },
+        data: {},
+      })
+        .then((response) => {
+          console.log(response.data);
+          if (response.data.code === "500000") {
+            this.updateTokenVerifyFailModal(true);
+          } else {
+            this.posts = response.data.data.bloglist;
+            console.log(this.posts);
+            for (let i = 0; i < this.posts.length; i++) {
+              this.posts[i].tags = [];
+
+              this.posts[i].previewContent =
+                this.posts[i].blogContent.length > 200
+                  ? this.posts[i].blogContent.substring(0, 200) + "..."
+                  : this.posts[i].blogContent;
+              console.log(this.posts[i].blogId);
+              for (
+                let j = 0;
+                j < response.data.data[this.posts[i].blogId].length;
+                j++
+              ) {
+                this.posts[i].tags.push(
+                  response.data.data[this.posts[i].blogId][j].tagName
+                );
               }
-              this.showPosts = this.posts;
-              this.totalRows = this.showPosts.length;
             }
-            console.log(this.showPosts)
-          })
-          .catch((error) => {
-            console.log(error);
-          });
-    }
+            this.showPosts = this.posts;
+            this.totalRows = this.showPosts.length;
+          }
+          console.log(this.showPosts);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+    async deletePostRequest() {},
   },
   computed: {
     // get data from vuex

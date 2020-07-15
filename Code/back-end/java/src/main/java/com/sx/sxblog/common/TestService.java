@@ -5,6 +5,7 @@ import com.sx.sxblog.DemoApplication;
 import com.sx.sxblog.entity.Blog;
 import com.sx.sxblog.entity.Collect;
 import com.sx.sxblog.entity.Tag;
+import com.sx.sxblog.entity.User;
 import com.sx.sxblog.service.impl.BlogServiceImpl;
 import com.sx.sxblog.service.impl.CollectServiceImpl;
 import com.sx.sxblog.service.impl.TagServiceImpl;
@@ -87,12 +88,16 @@ public class TestService {
                 int blog_id = collect.getBlogId();
 
                 String  s = String.valueOf(blog_id);
-
                 Blog blog = blogService.getBlogById(blog_id);
+                User user = userService.getUserById(blog.getUserId());
+                String username = user.getUserName();
+                System.out.println(username);
+
                 List<Tag> tagList = tagService.getTagsByBlogId(blog_id);
                 System.out.println(blog.getBlogContent());
                 data.put(s, blog);
                 data.put(s + "tag", tagList);
+                data.put(s + "username", username);
 
             }
         }
