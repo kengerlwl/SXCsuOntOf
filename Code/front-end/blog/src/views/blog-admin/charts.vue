@@ -48,6 +48,9 @@
   </div>
 </template>
 <script>
+import { mapState, mapMutations } from "vuex";
+import Vue from "vue";
+import axios from "axios";
 export default {
   data() {
     this.chartSettings = {
@@ -56,36 +59,85 @@ export default {
     };
     return {
       chartData: {
-        columns: ["日期", "访问用户", "下单用户", "下单率"],
+        columns: ["博客", "访问用户"],
         rows: [
-          { 日期: "1/1", 访问用户: 1393, 下单用户: 1093, 下单率: 0.32 },
-          { 日期: "1/2", 访问用户: 3530, 下单用户: 3230, 下单率: 0.26 },
-          { 日期: "1/3", 访问用户: 2923, 下单用户: 2623, 下单率: 0.76 },
-          { 日期: "1/4", 访问用户: 1723, 下单用户: 1423, 下单率: 0.49 },
-          { 日期: "1/5", 访问用户: 3792, 下单用户: 3492, 下单率: 0.323 },
-          { 日期: "1/6", 访问用户: 4593, 下单用户: 4293, 下单率: 0.78 },
+
         ],
       },
       perPage: 5,
       currentPage: 1,
       items: [
-        { Blog: 1, post: "Fred", volumns: "Flintstone" },
-        { Blog: 2, post: "Wilma", volumns: "Flintstone" },
-        { Blog: 3, post: "Barney", volumns: "Rubble" },
-        { Blog: 4, post: "Betty", volumns: "Rubble" },
-        { Blog: 5, post: "Pebbles", volumns: "Flintstone" },
-        { Blog: 6, post: "Bamm Bamm", volumns: "Rubble" },
-        { Blog: 7, post: "The Great", volumns: "Gazzoo" },
-        { Blog: 8, post: "Rockhead", volumns: "Slate" },
-        { Blog: 9, post: "Pearl", volumns: "Slaghoople" },
+    
       ],
     };
   },
   computed: {
+        ...mapState({
+      springBaseURL: (state) => {
+        return state.api.springBaseURL;
+      },
+      getPostsURL: (state) => {
+        return state.api.getPostsURL;
+      },
+      deletePostURL: (state) => {
+        return state.api.deletePostURL;
+      },
+    }),
     rows() {
       return this.items.length;
     },
   },
+  created(){
+    console.log("created");
+    this.getUserPostsRequest();
+  },
+
+  methods: {
+   async getUserPostsRequest() {
+      axios({
+        method: "get",
+        url:
+          this.springBaseURL +
+          this.getPostsURL +
+          "?user_id=" +
+          Vue.localStorage.get("user_id"),
+        headers: {
+          token: Vue.localStorage.get("jwt_token"),
+        },
+        data: {},
+      })
+        .then((response) => {
+          console.log(response.data);
+          if (response.data.code === "500000") {
+            this.updateTokenVerifyFailModal(true);
+          } else {
+            this.posts = response.data.data.bloglist;
+            console.log(this.posts);
+            for (let i = 0; i < this.posts.length; i++) {
+              let tmp = this.posts[i];
+              this.chartData.rows.push({ 博客: tmp.blogName, 访问用户: tmp.blogViews });
+
+
+
+            }
+//             var points = [40, 100, 1, 5, 25, 10];
+// points.sort(function(a, b){return a - b}); 
+        this.posts.sort(function(a, b){
+          return  b.blogViews - a.blogViews;
+        })
+        console.log(this.posts);
+
+        for(let i=0; i < this.posts.length; i++){
+          let tmp = this.posts[i];
+          this.items.push({index: 1+i, blogName: tmp.blogName, blogViews: tmp.blogViews });
+        }
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+}
 };
 </script>
 <style>
