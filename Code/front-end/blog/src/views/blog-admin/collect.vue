@@ -49,7 +49,7 @@
           <b-card-text>
             {{ item.previewContent }}
           </b-card-text>
-          <b-button href="#" variant="outline-info" class="mr-3">
+          <b-button variant="outline-info" class="mr-3" @click="toEditBlog(item.username, item.blogId)">
             READ MORE
           </b-button>
           <b-button
@@ -397,6 +397,14 @@ export default {
         );
       });
       this.totalRows = this.showCollectBlog.length;
+    },
+    toEditBlog(username ,blogId) {
+      // 跳轉到 user_blog_read 子組件檢視，并添加 query string 作為参数
+      this.$router.push({
+        path:
+          "/" + username + "/blog/read",
+        query: { blogId: blogId },
+      });
     },
     async deleteCollectRequest(collectId) {
       axios({

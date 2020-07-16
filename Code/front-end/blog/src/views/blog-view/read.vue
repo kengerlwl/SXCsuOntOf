@@ -12,7 +12,7 @@
           @click="toUserBlogHome"
           v-b-tooltip.hover
           title="Home Blog List"
-          >Username</span
+          >{{ this.$route.params.id }}</span
         >
       </div>
     </div>
@@ -25,7 +25,7 @@
           >
         </b-navbar>
         <div class="box-shadow">
-          <h1>{{ blog.title }}</h1>
+          <h1>{{ blog.blogName }}</h1>
           <div class="subheader p-1 mb-1">POST ON {{ blog.postTime }}</div>
           <div class="mb-4">
             <b-button
@@ -40,7 +40,7 @@
             </b-button>
           </div>
 
-          <markdown-it-vue :content="blog.content" />
+          <markdown-it-vue :content="blog.blogContent" />
         </div>
         <div id="comments" class="mt-5">
           <h2>
@@ -170,6 +170,10 @@
   </div>
 </template>
 <script>
+// import VueX
+import { mapState, mapMutations } from "vuex";
+import Vue from "vue";
+import axios from "axios";
 import MarkdownText from "../../static/js/example_md";
 import MarkdownItVue from "markdown-it-vue";
 import "markdown-it-vue/dist/markdown-it-vue.css";
@@ -180,11 +184,14 @@ export default {
   },
   data() {
     return {
+      blogTags: [],
       blog: {
-        title: "Demo",
-        tags: ["markdown", "vue", "java", "python", "linux"],
-        content: MarkdownText,
-        postTime: "2020-07-09 00:00",
+        blogId: 0,
+        userId: 0,
+        blogContent: "",
+        postTime: "",
+        blogViews: 0,
+        blogName: "",
       },
       aboutDeveloper: [
         {
@@ -219,13 +226,61 @@ export default {
       ],
     };
   },
+  beforeRouteUpdate(to, from, next) {
+    this.getPostByBlogId(to.query.blogId);
+  },
+  created() {
+    this.getPostByBlogId(this.$route.query.blogId);
+  },
   methods: {
+    ...mapMutations({
+      updateUsername: "updateUsername",
+      updateIsSignIn: "updateIsSignIn",
+      updateSignOutModal: "updateSignOutModal",
+      updateTokenVerifyFailModal: "updateTokenVerifyFailModal",
+    }),
     goBack() {
       window.history.length > 1 ? this.$router.go(-1) : this.$router.push("/");
     },
     toUserBlogHome() {
       this.$router.push("/" + this.$route.params.id + "/blog/home");
     },
+    async getPostByBlogId(BlogId) {
+      axios({
+        method: "get",
+        url:
+          this.springBaseURL +
+          this.getPostByBlogIdURL +
+          "?blog_id=" +
+          this.$route.query.blogId,
+        headers: {
+          token: Vue.localStorage.get("jwt_token"),
+        },
+        data: {},
+      })
+        .then((response) => {
+          console.log(response.data);
+          if (response.data.code === "500000") {
+            this.updateTokenVerifyFailModal(true);
+          } else {
+            this.blog = response.data.data.blog_id;
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+  },
+  computed: {
+    // get data from vuex
+    ...mapState({
+      springBaseURL: (state) => {
+        return state.api.springBaseURL;
+      },
+      getPostByBlogIdURL: (state) => {
+        return state.api.getPostByBlogIdURL;
+      },
+    }),
   },
 };
 </script>

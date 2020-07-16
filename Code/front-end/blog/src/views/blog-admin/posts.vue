@@ -441,7 +441,7 @@ export default {
       this.totalRows = this.showPosts.length;
     },
     toEditBlog(blogId) {
-      // 跳轉到 viewProduct 子組件檢視產品詳細，并添加 query string 作為参数
+      // 跳轉到 post_edit 子組件檢視，并添加 query string 作為参数
       this.$router.push({
         path:
           "/" + Vue.localStorage.get("user_name") + "/admin/posts/post_edit",

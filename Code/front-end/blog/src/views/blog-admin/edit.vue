@@ -16,7 +16,7 @@
           ></b-form-input>
         </b-nav-form>
         <b-navbar-nav class="ml-auto">
-          <b-button variant="success">Save</b-button>
+          <b-button variant="success" @click="savePost">Save</b-button>
         </b-navbar-nav>
       </b-navbar>
     </div>
@@ -41,6 +41,42 @@
       language="en"
       fontSize="16px"
     />
+    <!-- save error modal -->
+    <b-modal
+      v-model="saveFailModal"
+      no-close-on-backdrop
+      no-close-on-esc
+      centered
+      title="Save Post Fail"
+      header-bg-variant="danger"
+      header-text-variant="light"
+    >
+      <h4><strong>Please change a blog title.</strong></h4>
+      <template v-slot:modal-footer="{ ok, cancel, hide }">
+        <!-- Emulate built in modal footer ok and cancel button actions -->
+        <b-button variant="success" @click="ok()">
+          OK
+        </b-button>
+      </template>
+    </b-modal>
+    <!-- save success modal -->
+    <b-modal
+      v-model="saveSuccessModal"
+      no-close-on-backdrop
+      no-close-on-esc
+      centered
+      title="save success"
+      header-bg-variant="success"
+      header-text-variant="light"
+    >
+      <h4><strong>Save this post success.</strong></h4>
+      <template v-slot:modal-footer="{ ok, cancel, hide }">
+        <!-- Emulate built in modal footer ok and cancel button actions -->
+        <b-button variant="success" @click="ok()">
+          OK
+        </b-button>
+      </template>
+    </b-modal>
   </div>
 </template>
 <script>
@@ -52,16 +88,18 @@ import axios from "axios";
 export default {
   data() {
     return {
-      blogContent: "",
       blogTags: [],
       blog: {
         blogId: 0,
-        userId: "",
+        userId: 0,
         blogContent: "",
         postTime: "",
         blogViews: 0,
         blogName: "",
       },
+      // modal
+      saveFailModal: false,
+      saveSuccessModal: false,
     };
   },
   beforeRouteUpdate(to, from, next) {
@@ -78,7 +116,7 @@ export default {
   created() {
     if (this.$route.query.blogId === "-1" || this.$route.query.blogId === -1) {
       this.blog.blogId = -1;
-      this.blog.userId = Vue.localStorage.get("user_id");
+      this.blog.userId = parseInt(Vue.localStorage.get("user_id"), 10);
       this.blog.blogContent = "# Title";
       this.blog.postTime = "";
       this.blog.blogName = "init";
@@ -115,7 +153,6 @@ export default {
             this.updateTokenVerifyFailModal(true);
           } else {
             this.blog = response.data.data.blog_id;
-            this.$route.query.blogId = response.data.data.blog_id.blogId;
           }
         })
         .catch((error) => {
@@ -133,19 +170,38 @@ export default {
       }
     },
     async addNewPost() {
+      let date = new Date();
+      let postTime =
+        date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
       axios({
         method: "post",
         url: this.springBaseURL + this.createNewPostURL,
         headers: {
           token: Vue.localStorage.get("jwt_token"),
         },
-        data: {},
+        data: {
+          blogId: null,
+          userId: parseInt(Vue.localStorage.get("user_id"), 10),
+          blogContent: this.blog.blogContent,
+          postTime: postTime,
+          blogViews: 0,
+          blogName: this.blog.blogName,
+        },
       })
         .then((response) => {
           console.log(response.data);
           if (response.data.code === "500000") {
             this.updateTokenVerifyFailModal(true);
           } else {
+            if (response.data.status === true) {
+              // change route query
+              this.$route.query.blogId = response.data.data.result.blogId;
+              this.blog.blogId = response.data.data.result.blogId;
+              this.blog.userId = response.data.data.result.userId;
+              this.saveSuccessModal = true;
+            } else {
+              this.saveFailModal = true;
+            }
           }
         })
         .catch((error) => {
@@ -153,19 +209,34 @@ export default {
         });
     },
     async updatePost() {
+      let date = new Date();
+      let postTime =
+        date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
       axios({
         method: "post",
         url: this.springBaseURL + this.updatePostURL,
         headers: {
           token: Vue.localStorage.get("jwt_token"),
         },
-        data: {},
+        data: {
+          blogId: this.blog.blogId,
+          userId: this.blog.userId,
+          blogContent: this.blog.blogContent,
+          postTime: postTime,
+          blogViews: this.blog.blogViews,
+          blogName: this.blog.blogName,
+        },
       })
         .then((response) => {
           console.log(response.data);
           if (response.data.code === "500000") {
             this.updateTokenVerifyFailModal(true);
           } else {
+            if (response.data.status === true) {
+              this.saveSuccessModal = true;
+            } else {
+              this.saveFailModal = true;
+            }
           }
         })
         .catch((error) => {
