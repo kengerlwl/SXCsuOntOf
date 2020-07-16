@@ -401,9 +401,9 @@ export default {
         method: "get",
         url:
           this.springBaseURL +
-          this.getPostsURL +
-          "?user_id=" +
-          Vue.localStorage.get("user_id"),
+          this.getPostByUsernameURL +
+          "?user_name=" +
+          this.$route.params.id,
         headers: {
           token: Vue.localStorage.get("jwt_token"),
         },
@@ -484,6 +484,9 @@ export default {
       },
       getAllTagsByUserIdURL: (state) => {
         return state.api.getAllTagsByUserIdURL;
+      },
+      getPostByUsernameURL: (state) => {
+        return state.api.getPostByUsernameURL;
       },
     }),
     pageCount() {

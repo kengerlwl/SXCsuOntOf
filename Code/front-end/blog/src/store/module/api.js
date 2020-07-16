@@ -28,6 +28,7 @@ const api = {
         searchPostURL: "",
         getPostsURL: "/getBlogListByUser",
         getPostByBlogIdURL: "/getBlogById",
+        getPostByUsernameURL: "/getBlogListByUsername",
         getAllTagsByUserIdURL: "/pub/user_tags",
         // collect
         addCollectURL: "",
