@@ -161,6 +161,7 @@ const router = new VueRouter({
     mode: 'history',
     base: process.env.BASE_URL,
     routes,
+    props: true,
     scrollBehavior(to, from, savedPosition) {
         if (savedPosition) {
             return savedPosition

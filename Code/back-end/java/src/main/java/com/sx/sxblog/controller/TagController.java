@@ -8,6 +8,7 @@ import com.sx.sxblog.entity.Blog;
 import com.sx.sxblog.entity.Tag;
 import com.sx.sxblog.service.impl.BlogServiceImpl;
 import com.sx.sxblog.service.impl.TagServiceImpl;
+import com.sx.sxblog.service.impl.UserServiceImpl;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.web.bind.annotation.*;
 
@@ -32,6 +33,9 @@ public class TagController {
 
     @Resource
     private BlogServiceImpl blogService;
+
+    @Resource
+    private UserServiceImpl userService;
 
     @RequestMapping(value = "/getTagList",method = RequestMethod.GET)
     @ResponseBody
@@ -94,20 +98,24 @@ public class TagController {
 
     @GetMapping("/pub/user_tags")
     @ResponseBody
-    public ReturnEntity getAllTagsByUser(@Param("userid") int userid){
+    public ReturnEntity getAllTagsByUser(@Param("userid") int userid,@Param("username") String username){
 
         String msg = "";
         JSONObject data = new JSONObject();
         boolean status = true;
-        int id = 10;//不存在的id 如果错误说明try catch 有问题
 
+        int id = 10;//不存在的id 如果错误说明try catch 有问题
+        if(username==null || username.isEmpty() || username.equals("")) {
 //        String userid = (String) user_post_id.get("userid");
-        try{
+            try {
 //            id = (Integer) user_post_id.get("userid");
-            id = userid;
-        }catch (Exception e){
-            status = false;
-            msg = "worng id";
+                id = userid;
+            } catch (Exception e) {
+                status = false;
+                msg = "worng id";
+            }
+        }else {
+            id = userService.getUserByUsername(username).getUserId();
         }
 
         List<Blog> blogs = blogService.getBlogListByUserid(id);

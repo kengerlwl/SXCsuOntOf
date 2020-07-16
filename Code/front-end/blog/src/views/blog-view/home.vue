@@ -28,12 +28,13 @@
             <b-button-group>
               <b-input-group>
                 <b-form-input
+                  v-model="search"
                   class="mr-sm-2"
                   placeholder="Search"
                 ></b-form-input>
               </b-input-group>
               <b-button-group class="mx-1">
-                <b-button variant="outline-success" type="submit">
+                <b-button variant="outline-success" @click="searchBlogList">
                   Search
                 </b-button>
               </b-button-group>
@@ -47,10 +48,20 @@
             <b-button
               size="sm"
               class="m-1"
+              variant="outline-success"
+              pill
+              @click="showAllPost"
+            >
+              ALL
+            </b-button>
+            <b-button
+              size="sm"
+              class="m-1"
               variant="outline-secondary"
               pill
               v-for="(item, i) in tags"
               :key="i"
+              @click="filterByTag(item)"
             >
               {{ item }}
             </b-button>
@@ -65,7 +76,7 @@
               header-text-variant="white"
             >
               <template v-slot:header>
-                <h4 class="mb-0">{{ item.id + item.title }}</h4>
+                <h4 class="mb-0">{{ item.blogName }}</h4>
               </template>
               <b-card-sub-title>POST ON {{ item.postTime }}</b-card-sub-title>
               <b-badge
@@ -76,13 +87,13 @@
                 >{{ tag }}</b-badge
               >
               <b-card-text>
-                {{
-                  item.descript.length > 200
-                    ? item.descript.substring(0, 200) + "..."
-                    : item.descript
-                }}
+                {{ item.previewContent }}
               </b-card-text>
-              <b-button to="read" variant="outline-info" class="mr-3">
+              <b-button
+                @click="toViewBlog(item.blogId)"
+                variant="outline-info"
+                class="mr-3"
+              >
                 READ MORE
               </b-button>
               <template v-slot:footer>
@@ -150,6 +161,11 @@
   </div>
 </template>
 <script>
+// import VueX
+import { mapState, mapMutations } from "vuex";
+import Vue from "vue";
+import axios from "axios";
+
 const items = [
   {
     id: 1,
@@ -299,18 +315,10 @@ export default {
         description: "",
         company: "",
       },
-      tags: [
-        "Hello",
-        "linux",
-        "blog",
-        "archLinux",
-        "macOS",
-        "npm",
-        "bootstrap",
-        "json",
-        "Golang",
-      ],
+      tags: [],
+      search: "",
       blogList: items,
+      showBlogList: [],
       currentPage: 1,
       perPage: 6,
       totalRows: items.length,
@@ -350,22 +358,167 @@ export default {
       ],
     };
   },
+  beforeRouteUpdate(to, from, next) {
+    this.getUserPostsRequest();
+    this.getAllTagsbyUserIdRequest();
+  },
+  created() {
+    this.getUserPostsRequest();
+    this.getAllTagsbyUserIdRequest();
+  },
   methods: {
+    // vueX mutation
+    ...mapMutations({
+      updateUsername: "updateUsername",
+      updateIsSignIn: "updateIsSignIn",
+      updateSignOutModal: "updateSignOutModal",
+      updateTokenVerifyFailModal: "updateTokenVerifyFailModal",
+    }),
     toViewUserAbout() {
       this.$router.push("/" + this.$route.params.id + "/blog/about");
     },
+    searchBlogList() {
+      let v = this.search;
+      this.showBlogList = this.blogList.filter(function(item, index, array) {
+        return (
+          item.blogName.toLowerCase().indexOf(v.toLowerCase()) > -1 ||
+          item.blogContent.toLowerCase().indexOf(v.toLowerCase()) > -1 ||
+          item.postTime.toLowerCase().indexOf(v.toLowerCase()) > -1
+        );
+      });
+      this.totalRows = this.showBlogList.length;
+    },
+    filterByTag(tagName) {
+      this.showBlogList = [];
+      for (let i = 0; i < this.blogList.length; i++) {
+        for (let j = 0; j < this.blogList[i].tags.length; j++) {
+          if (this.blogList[i].tags[j] === tagName) {
+            this.showBlogList.push(this.blogList[i]);
+            break;
+          }
+        }
+      }
+      this.totalRows = this.showBlogList.length;
+    },
+    showAllPost() {
+      this.showBlogList = this.blogList;
+      this.totalRows = this.showBlogList.length;
+    },
+    toViewBlog(blogId) {
+      // 跳轉到 user_blog_read 子組件檢視，并添加 query string 作為参数
+      this.$router
+        .push({
+          path: "/" + this.$route.params.id + "/blog/read",
+          query: { blogId: blogId },
+        })
+        .catch((err) => {
+          err;
+        });
+    },
+    async getUserPostsRequest() {
+      axios({
+        method: "get",
+        url:
+          this.springBaseURL +
+          this.getPostByUsernameURL +
+          "?user_name=" +
+          this.$route.params.id,
+        headers: {
+          token: Vue.localStorage.get("jwt_token"),
+        },
+        data: {},
+      })
+        .then((response) => {
+          console.log(response.data);
+          if (response.data.code === "500000") {
+            this.updateTokenVerifyFailModal(true);
+          } else {
+            this.blogList = response.data.data.bloglist;
+            console.log(this.blogList);
+            for (let i = 0; i < this.blogList.length; i++) {
+              this.blogList[i].tags = [];
+
+              this.blogList[i].previewContent =
+                this.blogList[i].blogContent.length > 200
+                  ? this.blogList[i].blogContent.substring(0, 200) + "..."
+                  : this.blogList[i].blogContent;
+              console.log(this.blogList[i].blogId);
+              for (
+                let j = 0;
+                j < response.data.data[this.blogList[i].blogId].length;
+                j++
+              ) {
+                this.blogList[i].tags.push(
+                  response.data.data[this.blogList[i].blogId][j].tagName
+                );
+              }
+            }
+            this.showBlogList = this.blogList;
+            this.totalRows = this.showBlogList.length;
+          }
+          console.log(this.showBlogList);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+    async getAllTagsbyUserIdRequest() {
+      console.log(Vue.localStorage.get("user_id"));
+      console.log(typeof parseInt(Vue.localStorage.get("user_id")));
+      axios({
+        method: "get",
+        url:
+          this.springBaseURL +
+          this.getAllTagsByUserIdURL +
+          "?userid=1" +
+          "&username=" +
+          this.$route.params.id,
+        headers: {
+          token: Vue.localStorage.get("jwt_token"),
+        },
+        data: {},
+      })
+        .then((response) => {
+          console.log(response.data);
+          if (response.data.code === "500000") {
+            this.updateTokenVerifyFailModal(true);
+          } else {
+            if (response.data.status === true) {
+              this.tags = response.data.data.tag;
+            }
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
   },
   computed: {
+    // get data from vuex
+    ...mapState({
+      springBaseURL: (state) => {
+        return state.api.springBaseURL;
+      },
+      getPostsURL: (state) => {
+        return state.api.getPostsURL;
+      },
+      getAllTagsByUserIdURL: (state) => {
+        return state.api.getAllTagsByUserIdURL;
+      },
+      getPostByUsernameURL: (state) => {
+        return state.api.getPostByUsernameURL;
+      },
+    }),
     pageCount() {
       let l = this.totalRows,
         s = this.perPage;
       return Math.floor(l / s);
     },
     currentPageItems() {
-      let lengthAll = this.blogList.length;
+      let lengthAll = this.showBlogList.length;
       this.nbPages = 0;
       for (let i = 0; i < lengthAll; i = i + this.perPage) {
-        this.paginated_items[this.nbPages] = this.blogList.slice(
+        this.paginated_items[this.nbPages] = this.showBlogList.slice(
           i,
           i + this.perPage
         );
@@ -373,6 +526,14 @@ export default {
       }
 
       return this.paginated_items[this.currentPage - 1];
+    },
+  },
+  watch: {
+    $route(to, from) {
+      // react to route changes...
+      if (to !== from) {
+        location.reload();
+      }
     },
   },
 };

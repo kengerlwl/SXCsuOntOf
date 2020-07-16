@@ -15,7 +15,7 @@ const api = {
         updateUserUrl: '/user/change_data',
         updateUsernameURL: "/user/change_data",
         updateEmailURL: "/user/change_data",
-        verityNewEmailURL: "",
+        verityNewEmailURL: "/user/email_verify",
         updateSexURL: "/user/change_data",
         updateCompanyURL: "/user/change_data",
         updateBirthdayURL: "/user/change_data",
@@ -28,9 +28,10 @@ const api = {
         searchPostURL: "",
         getPostsURL: "/getBlogListByUser",
         getPostByBlogIdURL: "/getBlogById",
+        getPostByUsernameURL: "/getBlogListByUsername",
         getAllTagsByUserIdURL: "/pub/user_tags",
         // collect
-        addCollectURL: "",
+        addCollectURL: "/insertCollect",
         searchCollectURL: "",
         deleteCollectURL: "/deleteCollect",
         getCollectURL: "/getCollectListByUser",
@@ -38,6 +39,9 @@ const api = {
         // tags
         addNewTagURL: "/insertTag",
         deleteTagURL: "/deleteTag",
+        // comment
+        getCommentByBlogIdURL: "/getCommentListByBlog",
+        addNewCommentURL: "/insertComment",
         // news
         getSchoolNewsURL: "/getNews",
         getGamesNewsURL: "/getEpicFreeGame"

@@ -6,10 +6,8 @@ import com.sx.sxblog.common.ReturnEntity;
 import com.sx.sxblog.common.UserUtil;
 import com.sx.sxblog.entity.Blog;
 import com.sx.sxblog.entity.Tag;
-import com.sx.sxblog.service.impl.BlogServiceImpl;
-import com.sx.sxblog.service.impl.CollectServiceImpl;
-import com.sx.sxblog.service.impl.CommentServiceImpl;
-import com.sx.sxblog.service.impl.TagServiceImpl;
+import com.sx.sxblog.entity.User;
+import com.sx.sxblog.service.impl.*;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -36,6 +34,8 @@ public class BlogController {
     @Resource
     private CollectServiceImpl collectService;
 
+    @Resource
+    private UserServiceImpl userService;
 
     @RequestMapping(value = "/getBlogList",method = RequestMethod.GET)
     @ResponseBody
@@ -82,6 +82,41 @@ public class BlogController {
         return ReturnEntity.successResult(data);
     }
 
+    @RequestMapping(value = "/getBlogListByUsername",method = RequestMethod.GET)
+    @ResponseBody
+    public ReturnEntity getBlogListByUsername(String user_name){
+        JSONObject data = new JSONObject();
+
+        List<Blog> blogList = blogService.getBlogList();
+
+        User user= userService.getUserByUsername(user_name);
+        int user_id = user.getUserId();
+        for(int    i=0;    i<blogList.size();    i++) {
+            Blog blogtmp    =    blogList.get(i);
+            int userID = blogtmp.getUserId();
+
+            int tmpId =  blogtmp.getBlogId();
+            if (user_id != userID){
+                blogList.remove(i);
+                i--;
+            }
+            else{
+                List<Tag> tagList = tagService.getTagsByBlogId(tmpId);
+                System.out.println(tmpId);
+
+                System.out.println("获取相应的blog tag");
+                JSONObject tmp = new JSONObject();
+                data.put(String.valueOf(tmpId), tagList);
+            }
+
+
+
+        }
+        data.put("bloglist", blogList);
+
+        return ReturnEntity.successResult(data);
+    }
+
 
 
 
@@ -90,6 +125,12 @@ public class BlogController {
     public ReturnEntity getBlogById(int blog_id){
         JSONObject data = new JSONObject();
         Blog blog = blogService.getBlogById(blog_id);
+
+        int count = blog.getBlogViews();
+        count = count+1;
+        blog.setBlogViews(count);
+        blogService.updateBlog(blog);
+
         data.put("blog_id",blog);
         return ReturnEntity.successResult(data);
     }

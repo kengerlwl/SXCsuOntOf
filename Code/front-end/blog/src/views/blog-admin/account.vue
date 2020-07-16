@@ -1,5 +1,5 @@
 <template>
-  <div active @click="updateUser">
+  <div active>
     <h1>Account Profile</h1>
     <hr class="my-4" />
     <b-row>
@@ -59,7 +59,7 @@
                 >
                   <b-form-input
                     id="input-username"
-                    v-model="user.username"
+                    v-model="form.username"
                     required
                     placeholder="Enter New Username"
                     :state="newUsernameState"
@@ -112,7 +112,7 @@
                 >
                   <b-form-input
                     id="input-email"
-                    v-model="user.email"
+                    v-model="form.email"
                     type="email"
                     required
                     placeholder="Enter New Email"
@@ -126,8 +126,11 @@
                   </b-form-invalid-feedback>
                 </b-form-group>
                 <!-- get captcha -->
-                <b-button variant="success" @click="openVerifyEmailModal"
+                <!--<b-button variant="success" @click="openVerifyEmailModal"
                   >GET CAPTCHA</b-button
+                >-->
+                <b-button variant="success" @click="updateEmailRequest"
+                  >SUBMIT</b-button
                 >
               </b-collapse>
             </b-card-text>
@@ -200,13 +203,13 @@
                 >
                   <b-form-input
                     id="input-sex"
-                    v-model="user.sex"
+                    v-model="form.sex"
                     required
                     placeholder="Enter New Sex"
                   ></b-form-input>
                 </b-form-group>
                 <!-- submit -->
-                <b-button variant="success">SUBMIT</b-button>
+                <b-button variant="success" @click="updateSexRequest">SUBMIT</b-button>
               </b-collapse>
             </b-card-text>
           </b-card>
@@ -242,11 +245,11 @@
                 <label for="birthday-datepicker">Choose a date</label>
                 <b-form-datepicker
                   id="birthday-datepicker"
-                  v-model="user.birthday"
+                  v-model="form.birthday"
                   class="mb-2"
                 ></b-form-datepicker>
                 <!-- submit -->
-                <b-button variant="success">SUBMIT</b-button>
+                <b-button variant="success" @click="updateBirthdayRequest">SUBMIT</b-button>
               </b-collapse>
             </b-card-text>
           </b-card>
@@ -288,7 +291,7 @@
                 >
                   <b-form-textarea
                     id="textarea-description"
-                    v-model="user.description"
+                    v-model="form.description"
                     required
                     placeholder="Enter something..."
                     rows="3"
@@ -296,7 +299,7 @@
                   ></b-form-textarea>
                 </b-form-group>
                 <!-- submit -->
-                <b-button variant="success">SUBMIT</b-button>
+                <b-button variant="success" @click="updateDescriptionRequest">SUBMIT</b-button>
               </b-collapse>
             </b-card-text>
           </b-card>
@@ -337,13 +340,13 @@
                 >
                   <b-form-input
                     id="input-company"
-                    v-model="user.company"
+                    v-model="form.company"
                     required
                     placeholder="Enter New company"
                   ></b-form-input>
                 </b-form-group>
                 <!-- submit -->
-                <b-button variant="success">SUBMIT</b-button>
+                <b-button variant="success" @click="updateCompanyRequest">SUBMIT</b-button>
               </b-collapse>
             </b-card-text>
           </b-card>
@@ -377,7 +380,7 @@
                 class="mt-2"
               >
                 <!-- origin password -->
-                <b-form-group
+                <!--<b-form-group
                   id="input-group-origin-password"
                   label="Origin Password:"
                   label-for="input-origin-password"
@@ -397,7 +400,7 @@
                   <b-form-invalid-feedback :state="originPasswordState">
                     Enter at least 8 letters
                   </b-form-invalid-feedback>
-                </b-form-group>
+                </b-form-group>-->
                 <!-- new password -->
                 <b-form-group
                   id="input-group-new-password"
@@ -407,7 +410,7 @@
                 >
                   <b-form-input
                     id="input-new-password"
-                    v-model="user.newPassword"
+                    v-model="form.newPassword"
                     required
                     type="password"
                     placeholder="Enter New Password"
@@ -429,7 +432,7 @@
                 >
                   <b-form-input
                     id="iinput-confirm-new-password"
-                    v-model="user.confirmNewPassword"
+                    v-model="form.confirmNewPassword"
                     required
                     type="password"
                     placeholder="Confirm New Password"
@@ -442,7 +445,7 @@
                     Must same as the password
                   </b-form-invalid-feedback>
                 </b-form-group>
-                <b-button variant="success">SUBMIT</b-button>
+                <b-button variant="success" @click="updatePasswordRequest">SUBMIT</b-button>
               </b-collapse>
             </b-card-text>
           </b-card>
@@ -558,10 +561,7 @@ export default {
         birthday: "",
         sex: "",
         company: "",
-        password: "*******",
-        originPassword: "123",
-        newPassword: "123",
-        confirmNewPassword: "123",
+        password: "******",
       },
       // update data
       form: {
@@ -589,9 +589,9 @@ export default {
       verifyEmailModal: false,
       // update modal and msg
       updateFailModal: false,
-      updateFailMsg: "",
+      updateFailMsg: "fail",
       updateSuccessModal: false,
-      updateSuccessMsg: "",
+      updateSuccessMsg: "success",
       // delete account modal
       deleteAccountModal: false,
     };
@@ -601,55 +601,56 @@ export default {
     this.getUserDataRequest();
   },
   methods: {
-    openDeleteAccountModal() {
-      this.deleteAccountModal = true;
-    },
-    async deleteAccount() {
-      console.log("delete account");
-      
-    },
-
-    async updateUser() {
-      console.log(this.user);
-      axios({
-        method: "post",
-        url: this.springBaseURL + this.updateUserUrl,
-        headers: {
-          token: Vue.localStorage.get("jwt_token"),
-        },
-        data: {
-          birthday: this.user.birthday,
-          sex: this.user.sex,
-          description: this.user.description,
-          company: this.user.company,
-          email: this.user.email,
-          username: this.user.username,
-          password: this.user.password,
-        },
-      })
-        .then((response) => {
-          console.log(response.data);
-          // token verify fail
-          if (response.data.code === "500000") {
-            this.updateTokenVerifyFailModal(true);
-          } else {
-            if (response.data.status === true) {
-            } else {
-            }
-          }
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    },
-
-    // vueX mutation
     ...mapMutations({
       updateUsername: "updateUsername",
       updateIsSignIn: "updateIsSignIn",
       updateSignOutModal: "updateSignOutModal",
       updateTokenVerifyFailModal: "updateTokenVerifyFailModal",
     }),
+    openDeleteAccountModal() {
+      this.deleteAccountModal = true;
+    },
+    async deleteAccount() {
+      console.log("delete account");
+    },
+
+    // async updateUser() {
+    //   console.log(this.user);
+    //   axios({
+    //     method: "post",
+    //     url: this.springBaseURL + this.updateUserUrl,
+    //     headers: {
+    //       token: Vue.localStorage.get("jwt_token"),
+    //     },
+    //     data: {
+    //       birthday: this.user.birthday,
+    //       sex: this.user.sex,
+    //       description: this.user.description,
+    //       company: this.user.company,
+    //       email: this.user.email,
+    //       username: this.user.username,
+    //       password: this.user.password,
+    //     },
+    //   })
+    //     .then((response) => {
+    //       console.log(response.data);
+    //       // token verify fail
+    //       if (response.data.code === "500000") {
+    //         this.updateTokenVerifyFailModal(true);
+    //       } else {
+    //         if (response.data.status === true) {
+    //           Vue.localStorage.set("user_name", this.user.username);
+    //           this.updateUsername(this.user.username);
+    //           this.updateSuccessModal = true;
+    //         } else {
+    //           this.updateFailModal = true;
+    //         }
+    //       }
+    //     })
+    //     .catch((error) => {
+    //       console.log(error);
+    //     });
+    // },
     // get user's data
     async getUserDataRequest() {
       console.log("getUserDataRequest");
@@ -685,12 +686,15 @@ export default {
           console.log(error);
         });
     },
+    // avoid same username
     usernameVerifyRequest() {
       if (!this.newDataError.username) {
         axios({
           method: "post",
           url: this.springBaseURL + this.usernameVerifyURL,
-          headers: {},
+          headers: {
+            token: Vue.localStorage.get("jwt_token"),
+          },
           data: {
             username: this.form.username,
           },
@@ -705,6 +709,7 @@ export default {
                 this.updateFailMsg =
                   "This username has existed, please change one.";
               } else {
+                this.updateUsernameRequest();
               }
             }
           })
@@ -722,7 +727,14 @@ export default {
             token: Vue.localStorage.get("jwt_token"),
           },
           data: {
+            userid: Vue.localStorage.get("user_id"),
+            birthday: this.user.birthday,
+            sex: this.user.sex,
+            description: this.user.description,
+            company: this.user.company,
+            email: this.user.email,
             username: this.form.username,
+            // password: this.user.password,
           },
         })
           .then((response) => {
@@ -732,9 +744,15 @@ export default {
             } else {
               if (response.data.status === false) {
                 this.updateFailModal = true;
-                this.updateFailMsg =
-                  "This username has existed, please change one.";
+                this.updateFailMsg = "Update username fail.";
               } else {
+                Vue.localStorage.set("user_name", this.form.username);
+                this.updateUsername(this.form.username);
+                this.updateSuccessModal = true;
+                this.updateSuccessMsg = "Update username successfully.";
+                this.editUsername();
+                this.getUserDataRequest();
+                // this.$router.push("/" + Vue.localStorage.get("user_name") + "/admin/account");
               }
             }
           })
@@ -752,7 +770,14 @@ export default {
             token: Vue.localStorage.get("jwt_token"),
           },
           data: {
-            username: this.form.username,
+            userid: Vue.localStorage.get("user_id"),
+            birthday: this.user.birthday,
+            sex: this.user.sex,
+            description: this.user.description,
+            company: this.user.company,
+            email: this.form.email,
+            username: this.user.username,
+            // password: this.user.password,
           },
         })
           .then((response) => {
@@ -762,9 +787,12 @@ export default {
             } else {
               if (response.data.status === false) {
                 this.updateFailModal = true;
-                this.updateFailMsg =
-                  "This username has existed, please change one.";
+                this.updateFailMsg = "update email fail.";
               } else {
+                this.updateSuccessModal = true;
+                this.updateSuccessMsg = "Update email successfully.";
+                this.editEmail();
+                this.getUserDataRequest();
               }
             }
           })
@@ -781,7 +809,14 @@ export default {
           token: Vue.localStorage.get("jwt_token"),
         },
         data: {
-          username: this.form.username,
+          userid: Vue.localStorage.get("user_id"),
+          birthday: this.user.birthday,
+          sex: this.user.sex,
+          description: this.form.description,
+          company: this.user.company,
+          email: this.user.email,
+          username: this.user.username,
+          // password: this.user.password,
         },
       })
         .then((response) => {
@@ -791,9 +826,12 @@ export default {
           } else {
             if (response.data.status === false) {
               this.updateFailModal = true;
-              this.updateFailMsg =
-                "This username has existed, please change one.";
+              this.updateFailMsg = "Update description fail.";
             } else {
+              this.updateSuccessModal = true;
+              this.updateSuccessMsg = "Update description successfully.";
+              this.editDescription();
+              this.getUserDataRequest();
             }
           }
         })
@@ -809,7 +847,14 @@ export default {
           token: Vue.localStorage.get("jwt_token"),
         },
         data: {
-          username: this.form.username,
+          userid: Vue.localStorage.get("user_id"),
+          birthday: this.user.birthday,
+          sex: this.form.sex,
+          description: this.user.description,
+          company: this.user.company,
+          email: this.user.email,
+          username: this.user.username,
+          // password: this.user.password,
         },
       })
         .then((response) => {
@@ -819,9 +864,12 @@ export default {
           } else {
             if (response.data.status === false) {
               this.updateFailModal = true;
-              this.updateFailMsg =
-                "This username has existed, please change one.";
+              this.updateFailMsg = "Update sex fail.";
             } else {
+              this.updateSuccessModal = true;
+              this.updateSuccessMsg = "Update sex successfully.";
+              this.editSex();
+              this.getUserDataRequest();
             }
           }
         })
@@ -837,7 +885,14 @@ export default {
           token: Vue.localStorage.get("jwt_token"),
         },
         data: {
-          username: this.form.username,
+          userid: Vue.localStorage.get("user_id"),
+          birthday: this.form.birthday,
+          sex: this.user.sex,
+          description: this.user.description,
+          company: this.user.company,
+          email: this.user.email,
+          username: this.user.username,
+          // password: this.user.password,
         },
       })
         .then((response) => {
@@ -847,9 +902,12 @@ export default {
           } else {
             if (response.data.status === false) {
               this.updateFailModal = true;
-              this.updateFailMsg =
-                "This username has existed, please change one.";
+              this.updateFailMsg = "Update birthday fail.";
             } else {
+              this.updateSuccessModal = true;
+              this.updateSuccessMsg = "Update birthday successfully.";
+              this.editBirthday();
+              this.getUserDataRequest();
             }
           }
         })
@@ -865,7 +923,14 @@ export default {
           token: Vue.localStorage.get("jwt_token"),
         },
         data: {
-          username: this.form.username,
+          userid: Vue.localStorage.get("user_id"),
+          birthday: this.user.birthday,
+          sex: this.user.sex,
+          description: this.user.description,
+          company: this.form.company,
+          email: this.user.email,
+          username: this.user.username,
+          // password: this.user.password,
         },
       })
         .then((response) => {
@@ -875,9 +940,12 @@ export default {
           } else {
             if (response.data.status === false) {
               this.updateFailModal = true;
-              this.updateFailMsg =
-                "This username has existed, please change one.";
+              this.updateFailMsg = "Update company fail.";
             } else {
+              this.updateSuccessModal = true;
+              this.updateSuccessMsg = "Update company successfully.";
+              this.editCompany();
+              this.getUserDataRequest();
             }
           }
         })
@@ -887,8 +955,7 @@ export default {
     },
     async updatePasswordRequest() {
       if (
-        !this.newDataError.originPassword &&
-        !this.this.newDataError.newPassword &&
+        !this.newDataError.newPassword &&
         !this.newDataError.confirmNewPassword
       ) {
         axios({
@@ -898,7 +965,14 @@ export default {
             token: Vue.localStorage.get("jwt_token"),
           },
           data: {
-            username: this.form.username,
+            userid: Vue.localStorage.get("user_id"),
+            birthday: this.user.birthday,
+            sex: this.user.sex,
+            description: this.user.description,
+            company: this.user.company,
+            email: this.user.email,
+            username: this.user.username,
+            password: this.form.newPassword,
           },
         })
           .then((response) => {
@@ -908,9 +982,12 @@ export default {
             } else {
               if (response.data.status === false) {
                 this.updateFailModal = true;
-                this.updateFailMsg =
-                  "This username has existed, please change one.";
+                this.updateFailMsg = "Update password fail.";
               } else {
+                this.updateSuccessModal = true;
+                this.updateSuccessMsg = "Update password successfully.";
+                this.editPassword();
+                this.getUserDataRequest();
               }
             }
           })
@@ -962,7 +1039,7 @@ export default {
       if (this.editPasswordVisible === false) {
         this.form.originPassword = "";
         this.form.newPassword = "";
-        this.form.comfirmNewPassword = "";
+        this.form.confirmNewPassword = "";
       }
     },
     // validate email
@@ -988,6 +1065,9 @@ export default {
       },
       tokenVerifyFailModal: (state) => {
         return state.user.tokenVerifyFailModal;
+      },
+      usernameVerifyURL: (state) => {
+        return state.api.usernameVerifyURL;
       },
       updateUsernameURL: (state) => {
         return state.api.updateUsernameURL;

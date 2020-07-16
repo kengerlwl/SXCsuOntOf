@@ -7,7 +7,7 @@
 
       <b-collapse id="nav-collapse" is-nav>
         <b-navbar-nav>
-          <b-nav-item v-if="isSignIn" @click="to('/blog/home')"
+          <b-nav-item v-if="isSignIn" @click="to('/blog/home/')"
             >Your Blog</b-nav-item
           >
         </b-navbar-nav>
@@ -17,7 +17,7 @@
 
         <!-- Right aligned nav items -->
         <b-navbar-nav class="ml-auto">
-          <b-nav-item-dropdown v-if="isSignIn" right>
+          <b-nav-item-dropdown class="top-index" v-if="isSignIn" right>
             <!-- Using 'button-content' slot -->
             <template v-slot:button-content>
               <strong>{{ username }}</strong>
@@ -140,7 +140,9 @@ export default {
       this.$router.push("/");
     },
     to(path) {
-      this.$router.push("/" + Vue.localStorage.get("user_name") + path);
+      let user_name = Vue.localStorage.get("user_name");
+      this.$router.push("/" + user_name + path);
+      console.log("/" + user_name + path)
     },
   },
   computed: {
@@ -188,5 +190,9 @@ export default {
 
 #nav a.router-link-exact-active {
   color: #42b983;
+}
+
+.top-index {
+  z-index: 1000000 !important;
 }
 </style>

@@ -62,6 +62,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         User user;
         QueryWrapper<User> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("user_name",username);
+        System.out.println(username);
         user = userMapper.selectOne(queryWrapper);
 
         return user;

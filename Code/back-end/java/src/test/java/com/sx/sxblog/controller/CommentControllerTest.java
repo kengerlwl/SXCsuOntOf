@@ -1,8 +1,11 @@
 package com.sx.sxblog.controller;
 
+import com.alibaba.fastjson.JSONObject;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.sx.sxblog.common.ReturnEntity;
 import com.sx.sxblog.entity.Blog;
 import com.sx.sxblog.entity.Comment;
+import com.sx.sxblog.service.impl.CommentServiceImpl;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -17,6 +20,9 @@ import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
+
+import javax.annotation.Resource;
+import java.util.List;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -64,6 +70,29 @@ public class CommentControllerTest {
                 .content(json))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andDo(MockMvcResultHandlers.print());
+    }
+
+    @Resource
+    private CommentServiceImpl commentService;
+
+    @Test
+    public void getC() throws  Exception{
+        JSONObject data = new JSONObject();
+        int blog_id = 1000000;
+        List<Comment> commentList = commentService.getCommentList();
+        for(int i =0; i < commentList.size(); i++)
+        {
+            Comment tmpComment = commentList.get(i);
+            if(tmpComment.getBlogId() != blog_id){
+                commentList.remove(i);
+                i--;
+            }else{
+
+            }
+        }
+            data.put("commentList",commentList);
+    System.out.println(data.toJSONString());
+
     }
 
 

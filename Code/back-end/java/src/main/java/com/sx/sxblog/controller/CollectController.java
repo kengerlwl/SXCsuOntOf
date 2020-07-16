@@ -115,11 +115,27 @@ public class CollectController {
     @RequestMapping(value = "/insertCollect",method = RequestMethod.POST)
     @ResponseBody
     public ReturnEntity insertCollect(@RequestBody Collect collect){
+        String msg = "";
         JSONObject data = new JSONObject();
-        int result = collectService.insertCollect(collect);
-        data.put("result",result);
-        System.out.println(data);
-        return ReturnEntity.successResult(data);
+        boolean status = true;
+
+        int userid = collect.getUserId();
+        int blogid = collect.getBlogId();
+
+        Collect testcollect = null;
+        testcollect = collectService.selectCollectByUserAndBlog(userid,blogid);
+
+        if (testcollect == null ){
+            int result = collectService.insertCollect(collect);
+            data.put("result",result);
+            System.out.println(data);
+        }else {
+            status = false;
+            msg = "already exits";
+        }
+
+        ReturnEntity returnEntity = new ReturnEntity(status,msg,data);
+        return returnEntity;
     }
 
     @RequestMapping(value = "/deleteCollect",method = RequestMethod.POST)
