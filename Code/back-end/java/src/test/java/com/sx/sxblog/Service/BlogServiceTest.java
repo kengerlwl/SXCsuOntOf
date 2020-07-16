@@ -36,7 +36,8 @@ public class BlogServiceTest {
         blog.setUserId(10000);
         blog.setBlogContent("this is a markdown");
         blog.setBlogViews(2345);
-        blog.setBlogName("title");
+        blog.setBlogName("tiasdfasdftle");
+        blog.setPostTime(blog.getPostTime().now());
 
         Integer result = blogService.insertBlog(blog);
         System.out.println(result);

@@ -105,7 +105,7 @@ public class BlogController {
             return ReturnEntity.failedResult(data.toJSONString());
         } else
         {
-
+        blog.setPostTime(blog.getPostTime().now());
         int result = blogService.insertBlog(blog);
         blogtmp = blogService.getBlogByBlogName(blog);
         data.put("result", blogtmp);
@@ -140,6 +140,8 @@ public class BlogController {
     @ResponseBody
     public ReturnEntity updateBlog(@RequestBody Blog blog){
         JSONObject data = new JSONObject();
+        blog.setPostTime(blog.getPostTime().now());
+
         int result = blogService.updateBlog(blog);
         data.put("result",result);
         return ReturnEntity.successResult(data);
