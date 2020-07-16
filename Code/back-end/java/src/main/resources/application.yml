@@ -8,6 +8,7 @@ spring:
     password: 12345678
 
 
+
   #邮件配置
   mail:
     host: smtp.163.com
