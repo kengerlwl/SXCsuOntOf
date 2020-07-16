@@ -19,6 +19,44 @@
           <b-button variant="success" @click="savePost">Save</b-button>
         </b-navbar-nav>
       </b-navbar>
+      <!-- save error modal -->
+      <b-modal
+        class="top-index"
+        v-model="saveFailModal"
+        no-close-on-backdrop
+        no-close-on-esc
+        centered
+        title="Save Post Fail"
+        header-bg-variant="danger"
+        header-text-variant="light"
+      >
+        <h4><strong>Please change a blog title.</strong></h4>
+        <template v-slot:modal-footer="{ ok, cancel, hide }">
+          <!-- Emulate built in modal footer ok and cancel button actions -->
+          <b-button variant="success" @click="ok()">
+            OK
+          </b-button>
+        </template>
+      </b-modal>
+      <!-- save success modal -->
+      <b-modal
+        class="top-index"
+        v-model="saveSuccessModal"
+        no-close-on-backdrop
+        no-close-on-esc
+        centered
+        title="save success"
+        header-bg-variant="success"
+        header-text-variant="light"
+      >
+        <h4><strong>Save this post success.</strong></h4>
+        <template v-slot:modal-footer="{ ok, cancel, hide }">
+          <!-- Emulate built in modal footer ok and cancel button actions -->
+          <b-button variant="success" @click="ok()">
+            OK
+          </b-button>
+        </template>
+      </b-modal>
     </div>
     <!-- tags -->
     <!--
@@ -41,42 +79,6 @@
       language="en"
       fontSize="16px"
     />
-    <!-- save error modal -->
-    <b-modal
-      v-model="saveFailModal"
-      no-close-on-backdrop
-      no-close-on-esc
-      centered
-      title="Save Post Fail"
-      header-bg-variant="danger"
-      header-text-variant="light"
-    >
-      <h4><strong>Please change a blog title.</strong></h4>
-      <template v-slot:modal-footer="{ ok, cancel, hide }">
-        <!-- Emulate built in modal footer ok and cancel button actions -->
-        <b-button variant="success" @click="ok()">
-          OK
-        </b-button>
-      </template>
-    </b-modal>
-    <!-- save success modal -->
-    <b-modal
-      v-model="saveSuccessModal"
-      no-close-on-backdrop
-      no-close-on-esc
-      centered
-      title="save success"
-      header-bg-variant="success"
-      header-text-variant="light"
-    >
-      <h4><strong>Save this post success.</strong></h4>
-      <template v-slot:modal-footer="{ ok, cancel, hide }">
-        <!-- Emulate built in modal footer ok and cancel button actions -->
-        <b-button variant="success" @click="ok()">
-          OK
-        </b-button>
-      </template>
-    </b-modal>
   </div>
 </template>
 <script>
@@ -161,8 +163,8 @@ export default {
     },
     savePost() {
       if (
-        this.$route.query.blogId === "-1" ||
-        this.$route.query.blogId === -1
+        this.blog.blogId === "-1" ||
+        this.blog.blogId === -1
       ) {
         this.addNewPost();
       } else {
@@ -183,7 +185,7 @@ export default {
           blogId: null,
           userId: parseInt(Vue.localStorage.get("user_id"), 10),
           blogContent: this.blog.blogContent,
-          postTime: postTime,
+          postTime: null,
           blogViews: 0,
           blogName: this.blog.blogName,
         },
@@ -222,7 +224,7 @@ export default {
           blogId: this.blog.blogId,
           userId: this.blog.userId,
           blogContent: this.blog.blogContent,
-          postTime: postTime,
+          postTime: null,
           blogViews: this.blog.blogViews,
           blogName: this.blog.blogName,
         },
@@ -273,5 +275,11 @@ export default {
 
 #tag-input-box {
   padding: 1em 5em 1em;
+}
+.v-note-wrapper {
+  z-index: 100 !important;
+}
+.top-index {
+  z-index: 100001;
 }
 </style>
