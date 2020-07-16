@@ -141,7 +141,7 @@
         </b-button>
       </template>
     </b-modal>
-    <!-- delete success modal -->
+    <!-- delete post success modal -->
     <b-modal
       v-model="deletePostSuccessModal"
       no-close-on-backdrop

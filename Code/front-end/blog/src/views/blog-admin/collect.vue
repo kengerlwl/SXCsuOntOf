@@ -103,7 +103,7 @@
         </b-card>
       </b-col>
     </b-row>
-    <!-- delete modal -->
+    <!-- delete collect modal -->
     <b-modal
       v-model="deletePostModal"
       no-close-on-backdrop
@@ -121,6 +121,24 @@
         </b-button>
         <b-button variant="danger" @click="deletePost()">
           Delete
+        </b-button>
+      </template>
+    </b-modal>
+    <!-- delete collect success modal -->
+    <b-modal
+      v-model="deleteCollectSuccessModal"
+      no-close-on-backdrop
+      no-close-on-esc
+      centered
+      title="Delete Post"
+      header-bg-variant="success"
+      header-text-variant="light"
+    >
+      <h4><strong>Delete Success</strong></h4>
+      <template v-slot:modal-footer="{ ok, cancel, hide }">
+        <!-- Emulate built in modal footer ok and cancel button actions -->
+        <b-button variant="success" @click="ok()">
+          OK
         </b-button>
       </template>
     </b-modal>
@@ -305,6 +323,7 @@ export default {
       // delete post modal
       deletePostModal: false,
       deleteItem: {},
+      deleteCollectSuccessModal: false,
       // search
       search: "",
     };
@@ -340,7 +359,9 @@ export default {
           this.showCollectBlog.splice(i, 1);
         }
       }
-
+      // axios
+      this.deleteCollectRequest(this.deleteItem.collectId);
+      // modal
       this.deletePostModal = false;
       // change totalRows
       this.totalRows = this.showCollectBlog.length;
@@ -377,7 +398,30 @@ export default {
       });
       this.totalRows = this.showCollectBlog.length;
     },
-    async deleteCollectRequest() {},
+    async deleteCollectRequest(collectId) {
+      axios({
+        method: "post",
+        url: this.springBaseURL + this.deleteCollectURL,
+        headers: {
+          token: Vue.localStorage.get("jwt_token"),
+        },
+        data: {
+          collectId: String(collectId),
+        },
+      })
+        .then((response) => {
+          console.log(response.data);
+          if (response.data.code === "500000") {
+            this.updateTokenVerifyFailModal(true);
+          } else {
+            this.deleteCollectSuccessModal = true;
+            this.getAllTagsbyUserIdRequest();
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
     async getCollectRequest() {
       console.log("getCollectRequest");
       axios({
@@ -495,6 +539,9 @@ export default {
       },
       getAllCollectTagsByUserIdURL: (state) => {
         return state.api.getAllCollectTagsByUserIdURL;
+      },
+      deleteCollectURL: (state) => {
+        return state.api.deleteCollectURL;
       },
       tokenVerifyFailModal: (state) => {
         return state.user.tokenVerifyFailModal;
