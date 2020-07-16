@@ -7,7 +7,7 @@
 
       <b-collapse id="nav-collapse" is-nav>
         <b-navbar-nav>
-          <b-nav-item v-if="isSignIn" @click="to('/blog/home')"
+          <b-nav-item v-if="isSignIn" @click="to('/blog/home/')"
             >Your Blog</b-nav-item
           >
         </b-navbar-nav>
@@ -140,7 +140,9 @@ export default {
       this.$router.push("/");
     },
     to(path) {
-      this.$router.push("/" + Vue.localStorage.get("user_name") + path);
+      let user_name = Vue.localStorage.get("user_name");
+      this.$router.push("/" + user_name + path);
+      console.log("/" + user_name + path)
     },
   },
   computed: {

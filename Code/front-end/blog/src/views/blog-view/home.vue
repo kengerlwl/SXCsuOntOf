@@ -89,7 +89,11 @@
               <b-card-text>
                 {{ item.previewContent }}
               </b-card-text>
-              <b-button to="read" variant="outline-info" class="mr-3">
+              <b-button
+                @click="toViewBlog(item.blogId)"
+                variant="outline-info"
+                class="mr-3"
+              >
                 READ MORE
               </b-button>
               <template v-slot:footer>
@@ -354,6 +358,10 @@ export default {
       ],
     };
   },
+  beforeRouteUpdate(to, from, next) {
+    this.getUserPostsRequest();
+    this.getAllTagsbyUserIdRequest();
+  },
   created() {
     this.getUserPostsRequest();
     this.getAllTagsbyUserIdRequest();
@@ -395,6 +403,17 @@ export default {
     showAllPost() {
       this.showBlogList = this.blogList;
       this.totalRows = this.showBlogList.length;
+    },
+    toViewBlog(blogId) {
+      // 跳轉到 user_blog_read 子組件檢視，并添加 query string 作為参数
+      this.$router
+        .push({
+          path: "/" + this.$route.params.id + "/blog/read",
+          query: { blogId: blogId },
+        })
+        .catch((err) => {
+          err;
+        });
     },
     async getUserPostsRequest() {
       axios({
@@ -506,6 +525,14 @@ export default {
       }
 
       return this.paginated_items[this.currentPage - 1];
+    },
+  },
+  watch: {
+    $route(to, from) {
+      // react to route changes...
+      if (to !== from) {
+        location.reload();
+      }
     },
   },
 };
