@@ -110,6 +110,8 @@ export default {
       // input error
       emailError: true,
       usernameError: true,
+      sendSuccessModal: false,
+      sendFailModal: false,
     };
   },
   methods: {
