@@ -470,8 +470,9 @@ export default {
         url:
           this.springBaseURL +
           this.getAllTagsByUserIdURL +
-          "?userid=" +
-          Vue.localStorage.get("user_id"),
+          "?userid=1" +
+          "&username=" +
+          this.$route.params.id,
         headers: {
           token: Vue.localStorage.get("jwt_token"),
         },
