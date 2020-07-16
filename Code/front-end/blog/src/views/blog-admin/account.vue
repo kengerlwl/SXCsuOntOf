@@ -589,9 +589,9 @@ export default {
       verifyEmailModal: false,
       // update modal and msg
       updateFailModal: false,
-      updateFailMsg: "",
+      updateFailMsg: "fail",
       updateSuccessModal: false,
-      updateSuccessMsg: "",
+      updateSuccessMsg: "success",
       // delete account modal
       deleteAccountModal: false,
     };
@@ -642,7 +642,9 @@ export default {
             if (response.data.status === true) {
               Vue.localStorage.set("user_name", this.user.username);
               this.updateUsername(this.user.username);
+              this.updateSuccessModal = true;
             } else {
+              this.updateFailModal = true;
             }
           }
         })
