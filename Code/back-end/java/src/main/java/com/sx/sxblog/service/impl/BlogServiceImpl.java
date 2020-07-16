@@ -45,6 +45,15 @@ public class BlogServiceImpl extends ServiceImpl<BlogMapper, Blog> implements IB
         );
     }
 
+
+    @Override
+    public List<Blog> getBlogByBlogName(String name){
+        QueryWrapper<Blog> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("blog_name",name);
+        List<Blog> blogs = blogMapper.selectList(queryWrapper);
+        return blogs;
+    }
+
     @Override
     public List<Blog> getBlogList() {
         return blogMapper.selectList(null);

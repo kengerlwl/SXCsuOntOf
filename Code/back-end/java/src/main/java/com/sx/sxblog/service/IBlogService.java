@@ -28,6 +28,8 @@ public interface IBlogService extends IService<Blog> {
     //对博客列表进行查询显示【】
     List<Blog> getBlogList();
 
+    List<Blog> getBlogByBlogName(String name);
+
     //对指定博客进行查询【】
     Blog getBlogById(int blog_id);
 
