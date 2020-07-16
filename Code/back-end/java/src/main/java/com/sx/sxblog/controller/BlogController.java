@@ -96,12 +96,23 @@ public class BlogController {
 
     @RequestMapping(value = "/insertBlog",method = RequestMethod.POST)
     @ResponseBody
-    public ReturnEntity insertBlog(@RequestBody Blog blog){
+    public ReturnEntity insertBlog(@RequestBody Blog blog) {
         JSONObject data = new JSONObject();
+
+        List<Blog> blogtmp = blogService.getBlogByBlogName(blog);
+        if (blogtmp.size() != 0) {
+            data.put("result", "error");
+            return ReturnEntity.failedResult(data.toJSONString());
+        } else
+        {
+
         int result = blogService.insertBlog(blog);
-        data.put("result",result);
+        blogtmp = blogService.getBlogByBlogName(blog);
+        data.put("result", blogtmp);
         System.out.println(data);
         return ReturnEntity.successResult(data);
+
+    }
     }
 
     @RequestMapping(value = "/deleteBlog",method = RequestMethod.POST)
