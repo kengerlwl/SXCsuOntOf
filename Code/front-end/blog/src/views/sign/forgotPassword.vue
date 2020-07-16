@@ -14,10 +14,10 @@
           type="email"
           required
           placeholder="Enter Username"
-          :state="emailState"
+          :state="usernameState"
         ></b-form-input>
-        <b-form-invalid-feedback :state="emailState">
-          Enter Your Username
+        <b-form-invalid-feedback :state="usernameState">
+          Enter at least 3 letters
         </b-form-invalid-feedback>
       </b-form-group>
 
@@ -57,6 +57,44 @@
         >SIGN IN</b-button
       >
     </div>
+    <!-- send success modal -->
+    <b-modal
+      class="top-index"
+      v-model="sendSuccessModal"
+      no-close-on-backdrop
+      no-close-on-esc
+      centered
+      title="success"
+      header-bg-variant="success"
+      header-text-variant="light"
+    >
+      <h4><strong>Your new password has been sent to your email.</strong></h4>
+      <template v-slot:modal-footer="{ ok, cancel, hide }">
+        <!-- Emulate built in modal footer ok and cancel button actions -->
+        <b-button variant="success" @click="ok()">
+          OK
+        </b-button>
+      </template>
+    </b-modal>
+    <!-- send fail modal -->
+    <b-modal
+      class="top-index"
+      v-model="sendFailModal"
+      no-close-on-backdrop
+      no-close-on-esc
+      centered
+      title="Fail"
+      header-bg-variant="danger"
+      header-text-variant="light"
+    >
+      <h4><strong>Oops...Please input the correct username and email.</strong></h4>
+      <template v-slot:modal-footer="{ ok, cancel, hide }">
+        <!-- Emulate built in modal footer ok and cancel button actions -->
+        <b-button variant="success" @click="ok()">
+          OK
+        </b-button>
+      </template>
+    </b-modal>
   </div>
 </template>
 <script>
@@ -69,6 +107,9 @@ export default {
     return {
       email: "",
       username: "",
+      // input error
+      emailError: true,
+      usernameError: true,
     };
   },
   methods: {
@@ -86,9 +127,9 @@ export default {
         .then((response) => {
           console.log(response.data);
           if (response.data.status === true) {
-            console.log("success");
+            this.sendSuccessModal = true;
           } else {
-            console.log("fail");
+            this.sendFailModal = true;
           }
         })
         .catch((error) => {
@@ -111,7 +152,12 @@ export default {
       },
     }),
     emailState() {
-      return this.validateEmail(this.email);
+      this.emailError = !this.validateEmail(this.email);
+      return !this.emailError;
+    },
+    usernameState() {
+      this.usernameError = this.username.length > 2 ? false : true;
+      return !this.usernameError;
     },
   },
 };

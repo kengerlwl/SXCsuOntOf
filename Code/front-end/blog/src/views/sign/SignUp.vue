@@ -146,7 +146,7 @@
       </h4>
       <template v-slot:modal-footer="{ ok, cancel, hide }">
         <!-- Emulate built in modal footer ok and cancel button actions -->
-        <b-button variant="success" @click="toSignIn">
+        <b-button variant="success" @click="toVerifyEmail">
           OK
         </b-button>
       </template>
@@ -257,9 +257,9 @@ export default {
           console.log(error);
         });
     },
-    toSignIn() {
+    toVerifyEmail() {
       // route push
-      this.$router.push("/sign/signIn");
+      this.$router.push("/sign/verifyEmail");
     },
   },
   computed: {
