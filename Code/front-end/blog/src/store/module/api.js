@@ -31,7 +31,7 @@ const api = {
         getPostByUsernameURL: "/getBlogListByUsername",
         getAllTagsByUserIdURL: "/pub/user_tags",
         // collect
-        addCollectURL: "",
+        addCollectURL: "/insertCollect",
         searchCollectURL: "",
         deleteCollectURL: "/deleteCollect",
         getCollectURL: "/getCollectListByUser",
@@ -41,7 +41,7 @@ const api = {
         deleteTagURL: "/deleteTag",
         // comment
         getCommentByBlogIdURL: "/getCommentListByBlog",
-        addNewCommentURL: "",
+        addNewCommentURL: "/insertComment",
         // news
         getSchoolNewsURL: "/getNews",
         getGamesNewsURL: "/getEpicFreeGame"

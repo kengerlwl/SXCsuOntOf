@@ -23,6 +23,68 @@
             ><b-icon-arrow-left-circle-fill></b-icon-arrow-left-circle-fill>
             Back</b-navbar-brand
           >
+          <b-navbar-nav class="ml-auto">
+            <b-button variant="outline-success" @click="addNewCollect"
+              >Collect</b-button
+            >
+          </b-navbar-nav>
+          <!-- collect success modal -->
+          <b-modal
+            class="top-index"
+            v-model="collectSuccessModal"
+            no-close-on-backdrop
+            no-close-on-esc
+            centered
+            title="collect success"
+            header-bg-variant="success"
+            header-text-variant="light"
+          >
+            <h4><strong>Collect this post success.</strong></h4>
+            <template v-slot:modal-footer="{ ok, cancel, hide }">
+              <!-- Emulate built in modal footer ok and cancel button actions -->
+              <b-button variant="success" @click="ok()">
+                OK
+              </b-button>
+            </template>
+          </b-modal>
+          <!-- collect fail modal -->
+          <b-modal
+            class="top-index"
+            v-model="collectFailModal"
+            no-close-on-backdrop
+            no-close-on-esc
+            centered
+            title="collect Fail"
+            header-bg-variant="danger"
+            header-text-variant="light"
+          >
+            <h4><strong>You have collect this post.</strong></h4>
+            <template v-slot:modal-footer="{ ok, cancel, hide }">
+              <!-- Emulate built in modal footer ok and cancel button actions -->
+              <b-button variant="success" @click="ok()">
+                OK
+              </b-button>
+            </template>
+          </b-modal>
+          <!-- guest need sign modal -->
+          <b-modal
+            class="top-index"
+            v-model="guestSignInModal"
+            no-close-on-backdrop
+            no-close-on-esc
+            centered
+            title="Oops..."
+            header-bg-variant="info"
+            header-text-variant="light"
+          >
+            <h4><strong>Please sign in to do the action.</strong></h4>
+            <template v-slot:modal-footer="{ ok, cancel, hide }">
+              <!-- Emulate built in modal footer ok and cancel button actions -->
+              <b-button variant="info" @click="ok()">
+                OK
+              </b-button>
+            </template>
+          </b-modal>
         </b-navbar>
         <div class="box-shadow">
           <h1>{{ blog.blogName }}</h1>
@@ -57,13 +119,14 @@
             </b-col>
             <b-col>
               <b-form-textarea
+                v-model="writeComment"
                 id="textarea-default"
-                placeholder="Default textarea"
+                placeholder="Write something"
               ></b-form-textarea>
             </b-col>
           </b-row>
           <div class="mt-2 send-btn">
-            <b-button variant="success">Send</b-button>
+            <b-button variant="success" @click="sendComment">Send</b-button>
           </div>
           <hr class="my-4" />
           <div v-for="(comment, i) in commentList">
@@ -79,12 +142,10 @@
                   {{ comment.userId }}
                 </div>
                 <div class="mb-1">
-                  {{ comment.commentWord}}
+                  {{ comment.commentWord }}
                 </div>
-                <div>
-                  post on {{ comment.commentDate }}
-                </div>
-                
+                <div>post on {{ comment.commentDate }}</div>
+
                 <div>
                   <b-button size="sm" variant="primary" class="mr-2"
                     >Edit</b-button
@@ -169,6 +230,12 @@ export default {
         blogName: "",
       },
       commentList: [],
+      writeComment: "",
+      // collect
+      collectSuccessModal: false,
+      collectFailModal: false,
+      // need sign in
+      guestSignInModal: false,
       aboutDeveloper: [
         {
           developer: "2892211452",
@@ -222,6 +289,51 @@ export default {
     toUserBlogHome() {
       this.$router.push("/" + this.$route.params.id + "/blog/home");
     },
+    addNewCollect() {
+      let token = Vue.localStorage.get("jwt_token");
+      if (token === undefined || token === null || token === "") {
+        this.guestSignInModal = true;
+      } else {
+        this.addNewCollectRequest();
+      }
+    },
+    sendComment() {
+      if (this.writeComment !== "") {
+        this.sendCommentRequest(this.writeComment);
+        this.writeComment = "";
+      }
+    },
+    async addNewCollectRequest() {
+      axios({
+        method: "post",
+        url: this.springBaseURL + this.addCollectURL,
+        headers: {
+          token: Vue.localStorage.get("jwt_token"),
+        },
+        data: {
+          collectId: null,
+          userId: this.blog.userId,
+          blogId: this.blog.blogId,
+          collectDate: null,
+        },
+      })
+        .then((response) => {
+          console.log(response.data);
+          if (response.data.code === "500000") {
+            this.updateTokenVerifyFailModal(true);
+          } else {
+            if (response.data.status === true) {
+              this.collectSuccessModal = true;
+            } else {
+              this.collectFailModal = true;
+            }
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+
     async getPostByBlogId(BlogId) {
       axios({
         method: "get",
@@ -273,7 +385,34 @@ export default {
         .catch((error) => {
           console.log(error);
         });
-    }
+    },
+    async sendCommentRequest(text) {
+      axios({
+        method: "post",
+        url: this.springBaseURL + this.addNewCommentURL,
+        headers: {
+          token: Vue.localStorage.get("jwt_token"),
+        },
+        data: {
+          commentId: null,
+          userId: this.blog.userId,
+          blogId: this.blog.blogId,
+          commentWord: text,
+          commentDate: null,
+        },
+      })
+        .then((response) => {
+          console.log(response.data);
+          if (response.data.code === "500000") {
+            this.updateTokenVerifyFailModal(true);
+          } else {
+            this.getCommentByBlogIdRequest();
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
   },
   computed: {
     // get data from vuex
@@ -286,6 +425,12 @@ export default {
       },
       getCommentByBlogIdURL: (state) => {
         return state.api.getCommentByBlogIdURL;
+      },
+      addCollectURL: (state) => {
+        return state.api.addCollectURL;
+      },
+      addNewCommentURL: (state) => {
+        return state.api.addNewCommentURL;
       },
     }),
   },
