@@ -59,4 +59,13 @@ public class CollectServiceImpl extends ServiceImpl<CollectMapper, Collect> impl
         int result = collectMapper.delete(queryWrapper);
         return result;
     }
+
+    @Override
+    public Collect selectCollectByUserAndBlog(int userid,int blogid){
+        Collect collect;
+        QueryWrapper<Collect> queryWrapper = new QueryWrapper<>();
+        queryWrapper.and(c -> c.eq("user_id",userid).eq("blog_id",blogid));
+        collect = collectMapper.selectOne(queryWrapper);
+        return collect;
+    }
 }
