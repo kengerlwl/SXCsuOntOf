@@ -60,19 +60,15 @@ export default {
     return {
       chartData: {
         columns: ["博客", "访问用户"],
-        rows: [
-
-        ],
+        rows: [],
       },
       perPage: 5,
       currentPage: 1,
-      items: [
-    
-      ],
+      items: [],
     };
   },
   computed: {
-        ...mapState({
+    ...mapState({
       springBaseURL: (state) => {
         return state.api.springBaseURL;
       },
@@ -87,13 +83,19 @@ export default {
       return this.items.length;
     },
   },
-  created(){
+  created() {
     console.log("created");
     this.getUserPostsRequest();
   },
 
   methods: {
-   async getUserPostsRequest() {
+    ...mapMutations({
+      updateUsername: "updateUsername",
+      updateIsSignIn: "updateIsSignIn",
+      updateSignOutModal: "updateSignOutModal",
+      updateTokenVerifyFailModal: "updateTokenVerifyFailModal",
+    }),
+    async getUserPostsRequest() {
       axios({
         method: "get",
         url:
@@ -115,29 +117,33 @@ export default {
             console.log(this.posts);
             for (let i = 0; i < this.posts.length; i++) {
               let tmp = this.posts[i];
-              this.chartData.rows.push({ 博客: tmp.blogName, 访问用户: tmp.blogViews });
-
-
-
+              this.chartData.rows.push({
+                博客: tmp.blogName,
+                访问用户: tmp.blogViews,
+              });
             }
-//             var points = [40, 100, 1, 5, 25, 10];
-// points.sort(function(a, b){return a - b}); 
-        this.posts.sort(function(a, b){
-          return  b.blogViews - a.blogViews;
-        })
-        console.log(this.posts);
+            //             var points = [40, 100, 1, 5, 25, 10];
+            // points.sort(function(a, b){return a - b});
+            this.posts.sort(function(a, b) {
+              return b.blogViews - a.blogViews;
+            });
+            console.log(this.posts);
 
-        for(let i=0; i < this.posts.length; i++){
-          let tmp = this.posts[i];
-          this.items.push({index: 1+i, blogName: tmp.blogName, blogViews: tmp.blogViews });
-        }
+            for (let i = 0; i < this.posts.length; i++) {
+              let tmp = this.posts[i];
+              this.items.push({
+                index: 1 + i,
+                blogName: tmp.blogName,
+                blogViews: tmp.blogViews,
+              });
+            }
           }
         })
         .catch((error) => {
           console.log(error);
         });
     },
-}
+  },
 };
 </script>
 <style>
