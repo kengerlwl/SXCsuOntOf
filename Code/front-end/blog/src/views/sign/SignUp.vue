@@ -96,6 +96,7 @@
         block
         variant="info"
         @click="usernameVerifyRequest"
+        to="/sign/verifyEmail"
         >SIGN UP</b-button
       >
       <b-button

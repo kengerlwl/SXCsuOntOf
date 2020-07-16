@@ -15,7 +15,7 @@ const api = {
         updateUserUrl: '/user/change_data',
         updateUsernameURL: "/user/change_data",
         updateEmailURL: "/user/change_data",
-        verityNewEmailURL: "",
+        verityNewEmailURL: "/user/email_verify",
         updateSexURL: "/user/change_data",
         updateCompanyURL: "/user/change_data",
         updateBirthdayURL: "/user/change_data",
