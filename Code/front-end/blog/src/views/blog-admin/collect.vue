@@ -8,7 +8,11 @@
         <b-button-group class="mr-4"> </b-button-group>
         <b-button-group>
           <b-input-group>
-            <b-form-input v-model="search" class="mr-sm-2" placeholder="Search"></b-form-input>
+            <b-form-input
+              v-model="search"
+              class="mr-sm-2"
+              placeholder="Search"
+            ></b-form-input>
           </b-input-group>
           <b-button-group class="mx-1">
             <b-button variant="outline-success" @click="searchBlogList">
@@ -30,7 +34,7 @@
           header-text-variant="white"
         >
           <template v-slot:header>
-            <h4 class="mb-0">{{ item.id + item.title }}</h4>
+            <h4 class="mb-0">{{ item.blogName }}</h4>
           </template>
           <b-card-sub-title>
             <b-icon-person-fill></b-icon-person-fill> {{ item.username }}
@@ -43,21 +47,20 @@
             >{{ tag }}</b-badge
           >
           <b-card-text>
-            {{
-              item.descript.length > 200
-                ? item.descript.substring(0, 200) + "..."
-                : item.descript
-            }}
+            {{ item.previewContent }}
           </b-card-text>
           <b-button href="#" variant="outline-info" class="mr-3">
             READ MORE
           </b-button>
-          <b-button variant="danger" @click="openDeleteModal(i, item.id)">
+          <b-button
+            variant="danger"
+            @click="openDeleteModal(i, item.collectId)"
+          >
             <b-icon-trash-fill></b-icon-trash-fill> Delete
           </b-button>
           <template v-slot:footer>
             <small class="text-muted">
-              <b-icon-clock></b-icon-clock> COLLECTED ON {{ item.collectTime }}
+              <b-icon-clock></b-icon-clock> COLLECTED ON {{ item.collectDate }}
             </small>
           </template>
         </b-card>
@@ -70,12 +73,21 @@
         />
       </b-col>
       <b-col cols="3">
-        <!-- left tags -->
+        <!-- right tags -->
         <b-card header-bg-variant="dark" header-text-variant="white">
           <template v-slot:header>
             <h4 class="mb-0">Tags</h4>
           </template>
           <b-card-text>
+          <b-button
+              size="sm"
+              class="m-1"
+              variant="outline-success"
+              pill
+              @click="showAllPost"
+            >
+              ALL
+            </b-button>
             <b-button
               size="sm"
               class="m-1"
@@ -83,6 +95,7 @@
               pill
               v-for="(item, i) in tags"
               :key="i"
+              @click="filterByTag(item)"
             >
               {{ item }}
             </b-button>
@@ -288,17 +301,7 @@ export default {
       collectBlog: items,
       showCollectBlog: [],
       // tags
-      tags: [
-        "Hello",
-        "linux",
-        "blog",
-        "archLinux",
-        "macOS",
-        "npm",
-        "bootstrap",
-        "json",
-        "Golang",
-      ],
+      tags: [],
       // delete post modal
       deletePostModal: false,
       deleteItem: {},
@@ -307,7 +310,8 @@ export default {
     };
   },
   created() {
-    this.showCollectBlog = this.collectBlog;
+    this.getCollectRequest();
+    this.getAllTagsbyUserIdRequest();
   },
   methods: {
     // vueX mutation
@@ -317,22 +321,22 @@ export default {
       updateSignOutModal: "updateSignOutModal",
       updateTokenVerifyFailModal: "updateTokenVerifyFailModal",
     }),
-    openDeleteModal(index, id) {
+    openDeleteModal(index, collectId) {
       this.deletePostModal = true;
       this.deleteItem.index = index;
-      this.deleteItem.id = id;
+      this.deleteItem.collectId = collectId;
     },
     deletePost() {
       // this.paginated_items[this.currentPage - 1].splice(this.deleteItem.index, 1);
-      console.log("delete collection id: " + this.deleteItem.id)
-      for(let i = 0; i < this.collectBlog.length; i++) {
-        if(this.collectBlog[i].id === this.deleteItem.id) {
+      console.log("delete collection id: " + this.deleteItem.collectId);
+      for (let i = 0; i < this.collectBlog.length; i++) {
+        if (this.collectBlog[i].collectId === this.deleteItem.collectId) {
           this.collectBlog.splice(i, 1);
         }
       }
 
-      for(let i = 0; i < this.showCollectBlog.length; i++) {
-        if(this.showCollectBlog[i].id === this.deleteItem.id) {
+      for (let i = 0; i < this.showCollectBlog.length; i++) {
+        if (this.showCollectBlog[i].collectId === this.deleteItem.collectId) {
           this.showCollectBlog.splice(i, 1);
         }
       }
@@ -341,25 +345,142 @@ export default {
       // change totalRows
       this.totalRows = this.showCollectBlog.length;
     },
+    filterByTag(tagName) {
+      this.showCollectBlog = [];
+      for (let i = 0; i < this.collectBlog.length; i++) {
+        for (let j = 0; j < this.collectBlog[i].tags.length; j++) {
+          if (this.collectBlog[i].tags[j] === tagName) {
+            this.showCollectBlog.push(this.collectBlog[i]);
+            break;
+          }
+        }
+      }
+      this.totalRows = this.showCollectBlog.length;
+    },
+    showAllPost() {
+      this.showCollectBlog = this.collectBlog;
+      this.totalRows = this.showCollectBlog.length;
+    },
     searchBlogList() {
       let v = this.search;
-      this.showCollectBlog = this.collectBlog.filter(function(item, index, array) {
+      this.showCollectBlog = this.collectBlog.filter(function(
+        item,
+        index,
+        array
+      ) {
         return (
-          item.title.toLowerCase().indexOf(v.toLowerCase()) > -1 ||
-          item.descript.toLowerCase().indexOf(v.toLowerCase()) > -1 ||
-          item.collectTime.toLowerCase().indexOf(v.toLowerCase()) > -1 ||
+          item.blogName.toLowerCase().indexOf(v.toLowerCase()) > -1 ||
+          item.blogContent.toLowerCase().indexOf(v.toLowerCase()) > -1 ||
+          item.collectDate.toLowerCase().indexOf(v.toLowerCase()) > -1 ||
           item.username.toLowerCase().indexOf(v.toLowerCase()) > -1
         );
       });
       this.totalRows = this.showCollectBlog.length;
     },
-    async deleteCollectRequest() {
-
-    },
+    async deleteCollectRequest() {},
     async getCollectRequest() {
+      console.log("getCollectRequest");
+      axios({
+        method: "get",
+        url:
+          this.springBaseURL +
+          this.getCollectURL +
+          "?user_id=" +
+          Vue.localStorage.get("user_id"),
+        headers: {
+          token: Vue.localStorage.get("jwt_token"),
+        },
+        data: {},
+      })
+        .then((response) => {
+          console.log(response.data);
+          if (response.data.code === "500000") {
+            this.updateTokenVerifyFailModal(true);
+          } else {
+            this.collectBlog = response.data.data.collectList;
+            console.log(this.collectBlog);
 
+            for (let i = 0; i < this.collectBlog.length; i++) {
+              // blog username
+              this.collectBlog[i].username =
+                response.data.data[
+                  String(this.collectBlog[i].blogId + "username")
+                ];
+              // origin blog info
+              this.collectBlog[i].originUserId =
+                response.data.data[this.collectBlog[i].blogId].userId;
+              this.collectBlog[i].postTime =
+                response.data.data[this.collectBlog[i].blogId].postTime;
+              this.collectBlog[i].blogName =
+                response.data.data[this.collectBlog[i].blogId].blogName;
+              this.collectBlog[i].blogContent =
+                response.data.data[this.collectBlog[i].blogId].blogContent;
+              this.collectBlog[i].blogViews =
+                response.data.data[this.collectBlog[i].blogId].blogViews;
+              // blog content
+              this.collectBlog[i].previewContent =
+                this.collectBlog[i].blogContent.length > 200
+                  ? this.collectBlog[i].blogContent.substring(0, 200) + "..."
+                  : this.collectBlog[i].blogContent;
+
+              console.log("before tag");
+              console.log(this.collectBlog);
+              // tag init
+              this.collectBlog[i].tags = [];
+
+              console.log(this.collectBlog[i].blogId);
+              for (
+                let j = 0;
+                j <
+                response.data.data[String(this.collectBlog[i].blogId + "tag")]
+                  .length;
+                j++
+              ) {
+                this.collectBlog[i].tags.push(
+                  response.data.data[
+                    String(this.collectBlog[i].blogId + "tag")
+                  ][j].tagName
+                );
+              }
+            }
+            this.showCollectBlog = this.collectBlog;
+            this.totalRows = this.showCollectBlog.length;
+          }
+          console.log(this.collectBlog);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     },
-    
+    async getAllTagsbyUserIdRequest() {
+      console.log(Vue.localStorage.get("user_id"));
+      console.log(typeof parseInt(Vue.localStorage.get("user_id")));
+      axios({
+        method: "get",
+        url:
+          this.springBaseURL +
+          this.getAllCollectTagsByUserIdURL + "?userid=" + Vue.localStorage.get("user_id"),
+        headers: {
+          token: Vue.localStorage.get("jwt_token"),
+        },
+        data: {
+        },
+      })
+        .then((response) => {
+          console.log(response.data);
+          if (response.data.code === "500000") {
+            this.updateTokenVerifyFailModal(true);
+          } else {
+            if (response.data.status === true) {
+              this.tags = response.data.data.tags;
+            }
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+
   },
   computed: {
     ...mapState({
@@ -369,11 +490,14 @@ export default {
       getUserDataURL: (state) => {
         return state.api.getUserDataURL;
       },
+      getCollectURL: (state) => {
+        return state.api.getCollectURL;
+      },
+      getAllCollectTagsByUserIdURL: (state) => {
+        return state.api.getAllCollectTagsByUserIdURL;
+      },
       tokenVerifyFailModal: (state) => {
         return state.user.tokenVerifyFailModal;
-      },
-      getCollectURL: (state) => {
-        return state.user.getCollectURL;
       },
       tokenVerifyFailModal: (state) => {
         return state.user.tokenVerifyFailModal;
@@ -386,7 +510,7 @@ export default {
     },
     currentPageItems() {
       if (this.showCollectBlog.length === 0) {
-        this.showCollectBlog = this.collectBlog
+        this.showCollectBlog = this.collectBlog;
       }
       let lengthAll = this.showCollectBlog.length;
       this.nbPages = 0;

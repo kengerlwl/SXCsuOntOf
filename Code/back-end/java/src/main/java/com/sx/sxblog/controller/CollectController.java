@@ -16,6 +16,7 @@ import com.sx.sxblog.service.impl.TagServiceImpl;
 
 
 import com.sx.sxblog.service.impl.UserServiceImpl;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -132,16 +133,17 @@ public class CollectController {
 
     @GetMapping("/pub/collect_tags")
     @ResponseBody
-    public ReturnEntity getAllTagOfCollect(@RequestBody Map<String,Object> user_post){
+    public ReturnEntity getAllTagOfCollect(@Param("userid") int userid){
         JSONObject data = new JSONObject();
         String msg = "";
         boolean status = true;
 
         int id = 10;
 
-        String userid = (String)user_post.get("userid");
+//        String userid = (String)user_post.get("userid");
         try {
-            id = UserUtil.switchToint(userid);
+//            id = UserUtil.switchToint(userid);
+            id = userid;
         }catch (Exception e){
             msg = "worng id";
             status = false;

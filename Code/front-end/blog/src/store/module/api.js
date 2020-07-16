@@ -33,7 +33,8 @@ const api = {
         addCollectURL: "",
         searchCollectURL: "",
         deleteCollectURL: "",
-        getCollectURL: "",
+        getCollectURL: "/getCollectListByUser",
+        getAllCollectTagsByUserIdURL: "/pub/collect_tags",
         // tags
         addNewTagURL: "/insertTag",
         deleteTagURL: "/deleteTag",
