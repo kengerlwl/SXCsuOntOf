@@ -99,7 +99,7 @@ public class BlogController {
     public ReturnEntity insertBlog(@RequestBody Blog blog){
         JSONObject data = new JSONObject();
         int result = blogService.insertBlog(blog);
-        List<Blog> blogtmp=  blogService.getBlogByBlogName(blog.getBlogName());
+        List<Blog> blogtmp=  blogService.getBlogByBlogName(blog);
         data.put("result",blogtmp);
         System.out.println(data);
         return ReturnEntity.successResult(data);
