@@ -99,6 +99,15 @@
             <b-button
               size="sm"
               class="m-1"
+              variant="outline-success"
+              pill
+              @click="showAllPost"
+            >
+              ALL
+            </b-button>
+            <b-button
+              size="sm"
+              class="m-1"
               variant="outline-secondary"
               pill
               v-for="(item, i) in tags"
@@ -181,7 +190,7 @@
             border-variant="light"
           >
             <strong>{{ tag }}</strong>
-            <b-button @click="removeTag(tag)" variant="info" size="sm"
+            <b-button variant="info" size="sm" @click="deleteTag(tag)"
               ><b-icon-x></b-icon-x
             ></b-button>
           </b-card>
@@ -199,7 +208,7 @@
         </b-form-group>
       </div>
       <div class="tag-add-btn">
-        <b-button variant="outline-dark">Add</b-button>
+        <b-button variant="outline-dark" @click="addNewTag">Add</b-button>
       </div>
       <template v-slot:modal-footer="{ ok, cancel, hide }">
         <!-- Emulate built in modal footer ok and cancel button actions -->
@@ -378,10 +387,9 @@ export default {
       currentEditBlogName: "",
       currentEditBlogId: "",
       newTag: {
-        blogId: 0,
+        blogId: -1,
         tagName: "",
       },
-      deleteTag: {},
     };
   },
   created() {
@@ -415,7 +423,7 @@ export default {
         }
       }
       // axios request
-      //this.deletePostRequest(this.deleteItem.id);
+      this.deletePostRequest(this.deleteItem.blogId);
 
       this.deletePostModal = false;
       // change totalRows
@@ -447,18 +455,79 @@ export default {
       this.newTag.blogId = blogId;
       this.editTagsModal = true;
     },
-    // deleteTag() {},
-    // addNewTag() {},
+    deleteTag(tagName) {
+      for (let i = 0; i < this.currentEditTags.length; i++) {
+        if (this.currentEditTags[i] === tagName) {
+          this.currentEditTags.splice(i, 1);
+          break;
+        }
+      }
+    },
+    addNewTag() {
+      this.addNewTagRequest(this.currentEditBlogId, this.newTag.tagName);
+      this.currentEditTags.push(this.newTag.tagName);
+      this.newTag.tagName = "";
+    },
+    async deleteTagRequest() {
+      axios({
+        method: "get",
+        url: this.springBaseURL + this.deleteTagURL,
+        headers: {
+          token: Vue.localStorage.get("jwt_token"),
+        },
+        data: {},
+      })
+        .then((response) => {
+          console.log(response.data);
+          if (response.data.code === "500000") {
+            this.updateTokenVerifyFailModal(true);
+          } else {
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+    async addNewTagRequest(blogId, tagName) {
+      axios({
+        method: "post",
+        url: this.springBaseURL + this.addNewTagURL,
+        headers: {
+          token: Vue.localStorage.get("jwt_token"),
+        },
+        data: {
+          blogId: blogId,
+          tagName: tagName,
+        },
+      })
+        .then((response) => {
+          console.log(response.data);
+          if (response.data.code === "500000") {
+            this.updateTokenVerifyFailModal(true);
+          } else {
+            if (response.data.status === true) {
+              this.getAllTagsbyUserIdRequest();
+            }
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
     filterByTag(tagName) {
       this.showPosts = [];
-      for(let i = 0; i < this.posts.length; i++) {
-        for(let j = 0; j < this.posts[i].tags.length; j++) {
-          if(this.posts[i].tags[j] === tagName) {
+      for (let i = 0; i < this.posts.length; i++) {
+        for (let j = 0; j < this.posts[i].tags.length; j++) {
+          if (this.posts[i].tags[j] === tagName) {
             this.showPosts.push(this.posts[i]);
             break;
           }
         }
       }
+      this.totalRows = this.showPosts.length;
+    },
+    showAllPost() {
+      this.showPosts = this.posts;
       this.totalRows = this.showPosts.length;
     },
     async getUserPostsRequest() {
@@ -509,23 +578,26 @@ export default {
         });
     },
     async getAllTagsbyUserIdRequest() {
-      console.log(Vue.localStorage.get("user_id"))
-      console.log(typeof(parseInt(Vue.localStorage.get("user_id"))))
+      console.log(Vue.localStorage.get("user_id"));
+      console.log(typeof parseInt(Vue.localStorage.get("user_id")));
       axios({
         method: "get",
-        url: this.springBaseURL + this.getAllTagsByUserIdURL + "?userid=" + Vue.localStorage.get("user_id"),
+        url:
+          this.springBaseURL +
+          this.getAllTagsByUserIdURL +
+          "?userid=" +
+          Vue.localStorage.get("user_id"),
         headers: {
-          // token: Vue.localStorage.get("jwt_token"),
+          token: Vue.localStorage.get("jwt_token"),
         },
-        data: {
-        },
+        data: {},
       })
         .then((response) => {
           console.log(response.data);
           if (response.data.code === "500000") {
             this.updateTokenVerifyFailModal(true);
           } else {
-            if(response.data.status === true) {
+            if (response.data.status === true) {
               this.tags = response.data.data.tag;
             }
           }
@@ -543,7 +615,7 @@ export default {
           token: Vue.localStorage.get("jwt_token"),
         },
         data: {
-          blogId: postId,
+          blogId: String(postId),
         },
       })
         .then((response) => {
@@ -552,6 +624,7 @@ export default {
             this.updateTokenVerifyFailModal(true);
           } else {
             this.deletePostSuccessModal = true;
+            this.getAllTagsbyUserIdRequest();
           }
         })
         .catch((error) => {
@@ -573,6 +646,12 @@ export default {
       },
       getAllTagsByUserIdURL: (state) => {
         return state.api.getAllTagsByUserIdURL;
+      },
+      addNewTagURL: (state) => {
+        return state.api.addNewTagURL;
+      },
+      deleteTagURL: (state) => {
+        return state.api.deleteTagURL;
       },
     }),
     pageCount() {

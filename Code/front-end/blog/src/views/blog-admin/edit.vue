@@ -60,12 +60,12 @@ export default {
         blogContent: "",
         postTime: "",
         blogViews: 0,
-        blogName: ""
-      }
+        blogName: "",
+      },
     };
   },
   beforeRouteUpdate(to, from, next) {
-    if(to.query.blogId === "-1" || to.query.blogId === -1) {
+    if (to.query.blogId === "-1" || to.query.blogId === -1) {
       this.blog.blogId = 0;
       this.blog.userId = Vue.localStorage.get("user_id");
       this.blog.blogContent = "# Title";
@@ -76,8 +76,8 @@ export default {
     }
   },
   created() {
-    if(this.$route.query.blogId === "-1" || this.$route.query.blogId === -1) {
-      this.blog.blogId = 0;
+    if (this.$route.query.blogId === "-1" || this.$route.query.blogId === -1) {
+      this.blog.blogId = -1;
       this.blog.userId = Vue.localStorage.get("user_id");
       this.blog.blogContent = "# Title";
       this.blog.postTime = "";
@@ -115,13 +115,63 @@ export default {
             this.updateTokenVerifyFailModal(true);
           } else {
             this.blog = response.data.data.blog_id;
+            this.$route.query.blogId = response.data.data.blog_id.blogId;
           }
-          console.log(this.showPosts);
         })
         .catch((error) => {
           console.log(error);
         });
-    }
+    },
+    savePost() {
+      if (
+        this.$route.query.blogId === "-1" ||
+        this.$route.query.blogId === -1
+      ) {
+        this.addNewPost();
+      } else {
+        this.updatePost();
+      }
+    },
+    async addNewPost() {
+      axios({
+        method: "post",
+        url: this.springBaseURL + this.createNewPostURL,
+        headers: {
+          token: Vue.localStorage.get("jwt_token"),
+        },
+        data: {},
+      })
+        .then((response) => {
+          console.log(response.data);
+          if (response.data.code === "500000") {
+            this.updateTokenVerifyFailModal(true);
+          } else {
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+    async updatePost() {
+      axios({
+        method: "post",
+        url: this.springBaseURL + this.updatePostURL,
+        headers: {
+          token: Vue.localStorage.get("jwt_token"),
+        },
+        data: {},
+      })
+        .then((response) => {
+          console.log(response.data);
+          if (response.data.code === "500000") {
+            this.updateTokenVerifyFailModal(true);
+          } else {
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
   },
   computed: {
     // get data from vuex
@@ -134,6 +184,12 @@ export default {
       },
       deletePostURL: (state) => {
         return state.api.deletePostURL;
+      },
+      updatePostURL: (state) => {
+        return state.api.updatePostURL;
+      },
+      createNewPostURL: (state) => {
+        return state.api.createNewPostURL;
       },
     }),
   },
