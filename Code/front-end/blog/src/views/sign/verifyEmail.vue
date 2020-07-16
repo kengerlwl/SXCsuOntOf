@@ -15,7 +15,7 @@
           placeholder="Enter Captcha"
         ></b-form-input>
       </b-form-group>
-      <b-button class="sign-btn" pill size="lg" block variant="danger"
+      <b-button class="sign-btn" pill size="lg" block variant="danger" @click="verify"
         >VERIFY</b-button
       >
       <b-button
@@ -33,6 +33,8 @@
 <script>
 // import VueX
 import { mapState, mapMutations } from "vuex";
+import axios from "axios";
+import Vue from "vue";
 
 export default {
   data() {
@@ -40,14 +42,42 @@ export default {
       captcha: "",
     };
   },
+
+  methods: {
+    verify(){
+        console.log("verify");
+  axios({
+        method: "post",
+        url: this.baseURL + this.verifyEmailURL,
+        headers: {},
+        data: {
+          code: this.captcha
+        },
+      })
+        .then((response) => {
+          console.log(response.data);
+          if (response.data.msg=== "") {
+            console.log("success")
+           
+            // route push
+            // this.$router.push("/user/signIn");
+          } else {
+            console.log("error")
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+  },
   computed: {
     // get data from vuex
     ...mapState({
       baseURL: (state) => {
-        return state.api.baseURL;
+        return state.api.springBaseURL;
       },
       verifyEmailURL: (state) => {
-        return state.api.verifyEmailURL;
+        return state.api.verityNewEmailURL;
       },
     }),
   },
