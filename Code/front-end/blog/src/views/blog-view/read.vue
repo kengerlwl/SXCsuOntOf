@@ -298,9 +298,14 @@ export default {
       }
     },
     sendComment() {
-      if (this.writeComment !== "") {
-        this.sendCommentRequest(this.writeComment);
-        this.writeComment = "";
+      let token = Vue.localStorage.get("jwt_token");
+      if (token === undefined || token === null || token === "") {
+        this.guestSignInModal = true;
+      } else {
+        if (this.writeComment !== "") {
+          this.sendCommentRequest(this.writeComment);
+          this.writeComment = "";
+        }
       }
     },
     async addNewCollectRequest() {
