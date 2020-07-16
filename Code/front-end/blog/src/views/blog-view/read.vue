@@ -65,7 +65,8 @@
           <div class="mt-2 send-btn">
             <b-button variant="success">Send</b-button>
           </div>
-          <div>
+          <hr class="my-4" />
+          <div v-for="(comment, i) in commentList">
             <b-row class="mt-2">
               <b-col cols="1">
                 <b-avatar
@@ -75,41 +76,15 @@
               </b-col>
               <b-col>
                 <div>
-                  username
+                  {{ comment.userId }}
                 </div>
                 <div class="mb-1">
-                  如果上天没有给你想要的，不是你值得拥有更好的，而是你不配。别以为今天是你人生的低谷，在你未来的日子里它都能算得上是巅峰了。见到长辈时，不是我们不想叫他，而是压根就不知道叫他什么。
+                  {{ comment.commentWord}}
                 </div>
                 <div>
-                  2020-01-01 00:00
+                  post on {{ comment.commentDate }}
                 </div>
-                <div>
-                  <b-button size="sm" variant="primary" class="mr-2"
-                    >Edit</b-button
-                  >
-                  <b-button size="sm" variant="danger">Delete</b-button>
-                </div>
-              </b-col>
-            </b-row>
-          </div>
-          <div>
-            <b-row class="mt-2">
-              <b-col cols="1">
-                <b-avatar
-                  size="64"
-                  src="https://avatars1.githubusercontent.com/u/48636976?s=460&u=6fc910ffe23ff8ff7ffc210d49ca81fdec486f9f&v=4"
-                ></b-avatar>
-              </b-col>
-              <b-col>
-                <div>
-                  username
-                </div>
-                <div class="mb-1">
-                  如果上天没有给你想要的，不是你值得拥有更好的，而是你不配。别以为今天是你人生的低谷，在你未来的日子里它都能算得上是巅峰了。见到长辈时，不是我们不想叫他，而是压根就不知道叫他什么。
-                </div>
-                <div>
-                  2020-01-01 00:00
-                </div>
+                
                 <div>
                   <b-button size="sm" variant="primary" class="mr-2"
                     >Edit</b-button
@@ -193,6 +168,7 @@ export default {
         blogViews: 0,
         blogName: "",
       },
+      commentList: [],
       aboutDeveloper: [
         {
           developer: "2892211452",
@@ -231,6 +207,7 @@ export default {
   },
   created() {
     this.getPostByBlogId(this.$route.query.blogId);
+    this.getCommentByBlogIdRequest();
   },
   methods: {
     ...mapMutations({
@@ -270,6 +247,33 @@ export default {
           console.log(error);
         });
     },
+    async getCommentByBlogIdRequest() {
+      axios({
+        method: "get",
+        url:
+          this.springBaseURL +
+          this.getCommentByBlogIdURL +
+          "?blog_id=" +
+          this.$route.query.blogId,
+        headers: {
+          token: Vue.localStorage.get("jwt_token"),
+        },
+        data: {},
+      })
+        .then((response) => {
+          console.log(response.data);
+          if (response.data.code === "500000") {
+            this.updateTokenVerifyFailModal(true);
+          } else {
+            this.commentList = response.data.data.commentList;
+            console.log("comment list");
+            console.log(this.commentList);
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
   },
   computed: {
     // get data from vuex
@@ -279,6 +283,9 @@ export default {
       },
       getPostByBlogIdURL: (state) => {
         return state.api.getPostByBlogIdURL;
+      },
+      getCommentByBlogIdURL: (state) => {
+        return state.api.getCommentByBlogIdURL;
       },
     }),
   },

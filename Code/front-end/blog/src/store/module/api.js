@@ -39,6 +39,9 @@ const api = {
         // tags
         addNewTagURL: "/insertTag",
         deleteTagURL: "/deleteTag",
+        // comment
+        getCommentByBlogIdURL: "/getCommentListByBlog",
+        addNewCommentURL: "",
         // news
         getSchoolNewsURL: "/getNews",
         getGamesNewsURL: "/getEpicFreeGame"
