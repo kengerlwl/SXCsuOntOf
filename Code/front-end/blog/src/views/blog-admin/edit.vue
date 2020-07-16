@@ -162,10 +162,7 @@ export default {
         });
     },
     savePost() {
-      if (
-        this.blog.blogId === "-1" ||
-        this.blog.blogId === -1
-      ) {
+      if (this.blog.blogId === "-1" || this.blog.blogId === -1) {
         this.addNewPost();
       } else {
         this.updatePost();
@@ -196,10 +193,11 @@ export default {
           } else {
             if (response.data.status === true) {
               // change route query
-              this.$route.query.blogId = response.data.data.result.blogId;
-              this.blog.blogId = response.data.data.result.blogId;
-              this.blog.userId = response.data.data.result.userId;
+              this.$route.query.blogId = response.data.data.result[0].blogId;
+              this.blog.blogId = response.data.data.result[0].blogId;
+              this.blog.userId = response.data.data.result[0].userId;
               this.saveSuccessModal = true;
+              console.log(this.blog)
             } else {
               this.saveFailModal = true;
             }
