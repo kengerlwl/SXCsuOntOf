@@ -6,9 +6,7 @@
       </div>
     </div>
     <div id="forgot-password">
-
-
-    <!--    username-->
+      <!--    username-->
       <b-form-group id="input-group-1" label="Username" label-for="input-1">
         <b-form-input
           id="input-1"
@@ -22,7 +20,6 @@
           Enter Your Username
         </b-form-invalid-feedback>
       </b-form-group>
-
 
       <!-- email -->
 
@@ -40,9 +37,13 @@
         </b-form-invalid-feedback>
       </b-form-group>
 
-
-
-      <b-button class="sign-btn" pill size="lg" block variant="danger" @click="sendEmail"
+      <b-button
+        class="sign-btn"
+        pill
+        size="lg"
+        block
+        variant="danger"
+        @click="sendEmail"
         >GET NEW PASSWORD</b-button
       >
       <!-- Sign In -->
@@ -67,13 +68,13 @@ export default {
   data() {
     return {
       email: "",
-      username:""
+      username: "",
     };
   },
   methods: {
-    sendEmail(){
+    sendEmail() {
       console.log("send email");
-        axios({
+      axios({
         method: "post",
         url: this.baseURL + this.forgotPasswordURL,
         headers: {},
@@ -86,11 +87,8 @@ export default {
           console.log(response.data);
           if (response.data.status === true) {
             console.log("success");
-           
           } else {
-          console.log("fail");
-
-           
+            console.log("fail");
           }
         })
         .catch((error) => {
