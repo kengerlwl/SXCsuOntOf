@@ -558,7 +558,7 @@ export default {
         birthday: "",
         sex: "",
         company: "",
-        password: "*******",
+        password: "123",
         originPassword: "123",
         newPassword: "123",
         confirmNewPassword: "123",
@@ -601,6 +601,12 @@ export default {
     this.getUserDataRequest();
   },
   methods: {
+    ...mapMutations({
+      updateUsername: "updateUsername",
+      updateIsSignIn: "updateIsSignIn",
+      updateSignOutModal: "updateSignOutModal",
+      updateTokenVerifyFailModal: "updateTokenVerifyFailModal",
+    }),
     openDeleteAccountModal() {
       this.deleteAccountModal = true;
     },
@@ -634,6 +640,8 @@ export default {
             this.updateTokenVerifyFailModal(true);
           } else {
             if (response.data.status === true) {
+              Vue.localStorage.set("user_name", this.user.username);
+              this.updateUsername(this.user.username);
             } else {
             }
           }
