@@ -185,7 +185,10 @@ export default {
           blogId: null,
           userId: parseInt(Vue.localStorage.get("user_id"), 10),
           blogContent: this.blog.blogContent,
+<<<<<<< HEAD
+=======
           postTime: null,
+>>>>>>> a6c17f87129d0d0bef493fda4ded6cbf597b3ee7
           blogViews: 0,
           blogName: this.blog.blogName,
         },
