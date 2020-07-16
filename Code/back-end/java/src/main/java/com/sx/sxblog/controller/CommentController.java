@@ -32,6 +32,26 @@ public class CommentController {
         return ReturnEntity.successResult(data);
     }
 
+
+    @RequestMapping(value = "/getCommentListByBlog",method = RequestMethod.GET)
+    @ResponseBody
+    public ReturnEntity getCommentListByBlog(int blog_id){
+        JSONObject data = new JSONObject();
+//        int blog_id = 1000000;
+        List<Comment> commentList = commentService.getCommentList();
+        for(int i =0; i < commentList.size(); i++)
+        {
+            Comment tmpComment = commentList.get(i);
+            if(tmpComment.getBlogId() != blog_id){
+                commentList.remove(i);
+                i--;
+            }else{
+
+            }
+        }
+        data.put("commentList",commentList);
+        return ReturnEntity.successResult(data);
+    }
     @RequestMapping(value = "/insertComment",method = RequestMethod.POST)
     @ResponseBody
     public ReturnEntity insertComment(@RequestBody Comment comment){
