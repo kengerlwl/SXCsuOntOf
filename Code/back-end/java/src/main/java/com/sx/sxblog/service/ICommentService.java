@@ -24,4 +24,7 @@ public interface ICommentService extends IService<Comment> {
     //对评论列表进行查询显示【】
     List<Comment> getCommentList();
 
+    //使用BlogId删除comment
+    int deletCommentByBlogid(int blogid);
+
 }

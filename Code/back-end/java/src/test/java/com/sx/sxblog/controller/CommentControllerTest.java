@@ -51,8 +51,8 @@ public class CommentControllerTest {
     public void insertComment() throws Exception
     {
         Comment comment = new Comment();
-        comment.setBlogId(1000005);
-        comment.setUserId(10001);
+        comment.setBlogId(1000002);
+        comment.setUserId(10003);
         comment.setCommentWord("对，这就是一篇博客");
 
         ObjectMapper mapper = new ObjectMapper();

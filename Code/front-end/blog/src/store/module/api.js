@@ -22,17 +22,21 @@ const api = {
         updateDescriptionURL: "/user/change_data",
         updatePasswordURL: "/user/change_data",
         // posts
-        createNewPostURL: "",
-        updatePostURL: "",
+        createNewPostURL: "/insertBlog",
+        updatePostURL: "/updateBlog",
         deletePostURL: "/deleteBlog",
         searchPostURL: "",
         getPostsURL: "/getBlogListByUser",
         getPostByBlogIdURL: "/getBlogById",
+        getAllTagsByUserIdURL: "/pub/user_tags",
         // collect
         addCollectURL: "",
         searchCollectURL: "",
         deleteCollectURL: "",
         getCollectURL: "",
+        // tags
+        addNewTagURL: "/insertTag",
+        deleteTagURL: "/deleteTag",
         // news
         getSchoolNewsURL: "/getNews",
         getGamesNewsURL: "/getEpicFreeGame"

@@ -30,4 +30,7 @@ public interface ICollectService extends IService<Collect> {
     //获取制定用户的collect列表
     List<Collect> getCollectListByUserid(int userid);
 
+    //用blogid删除
+    int deletCollectByBlogId(int blogid);
+
 }

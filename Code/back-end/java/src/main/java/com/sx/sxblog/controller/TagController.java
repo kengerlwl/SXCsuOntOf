@@ -8,6 +8,7 @@ import com.sx.sxblog.entity.Blog;
 import com.sx.sxblog.entity.Tag;
 import com.sx.sxblog.service.impl.BlogServiceImpl;
 import com.sx.sxblog.service.impl.TagServiceImpl;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -93,16 +94,17 @@ public class TagController {
 
     @GetMapping("/pub/user_tags")
     @ResponseBody
-    public ReturnEntity getAllTagsByUser(@RequestBody Map<String,Object> user_post_id){
+    public ReturnEntity getAllTagsByUser(@Param("userid") int userid){
 
         String msg = "";
         JSONObject data = new JSONObject();
         boolean status = true;
         int id = 10;//不存在的id 如果错误说明try catch 有问题
 
-        String userid = (String) user_post_id.get("userid");
+//        String userid = (String) user_post_id.get("userid");
         try{
-            id = UserUtil.switchToint(userid);
+//            id = (Integer) user_post_id.get("userid");
+            id = userid;
         }catch (Exception e){
             status = false;
             msg = "worng id";
@@ -128,6 +130,25 @@ public class TagController {
             status = false;
         }
         data.put("tag",tagSet);
+        ReturnEntity returnEntity = new ReturnEntity(status,msg,data);
+        return returnEntity;
+
+    }
+
+    @PostMapping("/delet_tag_by_blogid_tagname")
+    @ResponseBody
+    public ReturnEntity deletTagByUserTagname(@RequestBody Map<String,Object> map){
+        JSONObject data = new JSONObject();
+        String msg = "";
+        boolean status = true;
+
+        String blogId = (String) map.get("blog_id");
+        int id = UserUtil.switchToint(blogId);
+        String tagName = (String) map.get("tag_name");
+        int result = tagService.deletTagByUserAndContent(id,tagName);
+
+        data.put("result",result);
+
         ReturnEntity returnEntity = new ReturnEntity(status,msg,data);
         return returnEntity;
 
