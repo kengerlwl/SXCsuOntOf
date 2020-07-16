@@ -125,6 +125,12 @@ public class BlogController {
     public ReturnEntity getBlogById(int blog_id){
         JSONObject data = new JSONObject();
         Blog blog = blogService.getBlogById(blog_id);
+
+        int count = blog.getBlogViews();
+        count = count+1;
+        blog.setBlogViews(count);
+        blogService.updateBlog(blog);
+
         data.put("blog_id",blog);
         return ReturnEntity.successResult(data);
     }
