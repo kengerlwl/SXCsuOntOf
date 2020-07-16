@@ -17,7 +17,7 @@
 
         <!-- Right aligned nav items -->
         <b-navbar-nav class="ml-auto">
-          <b-nav-item-dropdown v-if="isSignIn" right>
+          <b-nav-item-dropdown class="top-index" v-if="isSignIn" right>
             <!-- Using 'button-content' slot -->
             <template v-slot:button-content>
               <strong>{{ username }}</strong>
@@ -188,5 +188,9 @@ export default {
 
 #nav a.router-link-exact-active {
   color: #42b983;
+}
+
+.top-index {
+  z-index: 1000000 !important;
 }
 </style>
