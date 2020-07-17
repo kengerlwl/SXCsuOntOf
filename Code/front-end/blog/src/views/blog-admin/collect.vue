@@ -554,9 +554,6 @@ export default {
       tokenVerifyFailModal: (state) => {
         return state.user.tokenVerifyFailModal;
       },
-      tokenVerifyFailModal: (state) => {
-        return state.user.tokenVerifyFailModal;
-      },
     }),
     pageCount() {
       let l = this.totalRows,

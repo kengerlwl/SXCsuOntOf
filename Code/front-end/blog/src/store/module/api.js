@@ -8,7 +8,7 @@ const api = {
         signUpURL: "/user/signUp",
         // check the username if it is exist
         usernameVerifyURL: "/user/username_verify",
-        verifyEmailURL: "",
+        verifyEmailURL: "/user/email_verify",
         forgotPasswordURL: "/user/find_passwd",
         // account setting
         getUserDataURL: "/user/get_data",
